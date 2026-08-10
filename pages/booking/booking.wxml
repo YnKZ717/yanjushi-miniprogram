@@ -1,0 +1,76 @@
+<view class="page">
+  <view class="card">
+    <view class="h">预约内容</view>
+    <view class="item-row" wx:if="{{cover || name || priceText}}">
+      <view class="item-cover" wx:if="{{cover}}" style="background-color: #eee;">
+        <image wx:if="{{cover && cover.indexOf('http') === 0}}" src="{{cover}}" mode="aspectFill" class="cover-img"></image>
+        <text wx:else class="cover-emoji">🖼️</text>
+      </view>
+      <view class="item-info">
+        <view class="item-type">{{type === 'room' ? '客房' : type === 'activity' ? '活动' : '体验'}}</view>
+        <view class="item-name bold">{{name}}</view>
+        <view class="item-price" wx:if="{{priceText}}">{{priceText}}</view>
+      </view>
+    </view>
+    <view class="row">
+      <text class="k">类型</text>
+      <text class="v">{{type === 'room' ? '客房' : type === 'activity' ? '活动' : '体验'}}</text>
+    </view>
+    <view class="row">
+      <text class="k">项目</text>
+      <text class="v bold">{{name}}</text>
+    </view>
+    <view class="row">
+      <text class="k">日期</text>
+      <picker mode="date" value="{{date}}" start="{{today}}" bindchange="onDateChange">
+        <view class="picker">{{date}} <text class="caret">›</text></view>
+      </picker>
+    </view>
+    <view class="row">
+      <text class="k">人数</text>
+      <view class="stepper">
+        <view class="stp-btn" bindtap="onGuestMinus">－</view>
+        <view class="stp-num">{{guests}}</view>
+        <view class="stp-btn plus" bindtap="onGuestPlus">＋</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="h">联系人信息</view>
+    <view class="f-row">
+      <text class="f-label">姓名</text>
+      <input class="f-input" placeholder="请输入联系人姓名" value="{{contactName}}" bindinput="onNameInput" />
+    </view>
+    <view class="f-row">
+      <text class="f-label">手机号</text>
+      <input class="f-input" type="number" placeholder="请输入手机号" maxlength="11" value="{{contactPhone}}" bindinput="onPhoneInput" />
+    </view>
+    <view class="f-row f-col">
+      <text class="f-label">备注（选填）</text>
+      <textarea class="f-textarea" placeholder="特殊要求/忌口/房型偏好等" value="{{remark}}" bindinput="onRemarkInput" maxlength="200" auto-height></textarea>
+    </view>
+  </view>
+
+  <view class="card direct-card">
+    <view class="dc-icon">🏡</view>
+    <view class="dc-body">
+      <view class="dc-title">私域直订专属权益</view>
+      <view class="dc-list">
+        <view class="dc-i">🎁 欢迎礼升级 · 🛏️ 房型优先升级 · 💬 管家企微一对一</view>
+      </view>
+      <view class="dc-tagline">* 不打折，只做非折价权益 · 价格与OTA同价</view>
+    </view>
+  </view>
+
+  <view class="agree-row" bindtap="toggleAgree">
+    <view class="checkbox {{agree ? 'checked' : ''}}">{{agree ? '✓' : ''}}</view>
+    <text class="a-text">我已阅读并同意《用户隐私协议》<br/>最小必要原则：仅用于预约联系，不对外共享</text>
+  </view>
+
+  <view class="safe-bottom"></view>
+
+  <view class="bottom-bar">
+    <button class="btn-primary b-btn {{agree ? '' : 'btn-disabled'}}" bindtap="submit" disabled="{{!agree}}">提交预约</button>
+  </view>
+</view>

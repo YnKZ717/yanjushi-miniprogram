@@ -1,0 +1,43 @@
+<view class="page" wx:if="{{room}}">
+  <view class="cover" style="background:linear-gradient(135deg,{{room.color}}55,{{room.color}}cc);">
+    <text class="cover-icon">🛏️</text>
+    <view class="cover-name">{{room.name}}</view>
+    <view class="cover-en">{{room.nameEn}}</view>
+  </view>
+  <view class="section">
+    <view class="title-row">
+      <text class="title">{{room.name}} · {{room.type}}</text>
+      <text class="price">¥{{room.price}}<text class="unit">起/晚</text></text>
+    </view>
+    <view class="meta">{{room.area}} · {{room.beds}} · 最多{{room.maxGuests}}人入住</view>
+    <view class="tags">
+      <text class="tag tag-stone" wx:for="{{room.tags}}" wx:for-item="t" wx:key="*this">{{t}}</text>
+    </view>
+  </view>
+  <view class="section">
+    <view class="h">房间介绍</view>
+    <view class="desc">{{room.desc}}</view>
+  </view>
+  <view class="section">
+    <view class="h">房间设施</view>
+    <view class="amenities">
+      <view class="a-item" wx:for="{{amenities}}" wx:key="*this">
+        <text class="a-icon">✓</text>
+        <text class="a-name">{{item}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="section">
+    <view class="h notice-title">直订专属权益</view>
+    <view class="notice-box">
+      <view class="n-item">🎁 欢迎礼升级（岩涺石定制白茶+手作小怪兽）</view>
+      <view class="n-item">🛏️ 优先房型升级（如有空房）</view>
+      <view class="n-item">💬 添加管家企微，一对一服务</view>
+      <view class="n-tagline">* 不打折，只做非折价权益 · 价格=OTA同价</view>
+    </view>
+  </view>
+  <view class="bottom-bar">
+    <view class="b-price">¥{{room.price}}<text class="unit">起/晚</text></view>
+    <button class="btn-primary b-btn" bindtap="book">立即预订</button>
+  </view>
+</view>

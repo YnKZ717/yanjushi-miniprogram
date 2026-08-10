@@ -1,0 +1,7 @@
+{
+  "name": "user",
+  "version": "1.0.0",
+  "description": "岩涺石 Monster Planet - 用户资料云函数",
+  "main": "index.js",
+  "dependencies": { "wx-server-sdk": "latest" }
+}

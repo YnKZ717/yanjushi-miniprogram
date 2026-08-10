@@ -1,0 +1,64 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/privacy/privacy",
+    "pages/mbti-index/mbti-index",
+    "pages/mbti-test/mbti-test",
+    "pages/mbti-result/mbti-result",
+    "pages/index/index",
+    "pages/room-list/room-list",
+    "pages/room-detail/room-detail",
+    "pages/booking/booking",
+    "pages/activity-list/activity-list",
+    "pages/activity-detail/activity-detail",
+    "pages/experience-list/experience-list",
+    "pages/order-list/order-list",
+    "pages/order-detail/order-detail",
+    "pages/resident/resident",
+    "pages/adopt/adopt",
+    "pages/mall/mall",
+    "pages/admin/admin"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1a1a1a",
+    "navigationBarTitleText": "岩涺石 Monster Planet",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F5F1EA"
+  },
+  "tabBar": {
+    "color": "#8a8a8a",
+    "selectedColor": "#2C5F4E",
+    "backgroundColor": "#FFFDF8",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/mbti-index/mbti-index",
+        "text": "测怪兽"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/order-list/order-list",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/resident/resident",
+        "text": "居民"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "permission": {
+    "scope.writePhotosAlbum": {
+      "desc": "用于保存您的怪兽人格海报到相册，方便分享到小红书和朋友圈"
+    },
+    "scope.userInfo": {
+      "desc": "用于生成您的专属怪兽居民证"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "order",
+  "version": "1.0.0",
+  "description": "岩涺石 Monster Planet - 订单云函数",
+  "main": "index.js",
+  "dependencies": { "wx-server-sdk": "latest" }
+}

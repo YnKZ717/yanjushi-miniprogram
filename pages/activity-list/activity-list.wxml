@@ -1,0 +1,24 @@
+<view class="page">
+  <view class="hero">
+    <view class="h-title">怪兽星球 · 主题活动</view>
+    <view class="h-sub">IP主线 · 陶艺主线 · 茶文化主线</view>
+  </view>
+  <view class="list">
+    <view class="a-item" wx:for="{{list}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+      <view class="a-cover" style="background:linear-gradient(135deg,{{item.color}}22,{{item.color}}88);">
+        <text class="a-icon">{{item.icon}}</text>
+      </view>
+      <view class="a-body">
+        <view class="a-name">{{item.name}}</view>
+        <view class="a-period">{{item.period}}</view>
+        <view class="a-tags">
+          <text class="a-tag" wx:for="{{item.tags}}" wx:for-item="t" wx:key="*this">{{t}}</text>
+        </view>
+        <view class="a-bottom">
+          <text class="a-price">¥{{item.priceRange}}</text>
+          <text class="a-link">查看详情 ›</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

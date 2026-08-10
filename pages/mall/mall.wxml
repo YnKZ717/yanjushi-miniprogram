@@ -1,0 +1,58 @@
+<view class="page">
+  <view class="hero">
+    <view class="h-title">🎁 岩涺石文创</view>
+    <view class="h-sub">把颜料的名字和怪兽的温度，带回家</view>
+  </view>
+  <view class="list">
+    <view class="p-item" wx:for="{{list}}" wx:key="id">
+      <view class="p-cover" style="background:linear-gradient(135deg, #2C5F4E33, #C9A96188);">
+        <text class="p-icon">📦</text>
+      </view>
+      <view class="p-body">
+        <view class="p-name">{{item.name}}</view>
+        <view class="p-tags">
+          <text class="p-tag" wx:for="{{item.tags}}" wx:for-item="t" wx:key="*this">{{t}}</text>
+        </view>
+        <view class="p-desc">{{item.desc}}</view>
+        <view class="p-bottom">
+          <view class="p-price">¥{{item.price}}</view>
+          <view class="count-row">
+            <view class="c-btn" bindtap="minus" data-id="{{item.id}}">－</view>
+            <view class="c-n">{{item.count || 0}}</view>
+            <view class="c-btn plus" bindtap="add" data-id="{{item.id}}">＋</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="safe-bottom"></view>
+  <view class="cart-bar" bindtap="openCart">
+    <view class="c-icon">🛒</view>
+    <view class="c-count">{{cart.length}}件 · ¥{{cartTotal}}</view>
+    <view class="c-btn-go">去结算 ›</view>
+  </view>
+
+  <view class="cart-mask" wx:if="{{showCart}}" bindtap="closeCart">
+    <view class="cart-modal" catchtap="">
+      <view class="cm-header">
+        <text class="cm-title">购物车</text>
+        <text class="cm-close" bindtap="closeCart">✕</text>
+      </view>
+      <view class="cm-body">
+        <view class="cm-empty" wx:if="{{cart.length === 0}}">购物车是空的～</view>
+        <view class="cm-item" wx:for="{{cart}}" wx:key="id">
+          <view class="cmi-name">{{item.name}}</view>
+          <view class="cmi-meta">¥{{item.price}} × {{item.count}}</view>
+          <view class="cmi-total">¥{{item.price * item.count}}</view>
+        </view>
+      </view>
+      <view class="cm-footer">
+        <view class="cm-total-row">
+          <text>合计</text>
+          <text class="cm-total">¥{{cartTotal}}</text>
+        </view>
+        <button class="btn-primary" bindtap="checkout">去结算</button>
+      </view>
+    </view>
+  </view>
+</view>

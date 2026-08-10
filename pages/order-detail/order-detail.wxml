@@ -1,0 +1,76 @@
+<view class="page" wx:if="{{order}}">
+  <view class="status-card" style="border-color:{{order.statusColor}}33;">
+    <view class="s-dot" style="background:{{order.statusColor}};"></view>
+    <view class="s-body">
+      <view class="s-text" style="color:{{order.statusColor}};">{{order.statusText}}</view>
+      <view class="s-desc" wx:if="{{order.status === 'pending'}}">管家将在24小时内联系您确认</view>
+      <view class="s-desc" wx:elif="{{order.status === 'confirmed'}}">已添加管家企微的话，可以随时沟通～</view>
+      <view class="s-desc" wx:else>感谢您选择岩涺石 Monster Planet</view>
+    </view>
+  </view>
+
+  <view class="stepper">
+    <view class="step" wx:for="{{statusSteps}}" wx:key="key">
+      <view class="dot {{order.status === item.key ? 'active' : ''}}"></view>
+      <view class="step-body">
+        <view class="step-name">{{item.text}}</view>
+        <view class="step-desc">{{item.desc}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="h">预约内容</view>
+    <view class="row"><text class="k">类型</text><text class="v">{{order.typeText}}</text></view>
+    <view class="row"><text class="k">项目</text><text class="v bold">{{order.name}}</text></view>
+    <view class="row"><text class="k">日期</text><text class="v">{{order.date}}</text></view>
+    <view class="row"><text class="k">人数</text><text class="v">{{order.guests}}人</text></view>
+    <view class="row" wx:if="{{order.remark}}">
+      <text class="k">备注</text>
+      <text class="v">{{order.remark}}</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="h">联系人</view>
+    <view class="row"><text class="k">姓名</text><text class="v">{{order.contactName}}</text></view>
+    <view class="row">
+      <text class="k">手机号</text>
+      <text class="v clickable" bindtap="copyPhone">{{order.contactPhone}} 复制</text>
+    </view>
+  </view>
+
+  <view class="card wx-card">
+    <view class="wx-icon">💬</view>
+    <view class="wx-body">
+      <view class="wx-title">添加管家企业微信确认预订</view>
+      <view class="wx-desc">· 一对一服务 · 行程调整 · 民宿攻略</view>
+    </view>
+    <view class="wx-btn" bindtap="addWechat">添加</view>
+  </view>
+
+  <view class="card" wx:if="{{order.orderId}}">
+    <view class="h">订单信息</view>
+    <view class="row"><text class="k">订单编号</text><text class="v small">{{order.orderId}}</text></view>
+    <view class="row"><text class="k">下单渠道</text><text class="v">{{order.source || '小程序直订'}}</text></view>
+    <view class="row"><text class="k">创建时间</text><text class="v small">{{order.createdAtText || '-'}}</text></view>
+  </view>
+
+  <view class="bottom-bar" wx:if="{{order.status === 'pending'}}">
+    <button class="btn-outline" bindtap="cancel">取消预约</button>
+    <button class="btn-primary" bindtap="addWechat">加企微确认</button>
+  </view>
+  <view class="bottom-bar" wx:elif="{{order.status === 'confirmed'}}">
+    <button class="btn-outline" bindtap="addWechat">联系管家</button>
+  </view>
+  <view class="safe-bottom" wx:else></view>
+
+  <view class="qr-mask" wx:if="{{showQr}}" bindtap="closeQr">
+    <view class="qr-modal" catchtap="">
+      <view class="qr-title">添加管家企业微信</view>
+      <view class="qr-img">📷<view class="qr-sub">管家企微二维码占位</view></view>
+      <view class="qr-tip">长按识别 / 截图保存扫码</view>
+      <view class="qr-close" bindtap="closeQr">关闭</view>
+    </view>
+  </view>
+</view>

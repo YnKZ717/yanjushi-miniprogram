@@ -1,0 +1,148 @@
+const app = getApp()
+const { formatPrice, showToast, showModal } = require('../../utils/util.js')
+
+Page({
+  data: {
+    result: null,
+    persona: null,
+    scores: null,
+    matchProducts: [],
+    showPoster: false,
+    posterTempPath: '',
+    generating: false,
+    showShareModal: false,
+    xhsCopyReady: false
+  },
+
+  onLoad() {
+    const result = app.globalData.mbtiResult
+    if (!result) {
+      showToast('请先完成测试')
+      setTimeout(() => wx.redirectTo({ url: '/pages/mbti-index/mbti-index' }), 1500)
+      return
+    }
+    this.setData({
+      result,
+      persona: result.persona,
+      scores: result.scores,
+      matchProducts: result.persona.matchProducts.map(p => ({
+        ...p,
+        priceText: formatPrice(p.price)
+      }))
+    })
+  },
+
+  goProduct(e) {
+    const item = e.currentTarget.dataset.item
+    if (item.type === 'activity') {
+      wx.navigateTo({ url: '/pages/activity-detail/activity-detail?id=' + item.key })
+    } else if (item.type === 'room') {
+      wx.navigateTo({ url: '/pages/room-detail/room-detail?id=' + item.key })
+    } else if (item.type === 'experience') {
+      wx.navigateTo({ url: '/pages/experience-list/experience-list' })
+    }
+  },
+
+  goBooking(e) {
+    const item = e.currentTarget.dataset.item
+    const params = Object.entries({
+      type: item.type,
+      key: item.key,
+      name: item.name
+    }).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&')
+    wx.navigateTo({ url: '/pages/booking/booking?' + params })
+  },
+
+  retake() {
+    showModal('重新测试', '重新测试会覆盖当前结果，确定吗？', { confirmText: '重新测' }).then(c => {
+      if (c) {
+        app.clearMbtiResult()
+        wx.redirectTo({ url: '/pages/mbti-test/mbti-test' })
+      }
+    })
+  },
+
+  openShare() {
+    this.setData({ showShareModal: true })
+  },
+
+  closeShare() {
+    this.setData({ showShareModal: false })
+  },
+
+  async generatePoster() {
+    if (this.data.generating) return
+    this.setData({ generating: true, showPoster: true })
+    try {
+      const { drawPoster } = require('../../utils/poster.js')
+      const tempPath = await drawPoster(this.data.persona)
+      this.setData({ posterTempPath: tempPath })
+    } catch (err) {
+      console.error('海报生成失败:', err)
+      showToast('海报生成失败')
+    } finally {
+      this.setData({ generating: false })
+    }
+  },
+
+  async savePoster() {
+    if (!this.data.posterTempPath) {
+      await this.generatePoster()
+      if (!this.data.posterTempPath) return
+    }
+    wx.saveImageToPhotosAlbum({
+      filePath: this.data.posterTempPath,
+      success: () => showToast('已保存到相册，去发小红书吧！', 'success'),
+      fail: (err) => {
+        if (err.errMsg && err.errMsg.includes('auth')) {
+          showModal('需要相册权限', '保存海报需要相册权限，是否去设置打开？').then(c => {
+            if (c) wx.openSetting()
+          })
+        } else {
+          showToast('保存失败')
+        }
+      }
+    })
+  },
+
+  previewPoster() {
+    if (!this.data.posterTempPath) return
+    wx.previewImage({ urls: [this.data.posterTempPath] })
+  },
+
+  copyXiaohongshu() {
+    const xhs = this.data.persona.copywriting.xiaohongshu
+    const text = xhs.title + '\n\n' + xhs.body + '\n\n' + xhs.tags.join(' ')
+    wx.setClipboardData({
+      data: text,
+      success: () => {
+        this.setData({ xhsCopyReady: true })
+        showToast('小红书文案已复制', 'success')
+        setTimeout(() => this.setData({ xhsCopyReady: false }), 2000)
+      }
+    })
+  },
+
+  closePoster() {
+    this.setData({ showPoster: false })
+  },
+
+  goAdopt() {
+    wx.navigateTo({ url: '/pages/adopt/adopt' })
+  },
+
+  onShareAppMessage(res) {
+    const persona = this.data.persona
+    return {
+      title: `我是${persona.name}${persona.icon}｜测测你的内心怪兽人格`,
+      path: '/pages/login/login'
+    }
+  },
+
+  onShareTimeline() {
+    const persona = this.data.persona
+    return {
+      title: `我是${persona.name}${persona.icon}｜岩涺石 Monster Planet`
+    }
+  }
+})

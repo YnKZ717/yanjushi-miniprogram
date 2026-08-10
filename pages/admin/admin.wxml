@@ -1,0 +1,30 @@
+<view class="page">
+  <view class="hero">
+    <view class="h-title">🏪 商家后台</view>
+    <view class="h-sub">大赛演示版 · 数据为占位示例</view>
+  </view>
+  <view class="stats">
+    <view class="stat-item" wx:for="{{stats}}" wx:key="label">
+      <view class="s-value">{{item.value}}</view>
+      <view class="s-label">{{item.label}}</view>
+    </view>
+  </view>
+  <view class="tabs">
+    <view class="tab {{activeTab === item.key ? 'active' : ''}}" wx:for="{{tabs}}" wx:key="key" bindtap="onTabChange" data-key="{{item.key}}">{{item.name}}</view>
+  </view>
+  <view class="tab-body">
+    <block wx:if="{{activeTab === 'order'}}">
+      <view class="list">
+        <view class="o-card" wx:for="{{orderDemo}}" wx:key="id">
+          <view class="o-top"><text class="o-name">{{item.name}}</text><text class="o-status" style="color:{{item.statusColor}};">{{item.status}}</text></view>
+          <view class="o-meta">{{item.date}} · {{item.user}}</view>
+          <view class="o-actions">
+            <view class="o-btn outline" bindtap="handleOrder" data-status="取消">取消</view>
+            <view class="o-btn primary" bindtap="handleOrder" data-status="确认">确认订单</view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view class="placeholder" wx:else>该模块详细功能待进一步开发</view>
+  </view>
+</view>

@@ -1,0 +1,52 @@
+.page { min-height: 100vh; background: var(--color-bg); padding-bottom: 40rpx; }
+.hero { padding: 48rpx 32rpx; background: linear-gradient(135deg, #1a1a1a, #2C5F4E); color: #FFFDF8; }
+.h-title { font-size: 40rpx; font-weight: 700; margin-bottom: 8rpx; }
+.h-sub { font-size: 22rpx; opacity: 0.7; }
+.stats {
+  margin: -30rpx 32rpx 0;
+  background: #FFFDF8;
+  border-radius: 24rpx;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rpx;
+  background: var(--color-border);
+  overflow: hidden;
+  box-shadow: 0 8rpx 30rpx rgba(0,0,0,0.08);
+}
+.stat-item { background: #FFFDF8; padding: 28rpx 20rpx; text-align: center; }
+.s-value { font-size: 36rpx; font-weight: 700; color: var(--color-primary); margin-bottom: 6rpx; }
+.s-label { font-size: 22rpx; color: var(--color-text-secondary); }
+.tabs {
+  display: flex; gap: 10rpx;
+  padding: 24rpx 32rpx 0;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.tab {
+  padding: 14rpx 28rpx;
+  background: rgba(44,95,78,0.08);
+  color: var(--color-primary);
+  border-radius: 100rpx;
+  font-size: 24rpx;
+  flex-shrink: 0;
+}
+.tab.active { background: var(--color-primary); color: #FFFDF8; }
+.tab-body { padding: 24rpx 32rpx; }
+.list { display: flex; flex-direction: column; gap: 16rpx; }
+.o-card { background: #FFFDF8; border-radius: 20rpx; padding: 24rpx; box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.04); }
+.o-top { display: flex; justify-content: space-between; margin-bottom: 10rpx; }
+.o-name { font-size: 28rpx; font-weight: 700; }
+.o-status { font-size: 24rpx; font-weight: 700; }
+.o-meta { font-size: 22rpx; color: var(--color-text-secondary); margin-bottom: 16rpx; }
+.o-actions { display: flex; gap: 16rpx; justify-content: flex-end; }
+.o-btn { padding: 12rpx 28rpx; border-radius: 100rpx; font-size: 24rpx; }
+.o-btn.outline { border: 2rpx solid var(--color-border); color: var(--color-text-secondary); }
+.o-btn.primary { background: var(--color-primary); color: #FFFDF8; }
+.placeholder {
+  background: #FFFDF8;
+  border-radius: 24rpx;
+  padding: 100rpx 32rpx;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 26rpx;
+}

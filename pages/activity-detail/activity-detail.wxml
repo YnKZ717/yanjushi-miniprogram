@@ -1,0 +1,42 @@
+<view class="page" wx:if="{{activity}}">
+  <view class="cover" style="background:linear-gradient(160deg,{{activity.color}}33,{{activity.color}}cc);">
+    <text class="icon">{{activity.icon}}</text>
+    <view class="t">{{activity.name}}</view>
+    <view class="sub">{{activity.period}}</view>
+  </view>
+  <view class="section">
+    <view class="row">
+      <text class="type">{{activity.type}}</text>
+      <text class="price">¥{{activity.priceRange}}</text>
+    </view>
+    <view class="tags">
+      <text class="tag" wx:for="{{activity.tags}}" wx:for-item="t" wx:key="*this">{{t}}</text>
+    </view>
+  </view>
+  <view class="section">
+    <view class="h">活动介绍</view>
+    <view class="desc">{{activity.desc}}</view>
+  </view>
+  <view class="section">
+    <view class="h">活动包含</view>
+    <view class="incl">
+      <view class="i-item" wx:for="{{activity.include}}" wx:key="*this">
+        <text class="i-check">✓</text>
+        <text class="i-name">{{item}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="section notice">
+    <view class="h">报名须知</view>
+    <view class="n">{{activity.scheduleNote}}</view>
+    <view class="n">· 预约后将添加管家企业微信确认</view>
+    <view class="n" wx:if="{{activity.id === 'kiln-fire-tea'}}">· 限{{activity.limit}}席，16岁以上报名</view>
+    <view class="n" wx:if="{{activity.id === 'adopt-plan'}}">· 首年限量{{activity.limit}}只，售罄不补</view>
+  </view>
+  <view class="bottom-bar">
+    <view class="b-l">
+      <view class="p">¥{{activity.price}}<text class="unit">/ {{activity.priceUnit}}</text></view>
+    </view>
+    <button class="btn-primary b-btn" bindtap="book">立即预约</button>
+  </view>
+</view>

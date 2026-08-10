@@ -1,0 +1,281 @@
+/* ============================================
+   岩涺石 Monster Planet 全局样式
+   野兽派 + 达达主义视觉语言占位
+   用户提供参考图后将替换为正式视觉系统
+   ============================================ */
+
+page {
+  --color-bg: #F5F1EA;
+  --color-bg-alt: #FFFDF8;
+  --color-surface: #FFFFFF;
+  --color-text: #1a1a1a;
+  --color-text-secondary: #6b6b6b;
+  --color-text-muted: #9e9e9e;
+  --color-border: #E8E0D5;
+
+  --color-primary: #2C5F4E;
+  --color-primary-light: #4A8B76;
+  --color-accent: #C44536;
+  --color-gold: #C9A961;
+  --color-blue: #3A5A7C;
+  --color-purple: #6B4E71;
+  --color-orange: #D97706;
+  --color-green: #4D7C4F;
+
+  --color-stone-blue: #3A5A7C;
+  --color-spring-green: #6B8E4E;
+  --color-ochre: #A67C52;
+  --color-indigo: #2C3E50;
+  --color-lotus: #B8869C;
+
+  --font-size-xs: 20rpx;
+  --font-size-sm: 24rpx;
+  --font-size-base: 28rpx;
+  --font-size-md: 32rpx;
+  --font-size-lg: 36rpx;
+  --font-size-xl: 44rpx;
+  --font-size-2xl: 56rpx;
+  --font-size-3xl: 72rpx;
+
+  --radius-sm: 8rpx;
+  --radius-md: 16rpx;
+  --radius-lg: 24rpx;
+  --radius-xl: 32rpx;
+
+  --spacing-xs: 8rpx;
+  --spacing-sm: 16rpx;
+  --spacing-md: 24rpx;
+  --spacing-lg: 32rpx;
+  --spacing-xl: 48rpx;
+  --spacing-2xl: 64rpx;
+
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+}
+
+view, text, button, input, textarea {
+  box-sizing: border-box;
+}
+
+.container {
+  padding: var(--spacing-lg);
+  min-height: 100vh;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
+  padding: 24rpx 48rpx;
+  border: none;
+  line-height: 1.4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+.btn-accent {
+  background-color: var(--color-accent);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
+  padding: 24rpx 48rpx;
+  border: none;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 2rpx solid var(--color-primary);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
+  padding: 22rpx 46rpx;
+}
+
+.btn-block {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-disabled {
+  background-color: #ccc !important;
+  color: #fff !important;
+  opacity: 0.6;
+}
+
+.card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.04);
+}
+
+.section-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+}
+
+.section-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.tag {
+  display: inline-block;
+  padding: 6rpx 20rpx;
+  border-radius: 100rpx;
+  font-size: var(--font-size-xs);
+  margin-right: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+}
+
+.tag-primary {
+  background-color: rgba(44, 95, 78, 0.1);
+  color: var(--color-primary);
+}
+
+.tag-accent {
+  background-color: rgba(196, 69, 54, 0.1);
+  color: var(--color-accent);
+}
+
+.tag-gold {
+  background-color: rgba(201, 169, 97, 0.15);
+  color: #8a6d2c;
+}
+
+.tag-stone {
+  background-color: rgba(58, 90, 124, 0.1);
+  color: var(--color-stone-blue);
+}
+
+.tag-spring {
+  background-color: rgba(107, 142, 78, 0.1);
+  color: var(--color-spring-green);
+}
+
+.tag-ochre {
+  background-color: rgba(166, 124, 82, 0.1);
+  color: var(--color-ochre);
+}
+
+.tag-indigo {
+  background-color: rgba(44, 62, 80, 0.1);
+  color: var(--color-indigo);
+}
+
+.tag-lotus {
+  background-color: rgba(184, 134, 156, 0.1);
+  color: var(--color-lotus);
+}
+
+.divider {
+  height: 1rpx;
+  background-color: var(--color-border);
+  margin: var(--spacing-lg) 0;
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-accent {
+  color: var(--color-accent);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-gold {
+  color: var(--color-gold);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.price {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.price-unit {
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+}
+
+.empty-state {
+  padding: var(--spacing-2xl) var(--spacing-lg);
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 160rpx;
+  color: var(--color-border);
+  margin-bottom: var(--spacing-md);
+}
+
+.empty-text {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-base);
+}

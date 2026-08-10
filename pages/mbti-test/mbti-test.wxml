@@ -1,0 +1,47 @@
+<view class="test-page">
+  <view class="progress-section">
+    <view class="top-bar">
+      <view class="back-btn" bindtap="prevQuestion">
+        <text wx:if="{{currentIndex === 0}}">✕</text>
+        <text wx:else>‹</text>
+      </view>
+      <view class="progress-text">{{currentIndex + 1}} / {{questions.length}}</view>
+      <view class="placeholder"></view>
+    </view>
+    <view class="progress-bar-wrap">
+      <view class="progress-bar-fill" style="width: {{progress}}%;"></view>
+    </view>
+  </view>
+
+  <view class="question-section">
+    <view class="question-card {{transitioning ? 'fade-out' : 'fade-in'}}">
+      <view class="q-label">情景题 · 第{{currentIndex + 1}}题</view>
+      <view class="q-title">{{questions[currentIndex].title}}</view>
+
+      <view class="options-list">
+        <view
+          wx:for="{{questions[currentIndex].options}}"
+          wx:key="index"
+          class="option-item {{selectedIndex === index ? 'selected' : ''}}"
+          bindtap="selectOption"
+          data-index="{{index}}"
+        >
+          <view class="option-index">{{['A','B','C','D'][index]}}</view>
+          <view class="option-text">{{item.text}}</view>
+          <view class="option-check" wx:if="{{selectedIndex === index}}">✓</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="cta-section">
+    <button
+      class="btn-primary btn-block next-btn {{selectedIndex >= 0 ? 'active' : 'disabled'}}"
+      bindtap="nextQuestion"
+      disabled="{{selectedIndex < 0}}"
+      hover-class="none"
+    >
+      {{currentIndex === questions.length - 1 ? '召唤我的怪兽' : '下一题'}}
+    </button>
+  </view>
+</view>

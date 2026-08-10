@@ -1,0 +1,62 @@
+<view class="page">
+  <view class="hero">
+    <view class="hero-bg"></view>
+    <view class="id-card">
+      <view class="id-left">
+        <view class="avatar">{{userInfo.avatarUrl ? '' : '🧑‍🎨'}}</view>
+        <image wx:if="{{userInfo.avatarUrl}}" class="avatar-img" src="{{userInfo.avatarUrl}}"></image>
+      </view>
+      <view class="id-info">
+        <view class="id-name">{{userInfo.nickName || '怪兽星球新居民'}}</view>
+        <view class="id-no">居民编号 · {{residentNo}}</view>
+        <view class="id-code-row">
+          <text class="id-code">推荐码：{{referralCode}}</text>
+          <text class="copy" bindtap="copyReferral">复制</text>
+        </view>
+      </view>
+      <view class="id-badge">居民</view>
+    </view>
+
+    <view class="mbti-row" bindtap="goResult">
+      <view class="mbti-info" wx:if="{{mbtiResult}}">
+        <text class="m-icon">{{mbtiResult.persona.icon}}</text>
+        <view class="m-body">
+          <view class="m-name">{{mbtiResult.persona.name}} 人格</view>
+          <view class="m-mbti">{{mbtiResult.persona.mbtiRange}}</view>
+        </view>
+      </view>
+      <view class="mbti-info" wx:else>
+        <text class="m-icon">🎭</text>
+        <view class="m-body">
+          <view class="m-name">还没测怪兽人格</view>
+          <view class="m-mbti">点击去测试 ›</view>
+        </view>
+      </view>
+      <text class="m-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="stats">
+    <view class="stat-item"><text class="s-num">{{orderCount}}</text><text class="s-label">订单</text></view>
+    <view class="stat-item"><text class="s-num">{{adoptCount}}</text><text class="s-label">收养怪兽</text></view>
+    <view class="stat-item"><text class="s-num">{{recommendCount}}</text><text class="s-label">推荐</text></view>
+  </view>
+
+  <view class="menu-card">
+    <view class="m-item" wx:for="{{menu}}" wx:key="key" bindtap="goMenu" data-key="{{item.key}}">
+      <view class="m-icon">{{item.icon}}</view>
+      <view class="m-name">{{item.name}}</view>
+      <text class="m-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="intro-card">
+    <view class="i-title">🏡 怪兽星球居民公约</view>
+    <view class="i-desc">
+      · 私域直订占比目标 2028 年 ≥ 60%，和我们一起降低对OTA的依赖\n
+      · 推荐≥3位新客升级「引荐人」，享优先订房、生日礼、主理人茶会\n
+      · 每年1-2月发布年度成长报告，回顾你与岩涺石的故事
+    </view>
+  </view>
+  <view class="safe-bottom"></view>
+</view>

@@ -1,0 +1,7 @@
+<view class="page">
+  <view class="card">
+    <view class="title">岩涺石 Monster Planet 用户隐私协议</view>
+    <view class="content">{{content}}</view>
+  </view>
+  <button class="btn-primary b-btn" bindtap="back">我已阅读并同意</button>
+</view>
