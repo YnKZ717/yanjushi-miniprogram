@@ -1,5 +1,5 @@
 const { getOrderDetail, cancelOrder } = require('../../utils/api.js')
-const { showToast, showModal } = require('../../utils/util.js')
+const { showToast, showModal, setClipboardDataSafe } = require('../../utils/util.js')
 
 const STATUS_TEXT = {
   pending: '待确认',
@@ -37,11 +37,19 @@ Page({
           }
         })
       }
-    } catch (e) { showToast('加载失败') }
+    } catch (e) {
+      const msg = (e && e.message) || '加载失败'
+      showModal('订单不存在', '该订单不存在或已被删除。\n\n即将返回订单列表。', {
+        showCancel: false, confirmText: '返回订单列表', confirmColor: '#2C5F4E'
+      }).then(() => {
+        wx.switchTab({ url: '/pages/order-list/order-list' })
+      })
+    }
   },
   async copyPhone() {
-    const phone = this.data.order.contactPhone
-    wx.setClipboardData({ data: phone, success: () => showToast('已复制手机号', 'success') })
+    const phone = this.data.order && this.data.order.contactPhone
+    if (!phone) return showToast('暂无手机号可复制')
+    await setClipboardDataSafe(phone, '已复制手机号')
   },
   addWechat() { this.setData({ showQr: true }) },
   closeQr() { this.setData({ showQr: false }) },

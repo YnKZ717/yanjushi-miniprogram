@@ -1,5 +1,5 @@
 const app = getApp()
-const { formatDate, generateResidentNo, generateReferralCode } = require('../../utils/util.js')
+const { formatDate, generateResidentNo, generateReferralCode, setClipboardDataSafe } = require('../../utils/util.js')
 const { getMyOrders } = require('../../utils/api.js')
 
 Page({
@@ -71,11 +71,10 @@ Page({
     })
   },
 
-  copyReferral() {
-    wx.setClipboardData({
-      data: this.data.referralCode,
-      success: () => wx.showToast({ title: '推荐码已复制', icon: 'success' })
-    })
+  async copyReferral() {
+    const code = this.data.referralCode
+    if (!code) return wx.showToast({ title: '暂无推荐码', icon: 'none' })
+    await setClipboardDataSafe(code, '推荐码已复制')
   },
 
   onShareAppMessage() {

@@ -1,5 +1,5 @@
 const app = getApp()
-const { formatPrice, showToast, showModal } = require('../../utils/util.js')
+const { formatPrice, showToast, showModal, saveImageToAlbumWithAuth, setClipboardDataSafe } = require('../../utils/util.js')
 
 Page({
   data: {
@@ -90,19 +90,16 @@ Page({
       await this.generatePoster()
       if (!this.data.posterTempPath) return
     }
-    wx.saveImageToPhotosAlbum({
-      filePath: this.data.posterTempPath,
-      success: () => showToast('已保存到相册，去发小红书吧！', 'success'),
-      fail: (err) => {
-        if (err.errMsg && err.errMsg.includes('auth')) {
-          showModal('需要相册权限', '保存海报需要相册权限，是否去设置打开？').then(c => {
-            if (c) wx.openSetting()
-          })
-        } else {
-          showToast('保存失败')
-        }
-      }
-    })
+    const r = await saveImageToAlbumWithAuth(this.data.posterTempPath)
+    if (r.ok) {
+      showToast('已保存到相册，去发小红书吧！', 'success')
+    } else if (r.manualTip) {
+      showModal('保存小贴士', '暂时无法自动保存到相册~\n\n你可以先点「查看大图」进入预览，然后**长按图片**，在弹出的菜单里选「保存到相册」即可。', {
+        showCancel: false, confirmText: '我知道了', confirmColor: '#2C5F4E'
+      })
+    } else if (!r.needRetry) {
+      showToast('保存失败，请稍后重试')
+    }
   },
 
   previewPoster() {
@@ -110,17 +107,14 @@ Page({
     wx.previewImage({ urls: [this.data.posterTempPath] })
   },
 
-  copyXiaohongshu() {
+  async copyXiaohongshu() {
     const xhs = this.data.persona.copywriting.xiaohongshu
     const text = xhs.title + '\n\n' + xhs.body + '\n\n' + xhs.tags.join(' ')
-    wx.setClipboardData({
-      data: text,
-      success: () => {
-        this.setData({ xhsCopyReady: true })
-        showToast('小红书文案已复制', 'success')
-        setTimeout(() => this.setData({ xhsCopyReady: false }), 2000)
-      }
-    })
+    const r = await setClipboardDataSafe(text, '小红书文案已复制')
+    if (r.ok) {
+      this.setData({ xhsCopyReady: true })
+      setTimeout(() => this.setData({ xhsCopyReady: false }), 2000)
+    }
   },
 
   closePoster() {

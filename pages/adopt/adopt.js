@@ -1,6 +1,6 @@
 const CONFIG = require('../../utils/config.js')
 const { getAdoptRemain, createAdoption } = require('../../utils/api.js')
-const { showToast, showModal, showLoading, hideLoading } = require('../../utils/util.js')
+const { showToast, showModal, showLoading, hideLoading, showDemoPayModal, formatPrice } = require('../../utils/util.js')
 
 Page({
   data: {
@@ -21,30 +21,39 @@ Page({
     this.setData({ remain: r.remain, total: r.total })
   },
 
-  adopt() {
+  async adopt() {
     const ui = getApp().globalData.userInfo
     if (!ui) return wx.showToast({ title: '请先登录', icon: 'none' })
-    showModal('确认收养', '¥398元，收养一只独一无二的陶土小怪兽，民宿会为您在白茶园种一棵茶树。确定收养吗？', {
-      confirmText: '确认收养（¥398）', confirmColor: '#C44536'
-    }).then(async (c) => {
-      if (!c) return
-      showLoading('提交中...')
-      try {
-        const res = await createAdoption({
-          nickname: '我的小怪兽',
-          treeType: '乡土阔叶树'
-        })
-        hideLoading()
-        if (res && res.success) {
-          showToast('收养成功！', 'success')
-          this.setData({ remain: res.counter.remain })
-          setTimeout(() => wx.navigateTo({ url: '/pages/resident/resident' }), 1200)
-        } else {
-          showToast((res && res.message) || '提交失败')
-        }
-      } catch (e) {
-        hideLoading(); showToast('提交失败')
+
+    if (this.data.remain <= 0) {
+      return showModal('怪兽已全部被收养啦', '100只怪兽已全部被收养啦！下期开放请关注居民通知~', {
+        showCancel: false, confirmText: '我知道了', confirmColor: '#C44536'
+      })
+    }
+
+    const ok = await showDemoPayModal(formatPrice(CONFIG.PRICE.ADOPT_PLAN), '收养成功后，民宿会为您在白茶园种下一棵专属茶树，并收到一只独一无二的陶土小怪兽~')
+    if (!ok) return
+
+    showLoading('提交中...')
+    try {
+      const res = await createAdoption({
+        nickname: '我的小怪兽',
+        treeType: '乡土阔叶树'
+      })
+      hideLoading()
+      if (res && res.success) {
+        showToast('收养成功！', 'success')
+        this.setData({ remain: res.counter.remain })
+        setTimeout(() => wx.navigateTo({ url: '/pages/resident/resident' }), 1200)
+      } else {
+        showModal('提交失败', (res && res.message) || '请稍后重试', { showCancel: false })
       }
-    })
+    } catch (e) {
+      hideLoading()
+      const msg = (e && e.message) || '提交失败，请稍后重试'
+      showModal(msg.includes('已全部被收养') ? '怪兽已全部被收养啦' : '提交失败', msg, {
+        showCancel: false, confirmText: '我知道了', confirmColor: '#C44536'
+      })
+    }
   }
 })

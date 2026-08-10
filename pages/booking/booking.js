@@ -1,4 +1,4 @@
-const { showToast, showLoading, hideLoading, formatPrice } = require('../../utils/util.js')
+const { showToast, showLoading, hideLoading, formatPrice, showModal, showDemoPayModal, validateBookingForm, checkDuplicateOrder } = require('../../utils/util.js')
 const { createOrder } = require('../../utils/api.js')
 const { getRoomById, getActivityById, getExperienceById } = require('../../utils/data.js')
 
@@ -72,8 +72,17 @@ Page({
   },
 
   onDateChange(e) { this.setData({ date: e.detail.value }) },
-  onGuestMinus() { if (this.data.guests > 1) this.setData({ guests: this.data.guests - 1 }) },
-  onGuestPlus() { this.setData({ guests: this.data.guests + 1 }) },
+  onGuestMinus() {
+    if (this.data.guests > 1) this.setData({ guests: this.data.guests - 1 })
+  },
+  onGuestPlus() {
+    const max = (this.data.item && (this.data.item.maxGuests || this.data.item.seats)) || 999
+    if (this.data.guests < max) {
+      this.setData({ guests: this.data.guests + 1 })
+    } else {
+      showToast(`本项目最多可约 ${max} 人`)
+    }
+  },
   onNameInput(e) { this.setData({ contactName: e.detail.value }) },
   onPhoneInput(e) { this.setData({ contactPhone: e.detail.value }) },
   onRemarkInput(e) { this.setData({ remark: e.detail.value }) },
@@ -94,12 +103,53 @@ Page({
 
   async submit() {
     const { type, key, name, date, guests, contactName, contactPhone, agree, item, cover } = this.data
-    if (!contactName.trim()) return showToast('请填写联系人姓名')
-    if (!/^1\d{10}$/.test(contactPhone)) return showToast('请填写正确手机号')
-    if (!agree) return showToast('请同意隐私协议')
-    if (!date) return showToast('请选择日期')
 
+    // ============ 1) 隐私协议：未勾选弹 Modal（而不是 toast）============
+    if (!agree) {
+      await showModal('请先同意隐私协议', '为保障你的信息安全，预约前请先阅读并同意《用户隐私协议》。\n我们坚持最小必要原则，信息仅用于预约联系，不对外共享。', {
+        confirmText: '去勾选',
+        cancelText: '再看看',
+        confirmColor: '#C44536'
+      })
+      return
+    }
+
+    // ============ 2) 统一表单校验（姓名、手机号、日期、人数上限、过去日期）============
+    const form = {
+      contactName: contactName,
+      contactPhone: contactPhone,
+      agree,
+      date,
+      guests
+    }
+    const check = validateBookingForm(form, item || {})
+    if (!check.ok) {
+      await showModal('预约信息有误', check.errors[0], {
+        showCancel: false,
+        confirmText: '我知道了',
+        confirmColor: '#C44536'
+      })
+      return
+    }
+
+    // ============ 3) 防重单：同产品 + 同日期 + 同手机号 ============
+    const dup = checkDuplicateOrder({
+      type, key, date, contactPhone
+    })
+    if (dup.duplicated) {
+      const goOrder = await showModal('你已预约过啦', `同一手机号已在「${date}」预约了本项目，无需重复下单。\n\n点「查看订单」可去订单列表查看核销码。`, {
+        confirmText: '查看订单',
+        cancelText: '我知道了',
+        confirmColor: '#2C5F4E'
+      })
+      if (goOrder) wx.redirectTo({ url: '/pages/order-list/order-list' })
+      return
+    }
+
+    // ============ 4) 演示环境支付拦截 ============
     const amount = this._calcAmount()
+    const confirmPay = await showDemoPayModal(formatPrice(amount), '取消后可随时返回本页再次提交。')
+    if (!confirmPay) return
 
     try {
       showLoading('提交中...')
@@ -111,7 +161,8 @@ Page({
         source: '小程序直订',
         amount,
         cover: cover || (item && item.cover) || '',
-        itemName: name || (item && item.name) || ''
+        itemName: name || (item && item.name) || '',
+        title: name || (item && item.name) || ''
       })
       hideLoading()
       if (res && res.success) {
@@ -120,11 +171,21 @@ Page({
           wx.redirectTo({ url: '/pages/order-detail/order-detail?id=' + (res.orderId || '') })
         }, 1200)
       } else {
-        showToast((res && res.message) || '提交失败，请重试')
+        const msg = (res && res.message) || '提交失败，请重试'
+        await showModal('提交失败', msg, {
+          showCancel: false,
+          confirmText: '我知道了',
+          confirmColor: '#C44536'
+        })
       }
     } catch (e) {
       hideLoading()
-      showToast('提交失败，请重试')
+      const msg = (e && e.message) || '提交失败，请重试'
+      await showModal('提交失败', msg, {
+        showCancel: false,
+        confirmText: '我知道了',
+        confirmColor: '#C44536'
+      })
     }
   }
 })

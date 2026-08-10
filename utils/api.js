@@ -1,4 +1,4 @@
-const { showToast, generateResidentNo, generateReferralCode } = require('./util.js')
+const { showToast, generateResidentNo, generateReferralCode, safeGetStorageSync, safeSetStorageSync } = require('./util.js')
 const CONFIG = require('./config.js')
 
 function _getApp() {
@@ -22,7 +22,7 @@ async function loginWithWechat() {
     const app = _getApp()
     let openid = null
 
-    const cachedUser = wx.getStorageSync('userInfo')
+    const cachedUser = safeGetStorageSync('userInfo', null)
     if (cachedUser && cachedUser.openid) {
       openid = cachedUser.openid
     } else {
@@ -41,16 +41,17 @@ async function loginWithWechat() {
       avatar: ''
     }
 
-    const allUsers = wx.getStorageSync('users') || {}
+    const allUsers = safeGetStorageSync('users', {})
     allUsers[openid] = { ...(allUsers[openid] || {}), ...userInfo }
-    wx.setStorageSync('users', allUsers)
+    const written = safeSetStorageSync('users', allUsers)
+    if (!written) throw new Error('写入用户信息失败')
 
     app.setUserInfo(userInfo)
     console.log('[Mock登录] 成功，openid:', openid, '居民号:', userInfo.residentNo)
     return userInfo
   } catch (err) {
     console.error('Mock登录失败:', err)
-    showToast('登录失败，请重试')
+    showToast((err && err.message) || '登录失败，请重试')
     throw err
   }
 }
@@ -62,10 +63,10 @@ async function updateUserProfile(profile) {
   app.setUserInfo(updated)
 
   try {
-    const allUsers = wx.getStorageSync('users') || {}
+    const allUsers = safeGetStorageSync('users', {})
     if (updated.openid) {
       allUsers[updated.openid] = { ...(allUsers[updated.openid] || {}), ...updated }
-      wx.setStorageSync('users', allUsers)
+      safeSetStorageSync('users', allUsers)
     }
   } catch (err) {
     console.warn('同步用户资料到本地存储失败:', err)
@@ -86,16 +87,17 @@ async function saveMbtiResult(result) {
       createdAt: Date.now()
     }
 
-    const allResults = wx.getStorageSync('mbti_results') || []
+    const allResults = safeGetStorageSync('mbti_results', [])
     allResults.push(record)
-    wx.setStorageSync('mbti_results', allResults)
+    const written = safeSetStorageSync('mbti_results', allResults)
+    if (!written) throw new Error('保存MBTI结果失败（存储空间不足？）')
 
-    const stats = wx.getStorageSync('mbti_stats') || { total: 0, personas: { fireWatcher: 0, mudMonster: 0, earthBuilder: 0, wildArchitect: 0 } }
+    const stats = safeGetStorageSync('mbti_stats', { total: 0, personas: { fireWatcher: 0, mudMonster: 0, earthBuilder: 0, wildArchitect: 0 } })
     stats.total += 1
     if (stats.personas[result.persona] !== undefined) {
       stats.personas[result.persona] += 1
     }
-    wx.setStorageSync('mbti_stats', stats)
+    safeSetStorageSync('mbti_stats', stats)
 
     if (userInfo.openid) {
       const profileUpdate = { persona: result.persona, mbtiAt: Date.now() }
@@ -103,14 +105,17 @@ async function saveMbtiResult(result) {
     }
 
     console.log('[Mock保存MBTI] 人格:', result.persona, '累计测试:', stats.total)
+    return { success: true }
   } catch (err) {
     console.warn('保存MBTI结果到本地存储失败:', err)
+    showToast((err && err.message) || '保存失败，请稍后重试')
+    return { success: false, error: err }
   }
 }
 
 async function getMbtiStats() {
   try {
-    return wx.getStorageSync('mbti_stats') || { total: 0, personas: {} }
+    return safeGetStorageSync('mbti_stats', { total: 0, personas: {} })
   } catch (err) {
     console.warn('获取MBTI统计失败:', err)
     return { total: 0, personas: {} }
@@ -119,7 +124,7 @@ async function getMbtiStats() {
 
 async function getAdoptRemain() {
   try {
-    const counter = wx.getStorageSync('adopt_counter') || { total: 100, adopted: 0, remain: 100 }
+    const counter = safeGetStorageSync('adopt_counter', { total: 100, adopted: 0, remain: 100 })
     return {
       total: counter.total,
       adopted: counter.adopted,
@@ -135,17 +140,17 @@ async function createAdoption(adoptData) {
   try {
     const app = _getApp()
     const userInfo = app.globalData.userInfo || {}
-    const counter = wx.getStorageSync('adopt_counter') || { total: 100, adopted: 0, remain: 100 }
+    const counter = safeGetStorageSync('adopt_counter', { total: 100, adopted: 0, remain: 100 })
 
     if (counter.remain <= 0) {
-      showToast('怪兽已全部被收养啦！')
-      throw new Error('已售罄')
+      throw new Error('100只怪兽已全部被收养啦！下期开放请关注居民通知~')
     }
 
     counter.adopted += 1
     counter.remain = counter.total - counter.adopted
     counter.updatedAt = Date.now()
-    wx.setStorageSync('adopt_counter', counter)
+    const writtenCounter = safeSetStorageSync('adopt_counter', counter)
+    if (!writtenCounter) throw new Error('收养计数器写入失败（存储空间不足？）')
 
     const record = {
       adoptId: 'ADOPT' + Date.now(),
@@ -159,9 +164,10 @@ async function createAdoption(adoptData) {
       createdAt: Date.now()
     }
 
-    const records = wx.getStorageSync('adopt_records') || []
+    const records = safeGetStorageSync('adopt_records', [])
     records.unshift(record)
-    wx.setStorageSync('adopt_records', records)
+    const writtenRecords = safeSetStorageSync('adopt_records', records)
+    if (!writtenRecords) throw new Error('收养记录写入失败（存储空间不足？）')
 
     console.log('[Mock收养成功] 怪兽编号:', record.adoptId, '剩余:', counter.remain)
     return { success: true, record, counter }
@@ -175,7 +181,7 @@ async function getMyAdoptions() {
   try {
     const app = _getApp()
     const userInfo = app.globalData.userInfo || {}
-    const records = wx.getStorageSync('adopt_records') || []
+    const records = safeGetStorageSync('adopt_records', [])
     return records.filter(r => !userInfo.openid || r.openid === userInfo.openid)
   } catch (err) {
     console.warn('获取我的收养记录失败:', err)
@@ -193,8 +199,10 @@ async function createOrder(orderData) {
       orderId: orderId,
       openid: userInfo.openid || 'anonymous',
       type: orderData.type || 'booking',
-      title: orderData.title || '',
-      itemId: orderData.itemId || null,
+      key: orderData.key || null,
+      itemId: orderData.key || null,
+      title: orderData.title || orderData.name || orderData.itemName || '',
+      itemName: orderData.itemName || orderData.name || '',
       cover: orderData.cover || '',
       date: orderData.date || null,
       time: orderData.time || null,
@@ -207,18 +215,20 @@ async function createOrder(orderData) {
       payMethod: 'mock_wechat',
       paidAt: Date.now(),
       createdAt: Date.now(),
-      qrCode: 'QR_' + orderId
+      qrCode: 'QR_' + orderId,
+      source: orderData.source || '小程序直订'
     }
 
-    const orders = wx.getStorageSync('orders') || []
+    const orders = safeGetStorageSync('orders', [])
     orders.unshift(order)
-    wx.setStorageSync('orders', orders)
+    const written = safeSetStorageSync('orders', orders)
+    if (!written) throw new Error('订单写入失败（存储空间不足？）')
 
     console.log('[Mock创建订单] 订单号:', orderId, '金额:', order.amount, '类型:', order.type)
     return { success: true, orderId, order }
   } catch (err) {
     console.error('创建订单失败:', err)
-    showToast('下单失败，请重试')
+    showToast((err && err.message) || '下单失败，请重试')
     throw err
   }
 }
@@ -227,7 +237,7 @@ async function getMyOrders() {
   try {
     const app = _getApp()
     const userInfo = app.globalData.userInfo || {}
-    const orders = wx.getStorageSync('orders') || []
+    const orders = safeGetStorageSync('orders', [])
     return orders.filter(o => !userInfo.openid || o.openid === userInfo.openid)
   } catch (err) {
     console.warn('获取我的订单失败:', err)
@@ -237,10 +247,10 @@ async function getMyOrders() {
 
 async function getOrderDetail(orderId) {
   try {
-    const orders = wx.getStorageSync('orders') || []
+    const orders = safeGetStorageSync('orders', [])
     const order = orders.find(o => o.orderId === orderId)
     if (!order) {
-      throw new Error('订单不存在')
+      throw new Error('订单不存在或已被删除')
     }
     return order
   } catch (err) {
@@ -251,12 +261,12 @@ async function getOrderDetail(orderId) {
 
 async function cancelOrder(orderId) {
   try {
-    const orders = wx.getStorageSync('orders') || []
+    const orders = safeGetStorageSync('orders', [])
     const idx = orders.findIndex(o => o.orderId === orderId)
     if (idx >= 0) {
       orders[idx].status = 'cancelled'
       orders[idx].cancelledAt = Date.now()
-      wx.setStorageSync('orders', orders)
+      safeSetStorageSync('orders', orders)
     }
     return { success: true }
   } catch (err) {
