@@ -176,16 +176,16 @@ Page({
       return
     }
 
-    // ============ 4) 演示环境支付拦截 ============
+    // ============ 4) 支付未接入：不允许“支付成功”，仅提交预约申请（待确认） ============
     const amount = this._calcAmount()
-    const confirmPay = await this._openDialog({
-      title: '演示环境 · 非真实支付',
-      content: `当前为「演示环境」，不发生真实扣款，也不会对接任何支付平台。\n\n支付金额：${formatPrice(amount)}（仅用于展示流程）\n\n取消后可随时返回本页再次提交。\n\n点「确认演示支付」后，订单状态会自动设为「已支付」，可在订单页查看核销码。`,
-      confirmText: '确认演示支付',
+    const proceed = await this._openDialog({
+      title: '支付功能敬请期待',
+      content: `当前版本暂不支持线上支付。\n\n你仍可以提交预约申请（状态：待确认），管家将在24小时内联系您确认。\n\n参考金额：${formatPrice(amount)}（仅展示，不扣款）`,
+      confirmText: '提交预约申请',
       cancelText: '再想想',
       showCancel: true
     })
-    if (!confirmPay) return
+    if (!proceed) return
 
     try {
       showLoading('提交中...')
@@ -196,13 +196,14 @@ Page({
         remark: this.data.remark,
         source: '小程序直订',
         amount,
+        status: 'pending',
         cover: cover || (item && item.cover) || '',
         itemName: name || (item && item.name) || '',
         title: name || (item && item.name) || ''
       })
       hideLoading()
       if (res && res.success) {
-        showToast('预约成功', 'success')
+        showToast('预约已提交', 'success')
         setTimeout(() => {
           wx.redirectTo({ url: '/pages/order-detail/order-detail?id=' + (res.orderId || '') })
         }, 1200)

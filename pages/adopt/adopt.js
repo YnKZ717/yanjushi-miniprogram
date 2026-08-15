@@ -31,29 +31,10 @@ Page({
       })
     }
 
-    const ok = await showDemoPayModal(formatPrice(CONFIG.PRICE.ADOPT_PLAN), '收养成功后，民宿会为您在白茶园种下一棵专属茶树，并收到一只独一无二的陶土小怪兽~')
-    if (!ok) return
-
-    showLoading('提交中...')
-    try {
-      const res = await createAdoption({
-        nickname: '我的小怪兽',
-        treeType: '乡土阔叶树'
-      })
-      hideLoading()
-      if (res && res.success) {
-        showToast('收养成功！', 'success')
-        this.setData({ remain: res.counter.remain })
-        setTimeout(() => wx.navigateTo({ url: '/pages/resident/resident' }), 1200)
-      } else {
-        showModal('提交失败', (res && res.message) || '请稍后重试', { showCancel: false })
-      }
-    } catch (e) {
-      hideLoading()
-      const msg = (e && e.message) || '提交失败，请稍后重试'
-      showModal(msg.includes('已全部被收养') ? '怪兽已全部被收养啦' : '提交失败', msg, {
-        showCancel: false, confirmText: '我知道了', confirmColor: '#C44536'
-      })
-    }
+    showModal('支付功能敬请期待', `当前版本暂不支持线上支付，因此无法完成收养扣款。\n\n收养金额：${formatPrice(CONFIG.PRICE.ADOPT_PLAN)}（仅展示，不扣款）\n\n后续接入支付后将开放真实收养。`, {
+      showCancel: false,
+      confirmText: '我知道了',
+      confirmColor: '#C44536'
+    })
   }
 })

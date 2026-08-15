@@ -194,6 +194,7 @@ async function createOrder(orderData) {
     const app = _getApp()
     const userInfo = app.globalData.userInfo || {}
     const orderId = _generateOrderNo()
+    const status = orderData.status || 'paid'
 
     const order = {
       orderId: orderId,
@@ -211,11 +212,11 @@ async function createOrder(orderData) {
       contactPhone: orderData.contactPhone || '',
       remark: orderData.remark || '',
       amount: orderData.amount || 0,
-      status: 'paid',
-      payMethod: 'mock_wechat',
-      paidAt: Date.now(),
+      status: status,
+      payMethod: status === 'paid' ? 'mock_wechat' : null,
+      paidAt: status === 'paid' ? Date.now() : null,
       createdAt: Date.now(),
-      qrCode: 'QR_' + orderId,
+      qrCode: status === 'paid' ? ('QR_' + orderId) : '',
       source: orderData.source || '小程序直订'
     }
 
