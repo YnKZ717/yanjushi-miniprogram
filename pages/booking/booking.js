@@ -16,7 +16,13 @@ Page({
     contactName: '',
     contactPhone: '',
     remark: '',
-    agree: true
+    agree: true,
+    dialogVisible: false,
+    dialogTitle: '',
+    dialogContent: '',
+    dialogConfirmText: '确定',
+    dialogCancelText: '取消',
+    dialogShowCancel: true
   },
 
   onLoad(options) {
@@ -87,6 +93,30 @@ Page({
   onPhoneInput(e) { this.setData({ contactPhone: e.detail.value }) },
   onRemarkInput(e) { this.setData({ remark: e.detail.value }) },
   toggleAgree() { this.setData({ agree: !this.data.agree }) },
+  noop() {},
+  _openDialog(options) {
+    const opts = options || {}
+    const showCancel = opts.showCancel !== false
+    return new Promise((resolve) => {
+      this._dialogResolver = resolve
+      this.setData({
+        dialogVisible: true,
+        dialogTitle: opts.title || '',
+        dialogContent: opts.content || '',
+        dialogConfirmText: opts.confirmText || '确定',
+        dialogCancelText: opts.cancelText || '取消',
+        dialogShowCancel: showCancel
+      })
+    })
+  },
+  _closeDialog(result) {
+    const r = this._dialogResolver
+    this._dialogResolver = null
+    this.setData({ dialogVisible: false })
+    if (typeof r === 'function') r(!!result)
+  },
+  onDialogConfirm() { this._closeDialog(true) },
+  onDialogCancel() { this._closeDialog(false) },
 
   _calcAmount() {
     const { type, item, guests } = this.data
@@ -107,10 +137,11 @@ Page({
 
     // ============ 1) 隐私协议：未勾选弹 Modal（而不是 toast）============
     if (!agree) {
-      await showModal('请先同意隐私协议', '为保障你的信息安全，预约前请先阅读并同意《用户隐私协议》。\n我们坚持最小必要原则，信息仅用于预约联系，不对外共享。', {
-        confirmText: '去勾选',
-        cancelText: '再看看',
-        confirmColor: '#C44536'
+      await this._openDialog({
+        title: '请先同意隐私协议',
+        content: '为保障你的信息安全，预约前请先阅读并同意《用户隐私协议》。\n我们坚持最小必要原则，信息仅用于预约联系，不对外共享。',
+        confirmText: '我知道了',
+        showCancel: false
       })
       return
     }
@@ -125,11 +156,7 @@ Page({
     }
     const check = validateBookingForm(form, item || {})
     if (!check.ok) {
-      await showModal('预约信息有误', check.errors[0], {
-        showCancel: false,
-        confirmText: '我知道了',
-        confirmColor: '#C44536'
-      })
+      await this._openDialog({ title: '预约信息有误', content: check.errors[0], showCancel: false, confirmText: '我知道了' })
       return
     }
 
@@ -138,10 +165,12 @@ Page({
       type, key, date, contactPhone
     })
     if (dup.duplicated) {
-      const goOrder = await showModal('你已预约过啦', `同一手机号已在「${date}」预约了本项目，无需重复下单。\n\n点「查看订单」可去订单列表查看核销码。`, {
+      const goOrder = await this._openDialog({
+        title: '你已预约过啦',
+        content: `同一手机号已在「${date}」预约了本项目，无需重复下单。\n\n点「查看订单」可去订单列表查看核销码。`,
         confirmText: '查看订单',
         cancelText: '我知道了',
-        confirmColor: '#2C5F4E'
+        showCancel: true
       })
       if (goOrder) wx.switchTab({ url: '/pages/order-list/order-list' })
       return
@@ -149,7 +178,13 @@ Page({
 
     // ============ 4) 演示环境支付拦截 ============
     const amount = this._calcAmount()
-    const confirmPay = await showDemoPayModal(formatPrice(amount), '取消后可随时返回本页再次提交。')
+    const confirmPay = await this._openDialog({
+      title: '演示环境 · 非真实支付',
+      content: `当前为「演示环境」，不发生真实扣款，也不会对接任何支付平台。\n\n支付金额：${formatPrice(amount)}（仅用于展示流程）\n\n取消后可随时返回本页再次提交。\n\n点「确认演示支付」后，订单状态会自动设为「已支付」，可在订单页查看核销码。`,
+      confirmText: '确认演示支付',
+      cancelText: '再想想',
+      showCancel: true
+    })
     if (!confirmPay) return
 
     try {
@@ -173,20 +208,12 @@ Page({
         }, 1200)
       } else {
         const msg = (res && res.message) || '提交失败，请重试'
-        await showModal('提交失败', msg, {
-          showCancel: false,
-          confirmText: '我知道了',
-          confirmColor: '#C44536'
-        })
+        await this._openDialog({ title: '提交失败', content: msg, showCancel: false, confirmText: '我知道了' })
       }
     } catch (e) {
       hideLoading()
       const msg = (e && e.message) || '提交失败，请重试'
-      await showModal('提交失败', msg, {
-        showCancel: false,
-        confirmText: '我知道了',
-        confirmColor: '#C44536'
-      })
+      await this._openDialog({ title: '提交失败', content: msg, showCancel: false, confirmText: '我知道了' })
     }
   }
 })

@@ -73,4 +73,15 @@
   <view class="bottom-bar">
     <button class="btn-primary b-btn {{agree ? '' : 'btn-disabled'}}" catchtap="submit" hover-class="none">提交预约</button>
   </view>
+
+  <view wx:if="{{dialogVisible}}" class="dlg-mask" catchtap="onDialogCancel">
+    <view class="dlg-box" catchtap="noop">
+      <view class="dlg-title">{{dialogTitle}}</view>
+      <view class="dlg-content">{{dialogContent}}</view>
+      <view class="dlg-actions {{dialogShowCancel ? '' : 'single'}}">
+        <view wx:if="{{dialogShowCancel}}" class="dlg-btn cancel" catchtap="onDialogCancel">{{dialogCancelText}}</view>
+        <view class="dlg-btn confirm" catchtap="onDialogConfirm">{{dialogConfirmText}}</view>
+      </view>
+    </view>
+  </view>
 </view>
