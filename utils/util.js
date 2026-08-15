@@ -70,6 +70,17 @@ function hideLoading() {
 
 function showModal(title, content, options = {}) {
   return new Promise((resolve) => {
+    let settled = false
+    const done = (value) => {
+      if (settled) return
+      settled = true
+      clearTimeout(timer)
+      resolve(value)
+    }
+    const timer = setTimeout(() => {
+      showToast('弹窗打开失败，请重试')
+      done(false)
+    }, 1500)
     wx.showModal({
       title,
       content,
@@ -77,7 +88,8 @@ function showModal(title, content, options = {}) {
       cancelText: options.cancelText || '取消',
       confirmColor: options.confirmColor || '#2C5F4E',
       showCancel: options.showCancel !== false,
-      success: (res) => resolve(res.confirm)
+      success: (res) => done(res.confirm),
+      fail: () => done(false)
     })
   })
 }

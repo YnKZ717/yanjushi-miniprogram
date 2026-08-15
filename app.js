@@ -8,6 +8,29 @@ App({
     mockMode: true,
     envId: 'local-mock'
   },
+  onError(err) {
+    try {
+      wx.showModal({
+        title: '发生异常',
+        content: String(err || '未知错误').slice(0, 1500),
+        showCancel: false,
+        confirmText: '我知道了',
+        confirmColor: '#C44536'
+      })
+    } catch (e) {}
+  },
+  onUnhandledRejection(res) {
+    try {
+      const msg = (res && res.reason) ? res.reason : res
+      wx.showModal({
+        title: '发生异常',
+        content: String(msg || '未知错误').slice(0, 1500),
+        showCancel: false,
+        confirmText: '我知道了',
+        confirmColor: '#C44536'
+      })
+    } catch (e) {}
+  },
 
   onLaunch: function () {
     console.log('岩涺石 Monster Planet 小程序启动 · Mock本地模式')
