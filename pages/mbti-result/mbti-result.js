@@ -18,7 +18,7 @@ Page({
     const result = app.globalData.mbtiResult
     if (!result) {
       showToast('请先完成测试')
-      setTimeout(() => wx.redirectTo({ url: '/pages/mbti-index/mbti-index' }), 1500)
+      setTimeout(() => wx.switchTab({ url: '/pages/mbti-index/mbti-index' }), 1500)
       return
     }
     this.setData({

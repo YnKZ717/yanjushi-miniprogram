@@ -52,13 +52,5 @@
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents",
-  "permission": {
-    "scope.writePhotosAlbum": {
-      "desc": "用于保存您的怪兽人格海报到相册，方便分享到小红书和朋友圈"
-    },
-    "scope.userInfo": {
-      "desc": "用于生成您的专属怪兽居民证"
-    }
-  }
+  "lazyCodeLoading": "requiredComponents"
 }

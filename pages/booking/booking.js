@@ -142,7 +142,7 @@ Page({
         cancelText: '我知道了',
         confirmColor: '#2C5F4E'
       })
-      if (goOrder) wx.redirectTo({ url: '/pages/order-list/order-list' })
+      if (goOrder) wx.switchTab({ url: '/pages/order-list/order-list' })
       return
     }
 
