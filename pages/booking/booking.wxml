@@ -71,6 +71,6 @@
   <view class="safe-bottom"></view>
 
   <view class="bottom-bar">
-    <button class="btn-primary b-btn {{agree ? '' : 'btn-disabled'}}" bindtap="submit">提交预约</button>
+    <button class="btn-primary b-btn {{agree ? '' : 'btn-disabled'}}" catchtap="submit" hover-class="none">提交预约</button>
   </view>
 </view>

@@ -105,6 +105,7 @@
   background: #FFFDF8;
   padding: 20rpx 32rpx 40rpx;
   box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.06);
+  z-index: 999;
 }
 .b-btn {
   width: 100%;

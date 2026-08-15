@@ -102,6 +102,7 @@ Page({
   },
 
   async submit() {
+    console.log('[booking] submit tapped', { time: Date.now(), agree: this.data.agree })
     const { type, key, name, date, guests, contactName, contactPhone, agree, item, cover } = this.data
 
     // ============ 1) 隐私协议：未勾选弹 Modal（而不是 toast）============
