@@ -46,6 +46,38 @@ App({
     if (cachedMbti) {
       this.globalData.mbtiResult = cachedMbti
     }
+
+    this._ensurePrivacyAuthorized()
+  },
+
+  _ensurePrivacyAuthorized: function () {
+    try {
+      if (typeof wx.getPrivacySetting !== 'function') return
+      wx.getPrivacySetting({
+        success: (res) => {
+          if (res && res.needAuthorization && typeof wx.requirePrivacyAuthorize === 'function') {
+            wx.requirePrivacyAuthorize({
+              success: () => { wx.showToast({ title: '隐私协议已同意', icon: 'none' }) },
+              fail: () => {
+                try {
+                  wx.showModal({
+                    title: '请先同意隐私协议',
+                    content: '为保障信息安全，请先阅读并同意《用户隐私协议》后再使用本小程序。\n\n您可以在小程序设置中随时撤回同意。',
+                    showCancel: false,
+                    confirmText: '去查看并同意',
+                    confirmColor: '#2C5F4E',
+                    success: () => {
+                      wx.openPrivacyContract({ fail: () => {} })
+                    }
+                  })
+                } catch (e) {}
+              }
+            })
+          }
+        },
+        fail: () => {}
+      })
+    } catch (e) {}
   },
 
   _initMockStorage: function () {

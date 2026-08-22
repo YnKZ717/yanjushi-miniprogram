@@ -122,3 +122,22 @@
   font-size: 26rpx;
   color: var(--color-text-secondary);
 }
+
+.info-card {
+  background: linear-gradient(135deg, rgba(201,169,97,0.05), rgba(44,95,78,0.04));
+  border: 1rpx dashed rgba(201,169,97,0.45);
+}
+.copy-desc {
+  font-size: 22rpx;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  margin-bottom: 20rpx;
+}
+.full-width {
+  width: 100% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100rpx !important;
+  padding: 22rpx 0 !important;
+}

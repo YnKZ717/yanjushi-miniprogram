@@ -2,8 +2,8 @@ const { getMyOrders } = require('../../utils/api.js')
 const { showToast } = require('../../utils/util.js')
 
 const STATUS_TEXT = {
-  pending: '待确认',
-  paid: '已确认',
+  pending: '意向咨询中',
+  paid: '待管家确认',
   confirmed: '已确认',
   completed: '已完成',
   cancelled: '已取消'

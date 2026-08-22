@@ -1,5 +1,5 @@
 const { MALL_PRODUCTS } = require('../../utils/data.js')
-const { showToast } = require('../../utils/util.js')
+const { showToast, showModal } = require('../../utils/util.js')
 
 Page({
   data: {
@@ -31,6 +31,9 @@ Page({
   closeCart() { this.setData({ showCart: false }) },
   checkout() {
     if (this.data.cart.length === 0) return showToast('购物车是空的')
-    showToast('文创下单开发中，请先加管家企微下单')
+    const items = (this.data.cart || []).map(p => `· ${p.name} × ${p.count}（¥${p.price}/件）`).join('\n')
+    showModal('文创商品暂不支持线上购买',
+      `当前为意向咨询阶段，文创商品不支持线上结算。\n\n你选了：\n${items}\n\n合计：¥${this.data.cartTotal}\n\n如需购买，请添加管家企业微信询价与快递寄送。`,
+      { confirmText: '添加管家企微', cancelText: '再逛逛', showCancel: true, confirmColor: '#2C5F4E' })
   }
 })

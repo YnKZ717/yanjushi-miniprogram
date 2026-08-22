@@ -2,8 +2,8 @@ const { getOrderDetail, cancelOrder } = require('../../utils/api.js')
 const { showToast, showModal, setClipboardDataSafe } = require('../../utils/util.js')
 
 const STATUS_TEXT = {
-  pending: '待确认',
-  paid: '已确认',
+  pending: '待确认（意向咨询）',
+  paid: '待管家确认',
   confirmed: '已确认',
   completed: '已完成',
   cancelled: '已取消'
@@ -16,8 +16,8 @@ const STATUS_COLOR = {
   cancelled: '#ccc'
 }
 const STATUS_STEPS = [
-  { key: 'pending', text: '已提交', desc: '管家正在确认' },
-  { key: 'confirmed', text: '已确认', desc: '添加企微后对接细节', aliases: ['paid'] },
+  { key: 'pending', text: '已提交意向咨询', desc: '管家将在24小时内联系' },
+  { key: 'confirmed', text: '已确认', desc: '添加企微后对接线下收款与行程', aliases: ['paid'] },
   { key: 'completed', text: '已完成', desc: '欢迎再次回来' }
 ]
 
@@ -50,6 +50,30 @@ Page({
     const phone = this.data.order && this.data.order.contactPhone
     if (!phone) return showToast('暂无手机号可复制')
     await setClipboardDataSafe(phone, '已复制手机号')
+  },
+  _buildOrderDetailText() {
+    const o = this.data.order || {}
+    const lines = [
+      '【岩涺石 Monster Planet · 预约咨询单】',
+      `订单号：${o.orderId || '-'}`,
+      `创建时间：${o.createdAtText || new Date().toLocaleString()}`,
+      `类型：${o.type === 'room' ? '客房' : o.type === 'activity' ? '主题活动' : '单项体验'}`,
+      `项目：${o.name || '-'}`,
+      `日期：${o.date || '-'}`,
+      `人数：${o.guests || 0} 人`,
+      `参考金额：${o.amount ? '¥' + (Number(o.amount).toFixed(2)) : '待管家报价'}（仅展示，未支付）`,
+      '',
+      '【联系人】',
+      `姓名：${o.contactName || '-'}`,
+      `手机号：${o.contactPhone || '-'}`,
+      `备注：${o.remark || '无'}`
+    ]
+    return lines.join('\n')
+  },
+  async copyOrderDetail() {
+    const text = this._buildOrderDetailText()
+    if (!text || !text.trim()) return showToast('暂无订单信息可复制')
+    await setClipboardDataSafe(text, '订单详情已复制，快去粘贴给管家吧')
   },
   addWechat() { this.setData({ showQr: true }) },
   closeQr() { this.setData({ showQr: false }) },

@@ -46,6 +46,7 @@
     <view class="m-item" wx:for="{{menu}}" wx:key="key" bindtap="goMenu" data-key="{{item.key}}">
       <view class="m-icon">{{item.icon}}</view>
       <view class="m-name">{{item.name}}</view>
+      <text class="m-tag" wx:if="{{item.tag}}">{{item.tag}}</text>
       <text class="m-arrow">›</text>
     </view>
   </view>

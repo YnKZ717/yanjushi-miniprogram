@@ -44,9 +44,15 @@
     <view class="wx-icon">💬</view>
     <view class="wx-body">
       <view class="wx-title">添加管家企业微信确认预订</view>
-      <view class="wx-desc">· 一对一服务 · 行程调整 · 民宿攻略</view>
+      <view class="wx-desc">· 意向咨询阶段 · 线下确认收款后才算预订成功</view>
     </view>
     <view class="wx-btn" bindtap="addWechat">添加</view>
+  </view>
+
+  <view class="card info-card">
+    <view class="h">订单信息（可复制）</view>
+    <view class="copy-desc">本阶段订单仅保存在本机（清缓存会消失），建议长按复制或点下方按钮一键复制，粘贴发给管家即可完成咨询提交。</view>
+    <button class="btn-outline full-width" bindtap="copyOrderDetail">一键复制订单详情</button>
   </view>
 
   <view class="card" wx:if="{{order.orderId}}">

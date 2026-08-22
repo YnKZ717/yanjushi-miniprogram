@@ -105,3 +105,17 @@
 .i-title { font-size: 28rpx; font-weight: 700; color: #8a6d2c; margin-bottom: 16rpx; }
 .i-desc { font-size: 24rpx; color: var(--color-text-secondary); line-height: 2; white-space: pre-line; }
 .safe-bottom { height: 120rpx; }
+
+.m-tag {
+  margin-right: 16rpx;
+  padding: 6rpx 18rpx;
+  border-radius: 100rpx;
+  font-size: 20rpx;
+  background: rgba(201,169,97,0.15);
+  color: #8a6d2c;
+  letter-spacing: 1rpx;
+  flex-shrink: 0;
+}
+.m-tag:not([class*="gold"]) {
+  /* 不同 tag 类型用颜色区分（目前只有文字，但留好扩展）*/
+}
