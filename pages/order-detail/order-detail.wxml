@@ -111,7 +111,7 @@
       <block wx:if="{{copyBlockMode}}">
         <view class="copy-card-title" catchtap="noop" wx:if="{{copyFullText}}">💡 整块订单详情（长按下面的文字→弹出「全选」→ 点「复制」，一次性带走全部内容）</view>
         <view class="copy-block-wrap" catchtap="noop">
-          <text class="copy-block-text" user-select="{{true}}">{{copyFullText || '暂无订单信息'}}</text>
+          <text class="copy-block-text" user-select="{{true}}" selectable="{{true}}">{{copyFullText || '暂无订单信息'}}</text>
         </view>
       </block>
       <block wx:else>

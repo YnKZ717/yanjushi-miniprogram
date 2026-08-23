@@ -88,7 +88,8 @@ Page({
     return lines.join('\n')
   },
   copyOrderDetail() {
-    this.setData({ showCopyPanel: true })
+    const text = this._buildOrderDetailText()
+    this.setData({ showCopyPanel: true, copyFullText: text })
   },
   closeCopyPanel() { this.setData({ showCopyPanel: false }) },
   noop() { /* 仅用于阻止点击冒泡，避免误关闭面板 */ },
