@@ -61,15 +61,27 @@
 .f-label { width: 150rpx; font-size: 26rpx; color: var(--color-text-secondary); flex-shrink: 0; }
 .f-row.f-col .f-label { margin-bottom: 12rpx; }
 .f-input {
-  flex: 1; font-size: 26rpx; color: var(--color-text);
-  padding: 12rpx 0;
+  flex: 1;
+  font-size: 28rpx;
+  color: var(--color-text);
+  padding: 18rpx 16rpx;
+  min-height: 72rpx;
+  line-height: normal;
+  box-sizing: border-box;
+  background: #FFFDF8;
+  border-radius: 16rpx;
 }
+.f-row.f-col .f-input { width: 100%; }
 .f-textarea {
   width: 100%;
-  font-size: 26rpx;
-  padding: 12rpx 0;
+  font-size: 28rpx;
+  padding: 18rpx 16rpx;
   color: var(--color-text);
-  min-height: 100rpx;
+  min-height: 180rpx;
+  line-height: normal;
+  box-sizing: border-box;
+  background: #FFFDF8;
+  border-radius: 16rpx;
 }
 
 .direct-card {

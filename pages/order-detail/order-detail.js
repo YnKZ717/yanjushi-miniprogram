@@ -89,15 +89,29 @@ Page({
     this.setData({ showCopyPanel: true })
   },
   closeCopyPanel() { this.setData({ showCopyPanel: false }) },
+  noop() { /* 仅用于阻止点击冒泡，避免误关闭面板 */ },
   copyFullNow() {
     const text = this._buildOrderDetailText()
     if (!text || !text.trim()) return showToast('暂无订单信息可复制')
     this.setData({ copyFullText: text, copyFullDone: false, copyFullFailed: false })
+    const page = this
     this._writeClipboardOrToast(text, '订单详情已复制，快去粘贴给管家吧', {
-      onFinally: (ok) => {
-        this.setData({ copyFullDone: !!ok, copyFullFailed: !ok })
+      onFinally: (ok, reasonOrErr) => {
+        page.setData({ copyFullDone: !!ok, copyFullFailed: !ok })
+        if (!ok && typeof reasonOrErr === 'string' && (reasonOrErr.indexOf('privacy agreement') > -1 || reasonOrErr.indexOf('112') > -1 || reasonOrErr.indexOf('scope is not declared') > -1)) {
+          page._showPrivacyScopeTipModal()
+        }
       }
     })
+  },
+  _showPrivacyScopeTipModal() {
+    this._openDialog('复制失败：剪贴板隐私未声明',
+      '检测到微信返回「errno:112，剪贴板 API scope 未声明」。\n\n这是小程序后台配置问题，不是代码问题。请按以下 3 步处理（处理完重新上传小程序版本生效）：\n\n1）登录公众平台 mp.weixin.qq.com → 「设置」→「用户隐私保护指引」\n2）点「更新」或「修改」→ 在「收集的个人信息类型」里，勾选：✅ 剪贴板信息（选择用途：用于复制订单详情给管家）\n3）保存并提交审核（或保存为新版本再上传）\n\n在生效之前，你可以使用下方「📞 拨号」或「📤 转发」把订单发给管家，一样没问题。',
+      {
+        showCancel: false,
+        confirmText: '我知道了',
+        confirmColor: '#2C5F4E'
+      })
   },
   copyOrderId() {
     const id = this.data.order && this.data.order.orderId
