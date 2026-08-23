@@ -83,11 +83,12 @@
   <view class="qr-mask" wx:if="{{showCopyPanel}}" bindtap="closeCopyPanel">
     <view class="qr-modal copy-panel" catchtap="noop">
       <view class="qr-title" catchtap="noop">复制 / 分享订单详情</view>
-      <view class="qr-tip tip-warn" catchtap="noop" wx:if="{{copyFullFailed}}">系统剪贴板暂不可用（如长按文本也不弹菜单，请走下方「📞 直接拨打联系人」或「📤 转发给管家」）。实际失败原因已写入 Console。</view>
-      <view class="qr-tip" catchtap="noop" wx:else>4 种方式任选一种：①点绿色大按钮一键复制 ②长按下方的文本区域 ③点📞直接拨打电话 ④点📤转发给管家。</view>
+      <view class="qr-tip tip-warn" catchtap="noop" wx:if="{{copyFullFailed}}">系统剪贴板暂不可用（已记录原因并展示在下方）。当前可直接「📞 拨号」/「📤 转发」，或者长按「整块订单详情」一次性带走全部信息。</view>
+      <view class="qr-tip tip-warn" catchtap="noop" wx:elif="{{first112TipShown && copyFullFailed}}" style="background:rgba(192,57,43,0.06);border:1rpx dashed rgba(192,57,43,0.2);color:#C0392B;">剪贴板接口被微信拦截：后台未勾选「剪贴板信息」隐私 scope（errno:112）。生效前请用下方「整块复制」或「📞/📤」带走。</view>
+      <view class="qr-tip" catchtap="noop" wx:else>4 种方式任选一种：①点绿色大按钮一键复制 ②长按「整块订单详情」（一次性全选） ③点📞直接拨打 ④点📤转发给管家。</view>
       <button class="btn-primary" style="width:100%;margin: 20rpx 0 16rpx;" catchtap="copyFullNow" hover-class="none">
         <text wx:if="{{copyFullDone}}">✅ 已复制成功（可再次点击覆盖）</text>
-        <text wx:else>一键复制全部</text>
+        <text wx:else>一键复制全部（系统剪贴板）</text>
       </button>
 
       <view class="mini-copy-row" catchtap="noop">
@@ -100,24 +101,39 @@
         <button class="mini-copy mini-share" open-type="share" hover-class="none">📤 转发此订单给管家</button>
       </view>
 
-      <view class="copy-card-title" catchtap="noop" wx:if="{{order}}">📝 完整订单详情（长按以下文字→全选→复制；真机长按任意字即可弹出菜单）</view>
-      <view class="copy-selectable-wrap" catchtap="noop">
-        <block wx:if="{{order}}">
-          <text class="copy-line" user-select="{{true}}">【岩涺石 Monster Planet · 预约咨询单】</text>
-          <text class="copy-line" user-select="{{true}}">订单号：{{order.orderId || '-'}}</text>
-          <text class="copy-line" user-select="{{true}}">创建时间：{{order.createdAtText || '-'}}</text>
-          <text class="copy-line" user-select="{{true}}">类型：{{order.type === 'room' ? '客房' : order.type === 'activity' ? '主题活动' : '单项体验'}}</text>
-          <text class="copy-line" user-select="{{true}}">项目：{{order.name || '-'}}</text>
-          <text class="copy-line" user-select="{{true}}">日期：{{order.date || '-'}}</text>
-          <text class="copy-line" user-select="{{true}}">人数：{{order.guests || 0}} 人</text>
-          <text class="copy-line" user-select="{{true}}">参考金额：{{order.amount ? '¥' + order.amount : '待管家报价'}}（仅展示，未支付）</text>
-          <text class="copy-line" user-select="{{true}}">—— 联系人 ——</text>
-          <text class="copy-line" user-select="{{true}}">姓名：{{order.contactName || '-'}}</text>
-          <text class="copy-line" user-select="{{true}}">手机号：{{order.contactPhone || '-'}}</text>
-          <text class="copy-line" user-select="{{true}}">备注：{{order.remark || '无'}}</text>
-        </block>
-        <text class="copy-line" user-select="{{true}}" wx:else>暂无订单信息</text>
+      <view class="mode-switch" catchtap="noop">
+        <view class="mode-switch-inner">
+          <view class="mode-btn {{copyBlockMode ? 'active' : ''}}" catchtap="toggleBlockMode">整块复制（一次全选）</view>
+          <view class="mode-btn {{!copyBlockMode ? 'active' : ''}}" catchtap="toggleBlockMode">逐行复制</view>
+        </view>
       </view>
+
+      <block wx:if="{{copyBlockMode}}">
+        <view class="copy-card-title" catchtap="noop" wx:if="{{copyFullText}}">💡 整块订单详情（长按下面的文字→弹出「全选」→ 点「复制」，一次性带走全部内容）</view>
+        <view class="copy-block-wrap" catchtap="noop">
+          <text class="copy-block-text" user-select="{{true}}">{{copyFullText || '暂无订单信息'}}</text>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="copy-card-title" catchtap="noop" wx:if="{{order}}">逐行模式（长按某一行可单独选）</view>
+        <view class="copy-selectable-wrap" catchtap="noop">
+          <block wx:if="{{order}}">
+            <text class="copy-line" user-select="{{true}}">【岩涺石 Monster Planet · 预约咨询单】</text>
+            <text class="copy-line" user-select="{{true}}">订单号：{{order.orderId || '-'}}</text>
+            <text class="copy-line" user-select="{{true}}">创建时间：{{order.createdAtText || '-'}}</text>
+            <text class="copy-line" user-select="{{true}}">类型：{{order.type === 'room' ? '客房' : order.type === 'activity' ? '主题活动' : '单项体验'}}</text>
+            <text class="copy-line" user-select="{{true}}">项目：{{order.name || '-'}}</text>
+            <text class="copy-line" user-select="{{true}}">日期：{{order.date || '-'}}</text>
+            <text class="copy-line" user-select="{{true}}">人数：{{order.guests || 0}} 人</text>
+            <text class="copy-line" user-select="{{true}}">参考金额：{{order.amount ? '¥' + order.amount : '待管家报价'}}（仅展示，未支付）</text>
+            <text class="copy-line" user-select="{{true}}">—— 联系人 ——</text>
+            <text class="copy-line" user-select="{{true}}">姓名：{{order.contactName || '-'}}</text>
+            <text class="copy-line" user-select="{{true}}">手机号：{{order.contactPhone || '-'}}</text>
+            <text class="copy-line" user-select="{{true}}">备注：{{order.remark || '无'}}</text>
+          </block>
+          <text class="copy-line" user-select="{{true}}" wx:else>暂无订单信息</text>
+        </view>
+      </block>
 
       <view class="qr-close" catchtap="closeCopyPanel">关闭</view>
     </view>

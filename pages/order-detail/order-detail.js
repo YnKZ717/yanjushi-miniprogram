@@ -30,6 +30,8 @@ Page({
     copyFullText: '',
     copyFullFailed: false,
     copyFullDone: false,
+    first112TipShown: false,
+    copyBlockMode: true,
     dialogVisible: false,
     dialogTitle: '',
     dialogContent: '',
@@ -99,10 +101,16 @@ Page({
       onFinally: (ok, reasonOrErr) => {
         page.setData({ copyFullDone: !!ok, copyFullFailed: !ok })
         if (!ok && typeof reasonOrErr === 'string' && (reasonOrErr.indexOf('privacy agreement') > -1 || reasonOrErr.indexOf('112') > -1 || reasonOrErr.indexOf('scope is not declared') > -1)) {
-          page._showPrivacyScopeTipModal()
+          if (!page.data.first112TipShown) {
+            page.setData({ first112TipShown: true })
+            page._showPrivacyScopeTipModal()
+          }
         }
       }
     })
+  },
+  toggleBlockMode() {
+    this.setData({ copyBlockMode: !this.data.copyBlockMode })
   },
   _showPrivacyScopeTipModal() {
     this._openDialog('复制失败：剪贴板隐私未声明',
