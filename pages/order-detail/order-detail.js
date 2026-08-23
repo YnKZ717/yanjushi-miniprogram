@@ -109,6 +109,26 @@ Page({
     if (!phone) return showToast('暂无手机号')
     this._writeClipboardOrToast(phone, '已复制手机号')
   },
+  callPhone() {
+    const phone = this.data.order && this.data.order.contactPhone
+    if (!phone) return showToast('暂无手机号可拨打')
+    try {
+      if (wx.makePhoneCall && typeof wx.makePhoneCall === 'function') {
+        wx.makePhoneCall({
+          phoneNumber: String(phone).trim(),
+          fail: () => showToast('呼叫被取消或不支持，请手动拨打：' + phone)
+        })
+      } else {
+        showToast('当前环境不支持拨号，请手动拨打：' + phone)
+      }
+    } catch (e) {
+      showToast('拨号失败，请手动拨打：' + phone)
+    }
+  },
+  shareOrder() {
+    if (wx.shareAppMessage) return
+    showToast('请点击右上角菜单「转发/分享」发给管家')
+  },
   copyContactName() {
     const name = this.data.order && this.data.order.contactName
     if (!name) return showToast('暂无联系人姓名')
@@ -124,48 +144,58 @@ Page({
       try {
         if (!wx.setClipboardData || typeof wx.setClipboardData !== 'function') {
           if (!done) {
+            done = true
+            console.warn('[order-detail][clipboard] 不支持 setClipboardData')
             showToast(fallbackTip)
-            if (typeof onFinally === 'function') onFinally(false)
+            if (typeof onFinally === 'function') onFinally(false, 'no-api')
           }
           return
         }
         wx.setClipboardData({
           data: text,
-          success: () => {
+          success: (res) => {
             if (done) return
             done = true
+            console.log('[order-detail][clipboard] success', res)
             showToast(okMsg, 'success')
-            if (typeof onFinally === 'function') onFinally(true)
+            if (typeof onFinally === 'function') onFinally(true, 'success')
           },
           fail: (res) => {
             if (done) return
             const errMsg = (res && res.errMsg) || ''
+            console.warn('[order-detail][clipboard] fail, attempt:', attemptName, 'res:', JSON.stringify(res || {}))
             const maybePrivacy = errMsg.indexOf('privacy') > -1 || errMsg.indexOf('permission') > -1 || errMsg.indexOf('deny') > -1
             if (attemptName !== 'privacy_retry' && maybePrivacy && wx.requirePrivacyAuthorize && typeof wx.requirePrivacyAuthorize === 'function') {
               try {
                 wx.requirePrivacyAuthorize({
                   success: () => { tryClipboardOnce('privacy_retry') },
-                  fail: () => {
+                  fail: (r2) => {
                     if (done) return
                     done = true
-                    showToast('复制失败：请先同意隐私协议，或长按文本手动复制')
-                    if (typeof onFinally === 'function') onFinally(false)
+                    console.warn('[order-detail][clipboard] requirePrivacyAuthorize fail:', JSON.stringify(r2 || {}))
+                    showToast('复制失败：请先同意隐私协议，或长按/使用下方功能')
+                    if (typeof onFinally === 'function') onFinally(false, 'privacy-fail')
                   }
                 })
                 return
-              } catch (e) {}
+              } catch (e) {
+                console.warn('[order-detail][clipboard] requirePrivacyAuthorize exception:', e)
+              }
             }
             done = true
             showToast(fallbackTip)
-            if (typeof onFinally === 'function') onFinally(false)
+            if (typeof onFinally === 'function') onFinally(false, errMsg || 'fail')
           },
-          complete: () => {}
+          complete: (res) => {
+            console.log('[order-detail][clipboard] complete, attempt:', attemptName, 'res:', JSON.stringify(res || {}))
+          }
         })
       } catch (e) {
         if (done) return
         done = true
+        console.warn('[order-detail][clipboard] exception:', e)
         showToast(fallbackTip)
-        if (typeof onFinally === 'function') onFinally(false)
+        if (typeof onFinally === 'function') onFinally(false, 'exception')
       }
     }
     tryClipboardOnce('first')
