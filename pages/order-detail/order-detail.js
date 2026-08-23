@@ -93,15 +93,28 @@ Page({
   closeCopyPanel() { this.setData({ showCopyPanel: false }) },
   noop() { /* 仅用于阻止点击冒泡，避免误关闭面板 */ },
   copyFullNow() {
-    showToast('长按下方文字 → 点「全选」→ 点「复制」', 'none', 2000)
+    const text = this._buildOrderDetailText()
+    if (!text || !text.trim()) return showToast('暂无订单信息可复制')
+    this.setData({ copyFullText: text, copyFullDone: false, copyFullFailed: false })
+    const page = this
+    this._writeClipboardOrToast(text, '订单详情已复制，快去粘贴给管家吧', {
+      onFinally: (ok) => {
+        page.setData({ copyFullDone: !!ok, copyFullFailed: !ok })
+        if (!ok) {
+          page.setData({ showCopyPanel: true })
+        }
+      }
+    })
   },
   copyOrderId() {
-    const text = this._buildOrderDetailText()
-    this.setData({ showCopyPanel: true, copyFullText: text })
+    const id = this.data.order && this.data.order.orderId
+    if (!id) return showToast('暂无订单号')
+    this._writeClipboardOrToast(id, '订单号已复制')
   },
   copyContactPhone() {
-    const text = this._buildOrderDetailText()
-    this.setData({ showCopyPanel: true, copyFullText: text })
+    const phone = this.data.order && this.data.order.contactPhone
+    if (!phone) return showToast('暂无手机号')
+    this._writeClipboardOrToast(phone, '已复制手机号')
   },
   callPhone() {
     const phone = this.data.order && this.data.order.contactPhone
@@ -124,8 +137,9 @@ Page({
     showToast('请点击右上角菜单「转发/分享」发给管家')
   },
   copyContactName() {
-    const text = this._buildOrderDetailText()
-    this.setData({ showCopyPanel: true, copyFullText: text })
+    const name = this.data.order && this.data.order.contactName
+    if (!name) return showToast('暂无联系人姓名')
+    this._writeClipboardOrToast(name, '联系人已复制')
   },
   _writeClipboardOrToast(text, okTip, opts={}) {
     const okMsg = okTip || '已复制'

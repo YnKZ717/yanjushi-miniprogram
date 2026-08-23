@@ -51,8 +51,9 @@
 
   <view class="card info-card">
     <view class="h">订单信息（可复制）</view>
-    <view class="copy-desc">本阶段订单仅保存在本机（清缓存会消失），建议长按复制或点下方按钮一键复制，粘贴发给管家即可完成咨询提交。</view>
-    <button class="btn-outline full-width" bindtap="copyOrderDetail">一键复制订单详情</button>
+    <view class="copy-desc">本阶段订单仅保存在本机（清缓存会消失），建议一键复制后粘贴发给管家完成咨询提交；复制失败可长按复制面板内的文本兜底。</view>
+    <button class="btn-outline full-width" bindtap="copyFullNow">一键复制订单详情</button>
+    <button class="btn-outline full-width" style="margin-top:16rpx;background:transparent;border:1rpx solid rgba(44,95,78,0.3);color:#2C5F4E;" bindtap="copyOrderDetail">打开长按复制面板（兜底）</button>
   </view>
 
   <view class="card" wx:if="{{order.orderId}}">
