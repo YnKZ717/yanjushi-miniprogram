@@ -86,7 +86,7 @@
       <view class="copy-tip" catchtap="noop">点下面绿色按钮已展开菜单，先点「全选」再点「复制」</view>
       <button class="btn-primary" style="width:100%;margin: 20rpx 0 24rpx;" catchtap="copyFullNow" hover-class="none">一键复制订单详情</button>
       <view class="copy-block-wrap" catchtap="noop">
-        <textarea class="copy-block-textarea" value="{{copyFullText}}" maxlength="-1" user-select="{{true}}" auto-height="{{true}}" show-confirm-bar="{{false}}" disable-default-padding="{{true}}" placeholder="暂无订单信息"></textarea>
+        <text class="copy-block-text" user-select="{{true}}" selectable="{{true}}">{{copyFullText || '暂无订单信息'}}</text>
       </view>
       <view class="qr-close" catchtap="closeCopyPanel">关闭</view>
     </view>

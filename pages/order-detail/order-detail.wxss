@@ -277,9 +277,9 @@
   box-sizing: border-box;
   margin-bottom: 28rpx;
 }
-.copy-block-textarea {
+.copy-block-text {
+  display: block;
   width: 100%;
-  min-height: 380rpx;
   font-size: 25rpx;
   line-height: 2;
   color: #1a1a1a;
