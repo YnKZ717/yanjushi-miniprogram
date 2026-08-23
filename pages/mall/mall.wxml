@@ -55,4 +55,15 @@
       </view>
     </view>
   </view>
+
+  <view class="d-mask" wx:if="{{dialogVisible}}" bindtap="_dialogMask">
+    <view class="d-modal" catchtap="">
+      <view class="d-title">{{dialogTitle}}</view>
+      <view class="d-content"><text>{{dialogContent}}</text></view>
+      <view class="d-btns">
+        <view class="d-btn d-btn-cancel" wx:if="{{dialogShowCancel}}" bindtap="_dialogCancel">{{dialogCancelText}}</view>
+        <view class="d-btn d-btn-confirm" bindtap="_dialogConfirm">{{dialogConfirmText}}</view>
+      </view>
+    </view>
+  </view>
 </view>

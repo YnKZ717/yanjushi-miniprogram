@@ -141,3 +141,113 @@
   border-radius: 100rpx !important;
   padding: 22rpx 0 !important;
 }
+
+.copy-fallback-textarea {
+  width: 100%;
+  min-height: 420rpx;
+  max-height: 800rpx;
+  background: #FFFDF8;
+  border: 1rpx dashed rgba(201,169,97,0.55);
+  border-radius: 20rpx;
+  padding: 24rpx;
+  font-size: 24rpx;
+  line-height: 2;
+  color: #1a1a1a;
+  box-sizing: border-box;
+  margin-bottom: 28rpx;
+}
+
+.copy-panel .tip-warn {
+  color: #C0392B;
+  background: rgba(192,57,43,0.06);
+  border-radius: 16rpx;
+  padding: 16rpx 20rpx;
+  margin: 8rpx 0 18rpx;
+  border: 1rpx dashed rgba(192,57,43,0.2);
+}
+
+.mini-copy-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+  margin-bottom: 28rpx;
+}
+.mini-copy {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  padding: 18rpx 10rpx;
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #2C5F4E;
+  background: rgba(44,95,78,0.08);
+  border-radius: 100rpx;
+}
+
+.copy-card-title {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #8a6a2a;
+  margin-bottom: 12rpx;
+  padding-left: 4rpx;
+}
+
+.copy-selectable-text {
+  width: 100%;
+  min-height: 420rpx;
+  max-height: 70vh;
+  overflow: auto;
+  background: #FFFDF8;
+  border: 1rpx dashed rgba(201,169,97,0.55);
+  border-radius: 20rpx;
+  padding: 28rpx;
+  font-size: 24rpx;
+  line-height: 2;
+  color: #1a1a1a;
+  box-sizing: border-box;
+  margin-bottom: 28rpx;
+  word-break: break-all;
+  white-space: pre-wrap;
+  -webkit-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
+}
+
+.d-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 999; display: flex; align-items: center; justify-content: center; }
+.d-modal {
+  width: 620rpx;
+  background: #FFFDF8;
+  border-radius: 28rpx;
+  padding: 48rpx 36rpx 36rpx;
+  box-shadow: 0 20rpx 60rpx rgba(0,0,0,0.18);
+  animation: pop .22s ease;
+}
+@keyframes pop { from { transform: scale(.9); opacity: 0 } to { transform: scale(1); opacity: 1 } }
+.d-title { font-size: 34rpx; font-weight: 700; color: #1a1a1a; text-align: center; margin-bottom: 24rpx; }
+.d-content {
+  font-size: 26rpx;
+  line-height: 2;
+  color: #444;
+  white-space: pre-wrap;
+  max-height: 60vh;
+  overflow: auto;
+  margin-bottom: 36rpx;
+}
+.d-btns { display: flex; gap: 20rpx; justify-content: center; align-items: center; }
+.d-btn {
+  flex: 1;
+  min-width: 0;
+  padding: 22rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+  font-weight: 600;
+  border-radius: 100rpx;
+}
+.d-btn-cancel {
+  background: rgba(0,0,0,0.04);
+  color: #666;
+}
+.d-btn-confirm {
+  background: linear-gradient(135deg, #2C5F4E, #4A8B76);
+  color: #FFFDF8;
+}

@@ -55,9 +55,7 @@ Page({
       case 'report':
         this._showOfflineTip('年度成长报告', '年度成长报告功能预计 2027 年 1-2 月上线。\n\n上线后将按年度汇总您的入住/推荐/测试结果，感谢耐心等待。', false)
         break
-      case 'mall':
-        this._showOfflineTip('文创商城', '文创商品（怪兽陶土摆件、岩涺石白茶等）暂不支持线上购买。\n\n如需选购，请添加管家企业微信询价与快递寄送。', true)
-        break
+      case 'mall': wx.navigateTo({ url: '/pages/mall/mall' }); break
       case 'order': wx.switchTab({ url: '/pages/order-list/order-list' }); break
       case 'referral': this.shareReferral(); break
     }

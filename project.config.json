@@ -43,7 +43,7 @@
     "bigPackageSizeSupport": false,
     "compileWorklet": false,
     "localPlugins": false,
-    "condition": false,
+    "condition": true,
     "swc": false,
     "disableSWC": true
   },
@@ -57,5 +57,6 @@
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
-  "simulatorPluginLibVersion": {}
+  "simulatorPluginLibVersion": {},
+  "projectArchitecture": "multiPlatform"
 }
