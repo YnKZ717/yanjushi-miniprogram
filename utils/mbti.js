@@ -11,8 +11,7 @@ const PERSONAS = {
       secondary: '#C9A961',
       bg: '#FFF4E6'
     },
-    icon: '🔥',
-    cover: '/assets/mbti/fire.jpg',
+    cover: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@master/pics/monsters/观火者.png',
     tagline: '安静的燃料，需要一窑不熄的火',
     description: '你对世界有强烈的直觉和坚定的内核。你习惯在人群边缘观察，却比任何人都清楚内心的沸点。你选择窑火与茶的节奏：不喧哗、不拥挤，8个人围坐，火光映在茶气里，你会看见事物最本来的样子。',
     matchProducts: [
@@ -38,8 +37,7 @@ const PERSONAS = {
       secondary: '#6B8E4E',
       bg: '#F5EEDF'
     },
-    icon: '🟫',
-    cover: '/assets/mbti/mud.jpg',
+    cover: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@master/pics/monsters/泥巴怪.png',
     tagline: '手脏过泥巴里打滚，快乐比逻辑先',
     description: '你的快乐是即时的、感官的、不按剧本的。你捏泥巴你就捏，管它圆不圆。你是怪兽收养计划的天选主人——捏100只限量怪兽的第___号居民，手要留在大地上打滚的每一粒',
     matchProducts: [
@@ -65,8 +63,7 @@ const PERSONAS = {
       secondary: '#6B8E4E',
       bg: '#EDF4EA'
     },
-    icon: '🪨',
-    cover: '/assets/mbti/earth.jpg',
+    cover: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@master/pics/monsters/大地建造者.png',
     tagline: '把人是被石头替，要一起垒成',
     description: '你相信日积月累的力量。你相信石头叠石头，故事叠故事，最后叠出一个家。「石头的口信」是为你准备的——每月最后一个周末，你和朋友们在石头上写字、画、烧，把口信烧进一片大地里。',
     matchProducts: [
@@ -92,8 +89,7 @@ const PERSONAS = {
       secondary: '#6B4E71',
       bg: '#E6EEF4'
     },
-    icon: '🏗️',
-    cover: '/assets/mbti/wild.jpg',
+    cover: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@master/pics/monsters/野生建筑师.png',
     tagline: '结构是你解构是你，规则是你推翻的也是你',
     description: '你有一双拆东西的手和一个拆东西的脑。你看见窑、结构、材料、然后问「为什么不呢？」。这里有完整的陶艺工坊从揉泥拉坯上釉烧窑，你可以把一整件器物的从头到尾——从0到1，野生的创意工坊欢迎你。',
     matchProducts: [
@@ -207,12 +203,24 @@ function calculatePersona(answers) {
   }
 }
 
+function isValidCoverUrl(c) {
+  return typeof c === 'string' && c.length > 0
+    && (c.indexOf('http://') === 0 || c.indexOf('https://') === 0 || c.indexOf('/pics/') === 0)
+}
+
+function sanitizePersona(p) {
+  if (!p) return p
+  return Object.assign({}, p, { cover: isValidCoverUrl(p.cover) ? p.cover : '' })
+}
+
 function getPersona(key) {
-  return PERSONAS[key] || null
+  return sanitizePersona(PERSONAS[key] || null)
 }
 
 function getAllPersonas() {
-  return PERSONAS
+  const out = {}
+  Object.keys(PERSONAS).forEach(k => { out[k] = sanitizePersona(PERSONAS[k]) })
+  return out
 }
 
 function getQuestions() {
