@@ -2,10 +2,6 @@
   <view class="hero">
     <view class="hero-bg"></view>
     <view class="id-card">
-      <view class="id-left">
-        <view class="avatar">{{userInfo.avatarUrl ? '' : avatarInitial}}</view>
-        <image wx:if="{{userInfo.avatarUrl}}" class="avatar-img" src="{{userInfo.avatarUrl}}"></image>
-      </view>
       <view class="id-info">
         <view class="id-name">{{userInfo.nickName || '怪兽星球新居民'}}</view>
         <view class="id-no">居民编号 · {{residentNo}}</view>
@@ -19,16 +15,14 @@
 
     <view class="mbti-row" bindtap="goResult">
       <view class="mbti-info" wx:if="{{mbtiResult}}">
-        <view class="m-dot" style="background:{{mbtiResult.persona.colors.primary}};"></view>
         <view class="m-body">
-          <view class="m-name">{{mbtiResult.persona.name}} 人格</view>
+          <view class="m-name" style="color:#BDD3EC;">{{mbtiResult.persona.name}} 人格</view>
           <view class="m-mbti">{{mbtiResult.persona.mbtiRange}}</view>
         </view>
       </view>
       <view class="mbti-info" wx:else>
-        <view class="m-dot m-dot-empty"></view>
         <view class="m-body">
-          <view class="m-name">还没测怪兽人格</view>
+          <view class="m-name" style="color:rgba(255,253,248,0.6);">还没测怪兽人格</view>
           <view class="m-mbti">点击去测试 ›</view>
         </view>
       </view>
@@ -44,8 +38,7 @@
 
   <view class="menu-card">
     <view class="m-item" wx:for="{{menu}}" wx:key="key" bindtap="goMenu" data-key="{{item.key}}">
-      <view class="m-block" style="background:{{item.color}};"></view>
-      <view class="m-name">{{item.name}}</view>
+      <view class="m-name" style="color:{{item.color}};">{{item.name}}</view>
       <text class="m-tag" wx:if="{{item.tag}}">{{item.tag}}</text>
       <text class="m-arrow">›</text>
     </view>

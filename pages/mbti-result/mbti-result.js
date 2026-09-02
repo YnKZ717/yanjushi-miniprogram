@@ -23,7 +23,10 @@ Page({
     }
     this.setData({
       result,
-      persona: result.persona,
+      persona: Object.assign({}, result.persona, {
+        _heroTriedFallback: false,
+        _badgeTriedFallback: false
+      }),
       personaInitial: result.persona.name.charAt(0),
       scores: result.scores,
       matchProducts: result.persona.matchProducts.map(p => ({
@@ -31,6 +34,32 @@ Page({
         priceText: formatPrice(p.price)
       }))
     })
+  },
+
+  _tryFallbackCover(kind, fallbackFlag) {
+    const persona = this.data.persona || {}
+    if (persona[fallbackFlag]) {
+      this.setData({ 'persona.cover': '' })
+      return
+    }
+    const nowCover = persona.cover || ''
+    const fallback = persona.coverFallback || ''
+    if (nowCover && fallback && nowCover !== fallback) {
+      const next = Object.assign({}, persona)
+      next.cover = fallback
+      next[fallbackFlag] = true
+      this.setData({ persona: next })
+    } else {
+      this.setData({ 'persona.cover': '' })
+    }
+  },
+
+  onHeroCoverError() {
+    this._tryFallbackCover('hero', '_heroTriedFallback')
+  },
+
+  onBadgeCoverError() {
+    this._tryFallbackCover('badge', '_badgeTriedFallback')
   },
 
   goProduct(e) {

@@ -15,7 +15,7 @@
 .banner-item {
   display: flex;
   align-items: center;
-  padding: 28rpx;
+  padding: 32rpx 28rpx;
   border-radius: 24rpx;
   background: linear-gradient(135deg, #1a1a1a 0%, #2C5F4E 100%);
   color: #FFFDF8;
@@ -25,22 +25,10 @@
   background: linear-gradient(135deg, #A67C52 0%, #C9A961 100%);
 }
 
-.b-icon {
-  width: 88rpx; height: 88rpx;
-  background: rgba(255, 253, 248, 0.12);
-  border-radius: 22rpx;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 40rpx;
-  font-weight: 700;
-  color: #FFFDF8;
-  margin-right: 20rpx;
-  flex-shrink: 0;
-}
-
 .b-info { flex: 1; min-width: 0; }
-.b-title { font-size: 30rpx; font-weight: 700; margin-bottom: 6rpx; }
-.b-sub { font-size: 22rpx; opacity: 0.7; }
-.b-cta { flex-shrink: 0; font-size: 24rpx; opacity: 0.9; font-weight: 600; }
+.b-title { font-size: 32rpx; font-weight: 700; margin-bottom: 8rpx; letter-spacing: 2rpx; }
+.b-sub { font-size: 24rpx; opacity: 0.78; letter-spacing: 1rpx; }
+.b-cta { flex-shrink: 0; font-size: 26rpx; opacity: 0.9; font-weight: 600; letter-spacing: 1rpx; }
 
 .floor { padding: 0 32rpx 48rpx; }
 
@@ -140,21 +128,13 @@
 }
 .exp-item {
   display: flex; align-items: center;
-  padding: 24rpx 28rpx;
+  padding: 26rpx 28rpx;
   border-bottom: 1rpx solid var(--color-border);
 }
 .exp-item:last-child { border-bottom: none; }
-.e-icon {
-  width: 80rpx; height: 80rpx;
-  background: rgba(44, 95, 78, 0.08);
-  border-radius: 20rpx;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 36rpx; font-weight: 700; color: var(--color-primary);
-  margin-right: 20rpx; flex-shrink: 0;
-}
 .e-info { flex: 1; min-width: 0; }
-.e-name { font-size: 28rpx; font-weight: 600; color: var(--color-text); margin-bottom: 4rpx; }
-.e-meta { font-size: 22rpx; color: var(--color-text-secondary); }
+.e-name { font-size: 28rpx; font-weight: 700; color: var(--color-text); margin-bottom: 6rpx; }
+.e-meta { font-size: 22rpx; color: var(--color-text-secondary); letter-spacing: 1rpx; }
 .e-price { color: var(--color-accent); font-size: 28rpx; font-weight: 700; margin-left: 16rpx; }
 
 .brand-story {

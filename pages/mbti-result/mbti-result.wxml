@@ -1,9 +1,9 @@
 <view class="result-page">
   <view class="hero-section" style="background: linear-gradient(160deg, {{persona.colors.primary}} 0%, #1a1a1a 100%);">
     <view class="hero-bg" style="background: radial-gradient(circle at 80% 20%, {{persona.colors.secondary}}55 0%, transparent 50%);"></view>
-    <image wx:if="{{persona.cover}}" src="{{persona.cover}}" mode="aspectFill" class="hero-cover"></image>
+    <image wx:if="{{persona.cover}}" src="{{persona.cover}}" mode="aspectFill" class="hero-cover" binderror="onHeroCoverError" key="hero-{{persona.cover}}"></image>
     <view class="hero-content">
-      <image wx:if="{{persona.cover}}" src="{{persona.cover}}" mode="aspectFill" class="p-badge"></image>
+      <image wx:if="{{persona.cover}}" src="{{persona.cover}}" mode="aspectFill" class="p-badge" binderror="onBadgeCoverError" key="badge-{{persona.cover}}"></image>
       <view wx:else class="p-badge p-badge-fallback">{{personaInitial}}</view>
       <view class="p-name">{{persona.name}}</view>
       <view class="p-name-en">{{persona.nameEn}}</view>
@@ -47,11 +47,11 @@
     <view class="card match-card">
       <view class="card-label">为你匹配的岩涺石体验</view>
       <view class="match-item" wx:for="{{matchProducts}}" wx:key="key" bindtap="goProduct" data-item="{{item}}">
-        <view class="m-badge" style="background: {{persona.colors.bg}}; color: {{persona.colors.primary}};">
-          {{item.type === 'activity' ? '活动' : item.type === 'room' ? '客房' : '体验'}}
-        </view>
         <view class="m-info">
-          <view class="m-name">{{item.name}}</view>
+          <view class="m-badge-inline" style="color: {{persona.colors.primary}};">
+            {{item.type === 'activity' ? '活动' : item.type === 'room' ? '客房' : '体验'}} · 
+          </view>
+          <text class="m-name">{{item.name}}</text>
           <view class="m-desc">{{item.desc}}</view>
         </view>
         <view class="m-right">
@@ -66,24 +66,18 @@
       <view class="share-desc">生成专属海报保存相册发小红书/朋友圈，或者直接分享小程序给朋友</view>
       <view class="share-btns">
         <button class="share-btn poster-btn" bindtap="generatePoster" open-type="share" hover-class="none">
-          <view class="sb-bar" style="background:var(--color-gold);"></view>
-          <text class="sb-label">生成海报</text>
+          <text class="sb-label" style="color:var(--color-gold);">生成海报</text>
         </button>
         <button class="share-btn wx-btn" hover-class="none" bindtap="openShare">
-          <view class="sb-bar" style="background:var(--color-primary);"></view>
-          <text class="sb-label">分享好友</text>
+          <text class="sb-label" style="color:var(--color-primary);">分享好友</text>
         </button>
         <button class="share-btn xhs-btn" bindtap="copyXiaohongshu" hover-class="none">
-          <view class="sb-bar" style="background:var(--color-accent);"></view>
-          <text class="sb-label">{{xhsCopyReady ? '已复制✓' : '小红书文案'}}</text>
+          <text class="sb-label" style="color:var(--color-accent);">{{xhsCopyReady ? '已复制✓' : '小红书文案'}}</text>
         </button>
       </view>
     </view>
 
     <view class="card adopt-card">
-      <view class="adopt-left">
-        <view class="adopt-icon">兽</view>
-      </view>
       <view class="adopt-info">
         <view class="adopt-title">怪兽收养计划</view>
         <view class="adopt-sub">首年限量100只 · 每收养一只种一棵白茶树</view>

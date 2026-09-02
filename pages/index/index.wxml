@@ -1,7 +1,6 @@
 <view class="home-page">
   <view class="banner-area">
     <view class="banner-item" bindtap="goMbti">
-      <view class="b-icon">{{banners[0].mark}}</view>
       <view class="b-info">
         <view class="b-title">{{banners[0].title}}</view>
         <view class="b-sub">{{banners[0].sub}}</view>
@@ -9,7 +8,6 @@
       <view class="b-cta">{{banners[0].cta}} ›</view>
     </view>
     <view class="banner-item adopt-banner" bindtap="goAdopt">
-      <view class="b-icon">{{banners[1].mark}}</view>
       <view class="b-info">
         <view class="b-title">{{banners[1].title}}</view>
         <view class="b-sub">{{banners[1].sub}}</view>
@@ -84,9 +82,8 @@
     </view>
     <view class="exp-list">
       <view class="exp-item" wx:for="{{experiences}}" wx:key="id">
-        <view class="e-icon" style="background:{{item.color}}1f;color:{{item.color}};">{{item.initial}}</view>
         <view class="e-info">
-          <view class="e-name">{{item.name}}</view>
+          <view class="e-name" style="color:{{item.color}};">{{item.name}}</view>
           <view class="e-meta">{{item.duration}} · {{item.tags[0]}}</view>
         </view>
         <view class="e-price">¥{{item.price}}</view>

@@ -288,13 +288,9 @@
 
 .adopt-title {
   display: flex; align-items: center;
-  font-size: 30rpx; font-weight: 700; color: var(--color-ochre);
-  margin-bottom: 8rpx;
-}
-.adopt-dot {
-  width: 20rpx; height: 20rpx; border-radius: 6rpx;
-  background: var(--color-ochre);
-  margin-right: 12rpx; flex-shrink: 0;
+  font-size: 32rpx; font-weight: 700; color: var(--color-ochre);
+  margin-bottom: 10rpx;
+  letter-spacing: 2rpx;
 }
 .adopt-price { margin-left: auto; color: var(--color-accent); font-weight: 700; }
 
@@ -331,22 +327,13 @@
   display: flex; align-items: center;
   background: #FFFDF8;
   border-radius: 20rpx;
-  padding: 24rpx;
+  padding: 28rpx 24rpx;
   box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.04);
 }
 
-.banner-icon {
-  width: 80rpx; height: 80rpx;
-  background: linear-gradient(135deg, rgba(44,95,78,0.1), rgba(201,169,97,0.15));
-  border-radius: 20rpx;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 36rpx; font-weight: 700; color: var(--color-primary);
-  margin-right: 20rpx; flex-shrink: 0;
-}
-
 .banner-info { flex: 1; }
-.banner-title { font-size: 28rpx; font-weight: 600; color: var(--color-text); margin-bottom: 4rpx; }
-.banner-sub { font-size: 22rpx; color: var(--color-text-secondary); }
+.banner-title { font-size: 30rpx; font-weight: 700; color: var(--color-text); margin-bottom: 6rpx; }
+.banner-sub { font-size: 24rpx; color: var(--color-text-secondary); letter-spacing: 1rpx; }
 
 .banner-tag {
   font-size: 22rpx; font-weight: 600;

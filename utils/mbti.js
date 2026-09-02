@@ -11,7 +11,8 @@ const PERSONAS = {
       secondary: '#C9A961',
       bg: '#FFF4E6'
     },
-    cover: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/观火者.webp',
+    cover: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E8%A7%82%E7%81%AB%E8%80%85.webp',
+    coverFallback: 'https://raw.githubusercontent.com/YnKZ717/yanjushi-miniprogram/4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E8%A7%82%E7%81%AB%E8%80%85.webp',
     tagline: '安静的燃料，需要一窑不熄的火',
     description: '你对世界有强烈的直觉和坚定的内核。你习惯在人群边缘观察，却比任何人都清楚内心的沸点。你选择窑火与茶的节奏：不喧哗、不拥挤，8个人围坐，火光映在茶气里，你会看见事物最本来的样子。',
     matchProducts: [
@@ -37,7 +38,8 @@ const PERSONAS = {
       secondary: '#6B8E4E',
       bg: '#F5EEDF'
     },
-    cover: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/泥巴怪.jpg',
+    cover: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E6%B3%A5%E5%B7%B4%E6%80%AA.jpg',
+    coverFallback: 'https://raw.githubusercontent.com/YnKZ717/yanjushi-miniprogram/4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E6%B3%A5%E5%B7%B4%E6%80%AA.jpg',
     tagline: '手脏过泥巴里打滚，快乐比逻辑先',
     description: '你的快乐是即时的、感官的、不按剧本的。你捏泥巴你就捏，管它圆不圆。你是怪兽收养计划的天选主人——捏100只限量怪兽的第___号居民，手要留在大地上打滚的每一粒',
     matchProducts: [
@@ -63,7 +65,8 @@ const PERSONAS = {
       secondary: '#6B8E4E',
       bg: '#EDF4EA'
     },
-    cover: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/大地建造者.jpg',
+    cover: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E5%A4%A7%E5%9C%B0%E5%BB%BA%E9%80%A0%E8%80%85.jpg',
+    coverFallback: 'https://raw.githubusercontent.com/YnKZ717/yanjushi-miniprogram/4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E5%A4%A7%E5%9C%B0%E5%BB%BA%E9%80%A0%E8%80%85.jpg',
     tagline: '把人是被石头替，要一起垒成',
     description: '你相信日积月累的力量。你相信石头叠石头，故事叠故事，最后叠出一个家。「石头的口信」是为你准备的——每月最后一个周末，你和朋友们在石头上写字、画、烧，把口信烧进一片大地里。',
     matchProducts: [
@@ -89,7 +92,8 @@ const PERSONAS = {
       secondary: '#6B4E71',
       bg: '#E6EEF4'
     },
-    cover: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/野生建筑师.jpg',
+    cover: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E9%87%8E%E7%94%9F%E5%BB%BA%E7%AD%91%E5%B8%88.jpg',
+    coverFallback: 'https://raw.githubusercontent.com/YnKZ717/yanjushi-miniprogram/4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E9%87%8E%E7%94%9F%E5%BB%BA%E7%AD%91%E5%B8%88.jpg',
     tagline: '结构是你解构是你，规则是你推翻的也是你',
     description: '你有一双拆东西的手和一个拆东西的脑。你看见窑、结构、材料、然后问「为什么不呢？」。这里有完整的陶艺工坊从揉泥拉坯上釉烧窑，你可以把一整件器物的从头到尾——从0到1，野生的创意工坊欢迎你。',
     matchProducts: [
@@ -208,9 +212,51 @@ function isValidCoverUrl(c) {
     && (c.indexOf('http://') === 0 || c.indexOf('https://') === 0 || c.indexOf('/pics/') === 0)
 }
 
+function _toRawFallbackCover(cdnUrl) {
+  if (typeof cdnUrl !== 'string' || !cdnUrl) return cdnUrl
+  const m = cdnUrl.match(/^https:\/\/cdn\.jsdelivr\.net\/gh\/([^@]+)@([A-Za-z0-9]+)\/(.+)$/)
+  if (!m) return cdnUrl
+  const repo = m[1]
+  const hash = m[2]
+  const path = m[3]
+  return 'https://raw.githubusercontent.com/' + repo + '/' + hash + '/' + path
+}
+
+const HERO_WM_COVERS = [
+  {
+    js: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E8%A7%82%E7%81%AB%E8%80%85.webp',
+    raw: 'https://raw.githubusercontent.com/YnKZ717/yanjushi-miniprogram/4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E8%A7%82%E7%81%AB%E8%80%85.webp'
+  },
+  {
+    js: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E6%B3%A5%E5%B7%B4%E6%80%AA.jpg',
+    raw: 'https://raw.githubusercontent.com/YnKZ717/yanjushi-miniprogram/4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E6%B3%A5%E5%B7%B4%E6%80%AA.jpg'
+  },
+  {
+    js: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E5%A4%A7%E5%9C%B0%E5%BB%BA%E9%80%A0%E8%80%85.jpg',
+    raw: 'https://raw.githubusercontent.com/YnKZ717/yanjushi-miniprogram/4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E5%A4%A7%E5%9C%B0%E5%BB%BA%E9%80%A0%E8%80%85.jpg'
+  },
+  {
+    js: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E9%87%8E%E7%94%9F%E5%BB%BA%E7%AD%91%E5%B8%88.jpg',
+    raw: 'https://raw.githubusercontent.com/YnKZ717/yanjushi-miniprogram/4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E9%87%8E%E7%94%9F%E5%BB%BA%E7%AD%91%E5%B8%88.jpg'
+  }
+]
+
+function getHeroWmCover(idx) {
+  const item = HERO_WM_COVERS[Number(idx || 0)]
+  return item ? item.js : ''
+}
+
+function getHeroWmFallbackCover(idx) {
+  const item = HERO_WM_COVERS[Number(idx || 0)]
+  return item ? item.raw : ''
+}
+
 function sanitizePersona(p) {
   if (!p) return p
-  return Object.assign({}, p, { cover: isValidCoverUrl(p.cover) ? p.cover : '' })
+  return Object.assign({}, p, {
+    cover: isValidCoverUrl(p.cover) ? p.cover : '',
+    coverFallback: isValidCoverUrl(p.coverFallback) ? p.coverFallback : ''
+  })
 }
 
 function getPersona(key) {
@@ -233,5 +279,7 @@ module.exports = {
   calculatePersona,
   getPersona,
   getAllPersonas,
-  getQuestions
+  getQuestions,
+  getHeroWmCover,
+  getHeroWmFallbackCover
 }

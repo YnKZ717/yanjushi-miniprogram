@@ -1,14 +1,20 @@
 <view class="login-page">
-  <view class="bg-overlay"></view>
+  <view class="hero-section">
+    <view class="hero-bg"></view>
+    <image
+      wx:if="{{!bannerHide}}"
+      class="hero-cover"
+      src="{{bannerSrc}}"
+      mode="aspectFill"
+      binderror="onBannerError"
+      lazy-load="{{false}}"
+      show-menu-by-longpress="{{false}}"
+      key="{{bannerSrc}}"></image>
+    <view class="hero-bottom-fade"></view>
+  </view>
 
   <view class="login-content">
     <view class="brand-area">
-      <view class="brand-logo">
-        <image class="logo-m logo-m1" src="https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/观火者.webp" mode="aspectFill"></image>
-        <image class="logo-m logo-m2" src="https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/泥巴怪.jpg" mode="aspectFill"></image>
-        <image class="logo-m logo-m3" src="https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/大地建造者.jpg" mode="aspectFill"></image>
-        <image class="logo-m logo-m4" src="https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/野生建筑师.jpg" mode="aspectFill"></image>
-      </view>
       <view class="brand-name">岩涺石 <text class="brand-en">Monster Planet</text></view>
       <view class="brand-slogan">住进颜料的名字里，带走未被规训的自己</view>
     </view>

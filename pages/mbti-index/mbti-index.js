@@ -1,5 +1,5 @@
 const app = getApp()
-const { getQuestions, getAllPersonas } = require('../../utils/mbti.js')
+const { getQuestions, getAllPersonas, getHeroWmCover, getHeroWmFallbackCover } = require('../../utils/mbti.js')
 const { getAdoptRemain } = require('../../utils/api.js')
 const CONFIG = require('../../utils/config.js')
 
@@ -9,6 +9,7 @@ Page({
     mbtiResult: null,
     questions: [],
     personas: [],
+    heroWmList: [],
     adoptRemain: CONFIG.LIMITS.ADOPT_TOTAL,
     adoptTotal: CONFIG.LIMITS.ADOPT_TOTAL,
     residentNo: '',
@@ -20,7 +21,15 @@ Page({
   },
 
   onLoad() {
-    this.setData({ questions: getQuestions() })
+    this.setData({
+      questions: getQuestions(),
+      heroWmList: [
+        { idx: 0, src: getHeroWmCover(0), hide: false },
+        { idx: 1, src: getHeroWmCover(1), hide: false },
+        { idx: 2, src: getHeroWmCover(2), hide: false },
+        { idx: 3, src: getHeroWmCover(3), hide: false }
+      ]
+    })
     const p = getAllPersonas()
     this.setData({
       personas: [
@@ -46,6 +55,50 @@ Page({
     const { generateResidentNo } = require('../../utils/util.js')
     this.setData({ residentNo: generateResidentNo(app.globalData.userInfo.openid) })
     this.loadAdoptRemain()
+  },
+
+  onMbtiResultAvatarError() {
+    const persona = (this.data.mbtiResult && this.data.mbtiResult.persona) || {}
+    const nowCover = persona.cover || ''
+    const fallback = persona.coverFallback || ''
+    if (nowCover && fallback && nowCover !== fallback) {
+      this.setData({ 'mbtiResult.persona.cover': fallback })
+    } else {
+      this.setData({ 'mbtiResult.persona.cover': '' })
+    }
+  },
+
+  onPersonaCardCoverError(e) {
+    const key = e.currentTarget.dataset.key
+    const personas = this.data.personas.map(it => {
+      if (it.key !== key) return it
+      const nowCover = it.cover || ''
+      const fallback = it.coverFallback || ''
+      if (nowCover && fallback && nowCover !== fallback) {
+        return Object.assign({}, it, { cover: fallback })
+      }
+      return Object.assign({}, it, { cover: '' })
+    })
+    this.setData({ personas })
+  },
+
+  onHeroWmError(e) {
+    const idx = Number(e.currentTarget.dataset.idx || 0)
+    const list = (this.data.heroWmList || []).slice()
+    if (!list[idx]) return
+    const item = Object.assign({}, list[idx])
+    const nowSrc = item.src || ''
+    const fallback = getHeroWmFallbackCover(idx)
+    if (!item._triedFallback && nowSrc && fallback && nowSrc !== fallback) {
+      item.src = fallback
+      item._triedFallback = true
+      list[idx] = item
+      this.setData({ heroWmList: list })
+    } else {
+      item.hide = true
+      list[idx] = item
+      this.setData({ heroWmList: list })
+    }
   },
 
   async loadAdoptRemain() {

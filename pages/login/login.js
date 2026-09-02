@@ -2,10 +2,37 @@ const app = getApp()
 const { loginWithWechat, updateUserProfile } = require('../../utils/api.js')
 const { showToast, showModal, showLoading, hideLoading } = require('../../utils/util.js')
 
+const CDN = 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@37a79721989dd9489e1a0c83f186d9ae41b7e4ce/pics/login/monster-banner-4.1.jpg'
+const RAW = 'https://raw.githubusercontent.com/YnKZ717/yanjushi-miniprogram/37a79721989dd9489e1a0c83f186d9ae41b7e4ce/pics/login/monster-banner-4.1.jpg'
+const SAFE_FALLBACK = 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/covers/earth-builder.jpg'
+
 Page({
   data: {
     agreed: false,
-    loading: false
+    loading: false,
+    bannerSrc: CDN,
+    bannerHide: false,
+    _bannerFallbackTried: 0
+  },
+
+  onShow() {
+    this.setData({
+      bannerSrc: CDN,
+      bannerHide: false,
+      _bannerFallbackTried: 0
+    })
+  },
+
+  onBannerError() {
+    const nowSrc = this.data.bannerSrc || ''
+    const stage = Number(this.data._bannerFallbackTried || 0)
+    if (stage === 0 && nowSrc !== RAW) {
+      this.setData({ bannerSrc: RAW, _bannerFallbackTried: 1 })
+    } else if (stage === 1 && nowSrc !== SAFE_FALLBACK) {
+      this.setData({ bannerSrc: SAFE_FALLBACK, _bannerFallbackTried: 2 })
+    } else {
+      this.setData({ bannerHide: true })
+    }
   },
 
   toggleAgree() {
