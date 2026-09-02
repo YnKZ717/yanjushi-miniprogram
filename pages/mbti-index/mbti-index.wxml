@@ -1,16 +1,20 @@
 <view class="mbti-index-page">
   <view class="hero-section">
     <view class="hero-bg"></view>
+    <image class="hero-wm hero-wm1" src="https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/观火者.webp" mode="aspectFill"></image>
+    <image class="hero-wm hero-wm2" src="https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/泥巴怪.jpg" mode="aspectFill"></image>
+    <image class="hero-wm hero-wm3" src="https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/大地建造者.jpg" mode="aspectFill"></image>
+    <image class="hero-wm hero-wm4" src="https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/野生建筑师.jpg" mode="aspectFill"></image>
     <view class="hero-content">
-      <view class="hero-label">MBTI × 怪兽星球</view>
-      <view class="hero-title">测测你的内心<br/>住着哪一只怪兽</view>
-      <view class="hero-sub">{{questions.length}}道情景题 · 4种人格 · 生成专属海报</view>
+      <view class="hero-title">6 道题，<br/>捣出你的专属怪兽</view>
+      <view class="hero-sub">做完生成小红书专属海报，分享给朋友</view>
     </view>
   </view>
 
   <view class="result-card" wx:if="{{mbtiResult}}">
     <view class="result-header">
-      <view class="persona-badge" style="background:{{mbtiResult.persona.colors.bg}}; border-color:{{mbtiResult.persona.colors.primary}};">
+      <image wx:if="{{mbtiResult.persona.cover}}" src="{{mbtiResult.persona.cover}}" mode="aspectFill" class="persona-badge persona-avatar"></image>
+      <view wx:else class="persona-badge persona-badge-fallback" style="background:{{mbtiResult.persona.colors.bg}}; border-color:{{mbtiResult.persona.colors.primary}};">
         <text class="persona-icon" style="color:{{mbtiResult.persona.colors.primary}};">{{personaInitial}}</text>
       </view>
       <view class="result-info">
@@ -41,8 +45,7 @@
     <view class="persona-grid">
       <view class="persona-card card-{{item.key}}" wx:for="{{personas}}" wx:key="key" wx:for-item="item">
         <view class="p-text-col">
-          <view class="p-dot" style="background:{{item.colors.primary}};"></view>
-          <text class="p-name">{{item.name}}</text>
+          <text class="p-name" style="color:{{item.colors.primary}};">{{item.name}}</text>
           <text class="p-mbti">{{item.mbtiRange}}</text>
           <text class="p-tag">{{item.tagText}}</text>
         </view>
