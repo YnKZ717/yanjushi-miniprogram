@@ -3,14 +3,19 @@
 
   <view class="login-content">
     <view class="brand-area">
-      <view class="brand-logo"><text class="logo-char">岩</text></view>
+      <view class="brand-logo">
+        <image class="logo-m logo-m1" src="https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/观火者.webp" mode="aspectFill"></image>
+        <image class="logo-m logo-m2" src="https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/泥巴怪.jpg" mode="aspectFill"></image>
+        <image class="logo-m logo-m3" src="https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/大地建造者.jpg" mode="aspectFill"></image>
+        <image class="logo-m logo-m4" src="https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/野生建筑师.jpg" mode="aspectFill"></image>
+      </view>
       <view class="brand-name">岩涺石 <text class="brand-en">Monster Planet</text></view>
       <view class="brand-slogan">住进颜料的名字里，带走未被规训的自己</view>
     </view>
 
     <view class="cta-area">
-      <view class="cta-title">测测你的内心怪兽人格</view>
-      <view class="cta-desc">6道情景题 · 4种怪兽人格 · 生成专属海报分享小红书</view>
+      <view class="cta-title">欢迎来到岩涺石</view>
+      <view class="cta-desc">测你的专属怪兽人格，逛客房和活动，直接预约下单</view>
 
       <button
         class="btn-primary btn-block login-btn"

@@ -32,23 +32,23 @@
 }
 
 .brand-logo {
-  width: 160rpx;
-  height: 160rpx;
-  border-radius: 40rpx;
-  background: linear-gradient(135deg, #C44536 0%, #C9A961 100%);
-  border: 2rpx solid rgba(255, 253, 248, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 28rpx;
-  box-shadow: 0 8rpx 32rpx rgba(196, 69, 54, 0.25);
+  position: relative;
+  width: 264rpx;
+  height: 236rpx;
+  margin: 0 auto 20rpx;
 }
 
-.logo-char {
-  font-size: 84rpx;
-  font-weight: 700;
-  color: #FFFDF8;
+.logo-m {
+  position: absolute;
+  border-radius: 26rpx;
+  border: 3rpx solid rgba(255, 253, 248, 0.5);
+  box-shadow: 0 10rpx 26rpx rgba(0, 0, 0, 0.35);
+  background: #1f1f1f;
 }
+.logo-m1 { width: 132rpx; height: 132rpx; left: 2rpx; top: 26rpx; transform: rotate(-8deg); z-index: 4; }
+.logo-m2 { width: 112rpx; height: 112rpx; right: 0; top: 0; transform: rotate(6deg); z-index: 3; }
+.logo-m3 { width: 104rpx; height: 104rpx; left: 0; bottom: 0; transform: rotate(-4deg); z-index: 2; }
+.logo-m4 { width: 96rpx; height: 96rpx; right: 18rpx; bottom: 6rpx; transform: rotate(10deg); z-index: 1; }
 
 .brand-name {
   font-size: 56rpx;
