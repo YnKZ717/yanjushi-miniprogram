@@ -1,6 +1,9 @@
 .login-page {
   min-height: 100vh;
-  background: linear-gradient(160deg, #1a1a1a 0%, #2C3E3A 40%, #4A6B5A 100%);
+  background-image: url('https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@fc358e829d18b30c2050cfae6d38d0b74899189a/pics/login/login-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   position: relative;
   padding: 0 60rpx;
   display: flex;
@@ -11,8 +14,9 @@
 .bg-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(circle at 70% 20%, rgba(201, 169, 97, 0.15) 0%, transparent 50%),
-              radial-gradient(circle at 20% 80%, rgba(196, 69, 54, 0.12) 0%, transparent 50%);
+  background: radial-gradient(circle at 70% 20%, rgba(201, 169, 97, 0.18) 0%, transparent 55%),
+              radial-gradient(circle at 20% 80%, rgba(196, 69, 54, 0.14) 0%, transparent 55%),
+              linear-gradient(180deg, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.32) 100%);
   pointer-events: none;
 }
 
