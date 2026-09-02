@@ -34,8 +34,15 @@
   width: 180rpx;
   height: 180rpx;
   margin: 0 auto 32rpx;
-  background: rgba(255, 253, 248, 0.12);
   border-radius: 44rpx;
+  overflow: hidden;
+  display: block;
+  background: transparent;
+  border: none;
+}
+
+.p-badge-fallback {
+  background: rgba(255, 253, 248, 0.12);
   border: 2rpx solid rgba(255, 253, 248, 0.2);
   display: flex;
   align-items: center;

@@ -3,7 +3,8 @@
     <view class="hero-bg" style="background: radial-gradient(circle at 80% 20%, {{persona.colors.secondary}}55 0%, transparent 50%);"></view>
     <image wx:if="{{persona.cover}}" src="{{persona.cover}}" mode="aspectFill" class="hero-cover"></image>
     <view class="hero-content">
-      <view class="p-badge">{{personaInitial}}</view>
+      <image wx:if="{{persona.cover}}" src="{{persona.cover}}" mode="aspectFill" class="p-badge"></image>
+      <view wx:else class="p-badge p-badge-fallback">{{personaInitial}}</view>
       <view class="p-name">{{persona.name}}</view>
       <view class="p-name-en">{{persona.nameEn}}</view>
       <view class="p-mbti-wrap">
