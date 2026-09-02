@@ -1,6 +1,6 @@
 .login-page {
   min-height: 100vh;
-  background-image: url('https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@fc358e829d18b30c2050cfae6d38d0b74899189a/pics/login/login-bg.jpg');
+  background-image: url('https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@18527c089a15cf521fb0b8ace5dcb643a864e421/pics/login/login-bg4.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
