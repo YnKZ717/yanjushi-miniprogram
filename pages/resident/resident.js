@@ -13,12 +13,12 @@ Page({
     recommendCount: 0,
     yearReport: null,
     menu: [
-      { key: 'adopt', name: '我的怪兽', icon: '👾', tag: '线下办理' },
-      { key: 'tree', name: '我的茶树', icon: '🌱', tag: '线下办理' },
-      { key: 'report', name: '年度成长报告', icon: '📚', tag: '敬请期待' },
-      { key: 'referral', name: '推荐码/引荐人', icon: '🎁' },
-      { key: 'order', name: '我的订单', icon: '📋' },
-      { key: 'mall', name: '文创商城', icon: '🎁', tag: '线下联系' }
+      { key: 'adopt', name: '我的怪兽', color: '#A67C52', tag: '线下办理' },
+      { key: 'tree', name: '我的茶树', color: '#6B8E4E', tag: '线下办理' },
+      { key: 'report', name: '年度成长报告', color: '#3A5A7C', tag: '敬请期待' },
+      { key: 'referral', name: '推荐码/引荐人', color: '#C9A961' },
+      { key: 'order', name: '我的订单', color: '#2C5F4E' },
+      { key: 'mall', name: '文创商城', color: '#6B4E71', tag: '线下联系' }
     ]
   },
 
@@ -27,11 +27,13 @@ Page({
     const ui = app.globalData.userInfo
     const openid = ui && ui.openid
     const mbti = app.globalData.mbtiResult
+    const nick = ((ui && ui.nickName) || '').trim()
     this.setData({
       userInfo: ui,
       residentNo: generateResidentNo(openid),
       referralCode: generateReferralCode(openid),
-      mbtiResult: mbti
+      mbtiResult: mbti,
+      avatarInitial: nick ? nick.charAt(0) : '居'
     })
     this.loadStats()
   },

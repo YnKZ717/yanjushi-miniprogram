@@ -18,6 +18,12 @@ Page({
     const list = MALL_PRODUCTS.map(p => ({ ...p, count: 0 }))
     this.setData({ list })
   },
+  onCoverError(e) {
+    const id = e.currentTarget.dataset.id
+    this.setData({
+      list: this.data.list.map(it => it.id === id ? Object.assign({}, it, { cover: '' }) : it)
+    })
+  },
   add(e) {
     const id = e.currentTarget.dataset.id
     const list = this.data.list.map(p => p.id === id ? { ...p, count: p.count + 1 } : p)

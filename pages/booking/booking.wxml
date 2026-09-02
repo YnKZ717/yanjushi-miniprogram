@@ -2,9 +2,11 @@
   <view class="card">
     <view class="h">预约内容</view>
     <view class="item-row" wx:if="{{cover || name || priceText}}">
-      <view class="item-cover" wx:if="{{cover}}" style="background-color: #eee;">
-        <image wx:if="{{cover && cover.indexOf('http') === 0}}" src="{{cover}}" mode="aspectFill" class="cover-img"></image>
-        <text wx:else class="cover-emoji">🖼️</text>
+      <view class="item-cover" style="background:linear-gradient(135deg,{{itemColor}}33,{{itemColor}}99);">
+        <image wx:if="{{cover}}" src="{{cover}}" mode="aspectFill" class="cover-img" binderror="onCoverError"></image>
+        <view wx:else class="cover-label">
+          <view class="cl-name" style="font-size:30rpx;letter-spacing:2rpx;">{{name}}</view>
+        </view>
       </view>
       <view class="item-info">
         <view class="item-type">{{type === 'room' ? '客房' : type === 'activity' ? '活动' : '体验'}}</view>
@@ -53,11 +55,13 @@
   </view>
 
   <view class="card direct-card">
-    <view class="dc-icon">🏡</view>
+    <view class="dc-icon">直</view>
     <view class="dc-body">
       <view class="dc-title">私域直订专属权益</view>
       <view class="dc-list">
-        <view class="dc-i">🎁 欢迎礼升级 · 🛏️ 房型优先升级 · 💬 管家企微一对一</view>
+        <view class="dc-i"><view class="dot" style="background:var(--color-gold);"></view>欢迎礼升级</view>
+        <view class="dc-i"><view class="dot" style="background:var(--color-stone-blue);"></view>房型优先升级</view>
+        <view class="dc-i"><view class="dot" style="background:var(--color-primary);"></view>管家企微一对一</view>
       </view>
       <view class="dc-tagline">* 不打折，只做非折价权益 · 价格与OTA同价</view>
     </view>

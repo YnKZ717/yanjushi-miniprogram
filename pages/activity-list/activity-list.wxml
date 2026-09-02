@@ -6,7 +6,11 @@
   <view class="list">
     <view class="a-item" wx:for="{{list}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
       <view class="a-cover" style="background:linear-gradient(135deg,{{item.color}}22,{{item.color}}88);">
-        <text class="a-icon">{{item.icon}}</text>
+        <image wx:if="{{item.cover}}" src="{{item.cover}}" mode="aspectFill" class="a-cover-img" binderror="onCoverError" data-id="{{item.id}}"></image>
+        <view wx:else class="cover-label">
+          <view class="cl-name" style="font-size:72rpx;">{{item.initial}}</view>
+          <view class="cl-en" style="font-size:20rpx;letter-spacing:2rpx;">{{item.name}}</view>
+        </view>
       </view>
       <view class="a-body">
         <view class="a-name">{{item.name}}</view>

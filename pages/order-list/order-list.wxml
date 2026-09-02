@@ -1,6 +1,6 @@
 <view class="page">
   <view class="empty-state" wx:if="{{!loading && list.length === 0}}">
-    <view class="e-icon">📋</view>
+    <view class="e-mark">订</view>
     <view class="e-text">还没有订单哦</view>
     <view class="e-desc">去首页逛逛～</view>
   </view>

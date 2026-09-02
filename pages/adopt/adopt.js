@@ -7,18 +7,22 @@ Page({
     remain: CONFIG.LIMITS.ADOPT_TOTAL,
     total: CONFIG.LIMITS.ADOPT_TOTAL,
     stories: [
-      { id: 1, no: '007', name: '窑窑', owner: '来自上海的Y小姐', color: '#C44536', icon: '👾' },
-      { id: 2, no: '038', name: '春芽', owner: '杭州艺术家夫妇', color: '#6B8E4E', icon: '🟫' },
-      { id: 3, no: '045', name: '茶雾', owner: '苏州设计师L', color: '#3A5A7C', icon: '🌫️' },
-      { id: 4, no: '072', name: '赭石', owner: '北京N老师一家', color: '#A67C52', icon: '🔥' },
-      { id: 5, no: '088', name: '星星', owner: '成都K女士', color: '#6B4E71', icon: '⭐' },
-      { id: 6, no: '095', name: '藕荷', owner: '南京大学生情侣', color: '#B8869C', icon: '🪷' }
+      { id: 1, no: '007', name: '窑窑', owner: '来自上海的Y小姐', color: '#C44536' },
+      { id: 2, no: '038', name: '春芽', owner: '杭州艺术家夫妇', color: '#6B8E4E' },
+      { id: 3, no: '045', name: '茶雾', owner: '苏州设计师L', color: '#3A5A7C' },
+      { id: 4, no: '072', name: '赭石', owner: '北京N老师一家', color: '#A67C52' },
+      { id: 5, no: '088', name: '星星', owner: '成都K女士', color: '#6B4E71' },
+      { id: 6, no: '095', name: '藕荷', owner: '南京大学生情侣', color: '#B8869C' }
     ]
   },
 
   async onShow() {
     const r = await getAdoptRemain()
-    this.setData({ remain: r.remain, total: r.total })
+    this.setData({
+      remain: r.remain,
+      total: r.total,
+      stories: this.data.stories.map(s => Object.assign({}, s, { initial: s.name.charAt(0) }))
+    })
   },
 
   async adopt() {

@@ -1,7 +1,7 @@
 <view class="home-page">
   <view class="banner-area">
     <view class="banner-item" bindtap="goMbti">
-      <view class="b-icon">{{banners[0].icon}}</view>
+      <view class="b-icon">{{banners[0].mark}}</view>
       <view class="b-info">
         <view class="b-title">{{banners[0].title}}</view>
         <view class="b-sub">{{banners[0].sub}}</view>
@@ -9,7 +9,7 @@
       <view class="b-cta">{{banners[0].cta}} ›</view>
     </view>
     <view class="banner-item adopt-banner" bindtap="goAdopt">
-      <view class="b-icon">{{banners[1].icon}}</view>
+      <view class="b-icon">{{banners[1].mark}}</view>
       <view class="b-info">
         <view class="b-title">{{banners[1].title}}</view>
         <view class="b-sub">{{banners[1].sub}}</view>
@@ -20,14 +20,18 @@
 
   <view class="floor">
     <view class="floor-header">
-      <view class="f-title">🏨 颜料名客房</view>
+      <view class="f-title t-bar t-bar-stone">颜料名客房</view>
       <view class="f-more" bindtap="goRooms">全部客房 ›</view>
     </view>
     <scroll-view scroll-x class="room-scroll" enhanced show-scrollbar="{{false}}">
       <view class="room-row">
         <view class="room-card" wx:for="{{rooms}}" wx:key="id" bindtap="goRoom" data-id="{{item.id}}">
           <view class="r-cover" style="background:linear-gradient(135deg,{{item.color}}55,{{item.color}}aa);">
-            <text class="r-cover-icon">🛏️</text>
+            <image wx:if="{{item.cover}}" src="{{item.cover}}" mode="aspectFill" class="r-cover-img" binderror="onRoomCoverError" data-id="{{item.id}}"></image>
+            <view wx:else class="cover-label">
+              <view class="cl-name" style="font-size:56rpx;">{{item.name}}</view>
+              <view class="cl-en" style="font-size:20rpx;">{{item.nameEn}} · {{item.area}}</view>
+            </view>
           </view>
           <view class="r-body">
             <view class="r-name">{{item.name}}</view>
@@ -46,13 +50,17 @@
 
   <view class="floor">
     <view class="floor-header">
-      <view class="f-title">🔥 三大主题活动</view>
+      <view class="f-title t-bar t-bar-accent">三大主题活动</view>
       <view class="f-more" bindtap="goActivities">全部活动 ›</view>
     </view>
     <view class="act-grid">
       <view class="act-card" wx:for="{{activities}}" wx:key="id" bindtap="goActivity" data-id="{{item.id}}">
         <view class="a-top" style="background:linear-gradient(135deg,{{item.color}}22,{{item.color}}55);">
-          <text class="a-icon">{{item.icon}}</text>
+          <image wx:if="{{item.cover}}" src="{{item.cover}}" mode="aspectFill" class="a-cover-img" binderror="onActivityCoverError" data-id="{{item.id}}"></image>
+          <view wx:else class="cover-label" style="align-items:flex-start;text-align:left;">
+            <view class="cl-name" style="font-size:36rpx;letter-spacing:2rpx;">{{item.name}}</view>
+            <view class="cl-en" style="font-size:18rpx;">{{item.period}}</view>
+          </view>
           <view class="a-tags">
             <text class="a-tag" wx:for="{{item.tags}}" wx:for-item="t" wx:key="*this">{{t}}</text>
           </view>
@@ -71,12 +79,12 @@
 
   <view class="floor">
     <view class="floor-header">
-      <view class="f-title">🖐️ 单项体验</view>
+      <view class="f-title t-bar t-bar-spring">单项体验</view>
       <view class="f-more" bindtap="goExperience">全部体验 ›</view>
     </view>
     <view class="exp-list">
       <view class="exp-item" wx:for="{{experiences}}" wx:key="id">
-        <view class="e-icon">{{item.icon}}</view>
+        <view class="e-icon" style="background:{{item.color}}1f;color:{{item.color}};">{{item.initial}}</view>
         <view class="e-info">
           <view class="e-name">{{item.name}}</view>
           <view class="e-meta">{{item.duration}} · {{item.tags[0]}}</view>
@@ -103,7 +111,7 @@
 
   <view class="mall-entry" bindtap="goMall">
     <view class="m-info">
-      <view class="m-title">🎁 岩涺石文创商城</view>
+      <view class="m-title t-bar t-bar-gold">岩涺石文创商城</view>
       <view class="m-sub">手绘明信片 · 柴烧怪兽陶塑 · 白茶茶器礼盒</view>
     </view>
     <view class="m-cta">进入 ›</view>

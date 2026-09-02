@@ -1,12 +1,16 @@
 <view class="page">
   <view class="hero">
-    <view class="h-title">🎁 岩涺石文创</view>
+    <view class="h-title t-bar t-bar-gold">岩涺石文创</view>
     <view class="h-sub">把颜料的名字和怪兽的温度，带回家</view>
   </view>
   <view class="list">
     <view class="p-item" wx:for="{{list}}" wx:key="id">
       <view class="p-cover" style="background:linear-gradient(135deg, #2C5F4E33, #C9A96188);">
-        <text class="p-icon">📦</text>
+        <image wx:if="{{item.cover}}" src="{{item.cover}}" mode="aspectFill" class="p-cover-img" binderror="onCoverError" data-id="{{item.id}}"></image>
+        <view wx:else class="cover-label">
+          <view class="cl-name" style="font-size:42rpx;">{{item.shortName}}</view>
+          <view class="cl-en" style="font-size:18rpx;">岩涺石文创</view>
+        </view>
       </view>
       <view class="p-body">
         <view class="p-name">{{item.name}}</view>
@@ -27,7 +31,7 @@
   </view>
   <view class="safe-bottom"></view>
   <view class="cart-bar" bindtap="openCart">
-    <view class="c-icon">🛒</view>
+    <view class="c-icon">购</view>
     <view class="c-count">{{cart.length}}件 · ¥{{cartTotal}}</view>
     <view class="c-btn-go">去结算 ›</view>
   </view>

@@ -24,6 +24,7 @@ Page({
     this.setData({
       result,
       persona: result.persona,
+      personaInitial: result.persona.name.charAt(0),
       scores: result.scores,
       matchProducts: result.persona.matchProducts.map(p => ({
         ...p,
@@ -128,7 +129,7 @@ Page({
   onShareAppMessage(res) {
     const persona = this.data.persona
     return {
-      title: `我是${persona.name}${persona.icon}｜测测你的内心怪兽人格`,
+      title: `我是${persona.name}｜测测你的内心怪兽人格`,
       path: '/pages/login/login'
     }
   },
@@ -136,7 +137,7 @@ Page({
   onShareTimeline() {
     const persona = this.data.persona
     return {
-      title: `我是${persona.name}${persona.icon}｜岩涺石 Monster Planet`
+      title: `我是${persona.name}｜岩涺石 Monster Planet`
     }
   }
 })

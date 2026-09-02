@@ -10,8 +10,7 @@
   position: absolute; inset: 0;
   background: radial-gradient(circle at 30% 30%, rgba(201,169,97,0.3) 0%, transparent 45%);
 }
-.h-content { position: relative; z-index: 2; text-align: center; padding-bottom: 40rpx; }
-.h-icon { font-size: 120rpx; filter: drop-shadow(0 4rpx 20rpx rgba(0,0,0,0.2)); margin-bottom: 20rpx; }
+.h-content { position: relative; z-index: 2; text-align: center; padding: 40rpx 0; }
 .h-title { font-size: 56rpx; font-weight: 700; letter-spacing: 8rpx; margin-bottom: 16rpx; text-shadow: 0 2rpx 16rpx rgba(0,0,0,0.25); }
 .h-price { font-size: 64rpx; font-weight: 700; color: #FFFDF8; margin-bottom: 10rpx; }
 .h-price .unit { font-size: 28rpx; font-weight: 400; opacity: 0.7; }
@@ -54,7 +53,7 @@
   box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.04);
 }
 .h-row { display: flex; align-items: center; margin-bottom: 20rpx; }
-.h-row .h-icon { font-size: 36rpx; margin-right: 12rpx; }
+.h-bar { width: 10rpx; height: 32rpx; border-radius: 6rpx; margin-right: 14rpx; flex-shrink: 0; }
 .h-row .h-title { font-size: 30rpx; font-weight: 700; color: var(--color-text); }
 
 .tree-desc {
@@ -98,7 +97,7 @@
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 12rpx;
-  font-size: 44rpx;
+  font-size: 40rpx; font-weight: 700;
 }
 .s-name { font-size: 22rpx; font-weight: 600; color: var(--color-text); margin-bottom: 4rpx; }
 .s-owner { font-size: 18rpx; color: var(--color-text-secondary); line-height: 1.4; }

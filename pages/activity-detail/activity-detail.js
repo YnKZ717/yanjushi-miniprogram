@@ -17,5 +17,8 @@ Page({
   book() {
     const a = this.data.activity
     wx.navigateTo({ url: '/pages/booking/booking?type=activity&key=' + a.id + '&name=' + encodeURIComponent(a.name) })
+  },
+  onCoverError() {
+    this.setData({ 'activity.cover': '' })
   }
 })

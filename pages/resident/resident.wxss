@@ -25,7 +25,7 @@
   width: 100rpx; height: 100rpx; border-radius: 50%;
   background: linear-gradient(135deg, #C9A961, #C44536);
   display: flex; align-items: center; justify-content: center;
-  font-size: 48rpx;
+  font-size: 44rpx; font-weight: 700; color: #FFFDF8;
 }
 .avatar-img { position: absolute; inset: 0; width: 100rpx; height: 100rpx; border-radius: 50%; }
 .id-info { flex: 1; min-width: 0; }
@@ -53,7 +53,11 @@
   margin-bottom: 60rpx;
 }
 .mbti-info { display: flex; align-items: center; flex: 1; min-width: 0; }
-.m-icon { font-size: 48rpx; margin-right: 16rpx; }
+.m-dot {
+  width: 40rpx; height: 40rpx; border-radius: 12rpx;
+  margin-right: 18rpx; flex-shrink: 0;
+}
+.m-dot-empty { background: rgba(255,253,248,0.25); }
 .m-body { flex: 1; }
 .m-name { font-size: 28rpx; font-weight: 600; margin-bottom: 4rpx; }
 .m-mbti { font-size: 22rpx; opacity: 0.7; }
@@ -91,7 +95,10 @@
   border-bottom: 1rpx solid var(--color-border);
 }
 .m-item:last-child { border-bottom: none; }
-.m-item .m-icon { font-size: 40rpx; margin-right: 20rpx; flex-shrink: 0; }
+.m-item .m-block {
+  width: 36rpx; height: 36rpx; border-radius: 12rpx;
+  margin-right: 20rpx; flex-shrink: 0;
+}
 .m-item .m-name { flex: 1; font-size: 28rpx; color: var(--color-text); }
 .m-item .m-arrow { color: var(--color-text-muted); font-size: 32rpx; }
 

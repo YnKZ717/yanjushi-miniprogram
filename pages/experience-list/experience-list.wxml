@@ -1,7 +1,7 @@
 <view class="page">
   <view class="list">
     <view class="item" wx:for="{{list}}" wx:key="id">
-      <view class="icon">{{item.icon}}</view>
+      <view class="icon" style="background:{{item.color}}1f;color:{{item.color}};">{{item.initial}}</view>
       <view class="info">
         <view class="name">{{item.name}}</view>
         <view class="meta">{{item.duration}} · {{item.tags[0]}}</view>

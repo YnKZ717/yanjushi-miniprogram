@@ -3,19 +3,19 @@
 
   <view class="login-content">
     <view class="brand-area">
-      <view class="brand-logo">🗿</view>
+      <view class="brand-logo"><text class="logo-char">岩</text></view>
       <view class="brand-name">岩涺石 <text class="brand-en">Monster Planet</text></view>
       <view class="brand-slogan">住进颜料的名字里，带走未被规训的自己</view>
     </view>
 
     <view class="monster-preview">
       <view class="monster-row">
-        <view class="monster-chip chip-fire">🔥 观火者</view>
-        <view class="monster-chip chip-mud">🟫 泥巴怪</view>
+        <view class="monster-chip chip-fire"><view class="chip-dot" style="background:#C44536;"></view>观火者</view>
+        <view class="monster-chip chip-mud"><view class="chip-dot" style="background:#A67C52;"></view>泥巴怪</view>
       </view>
       <view class="monster-row">
-        <view class="monster-chip chip-earth">🪨 大地建造者</view>
-        <view class="monster-chip chip-wild">🏗️ 野生建筑师</view>
+        <view class="monster-chip chip-earth"><view class="chip-dot" style="background:#4D7C4F;"></view>大地建造者</view>
+        <view class="monster-chip chip-wild"><view class="chip-dot" style="background:#3A5A7C;"></view>野生建筑师</view>
       </view>
     </view>
 

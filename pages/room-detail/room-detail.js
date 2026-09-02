@@ -13,5 +13,8 @@ Page({
   },
   book() {
     wx.navigateTo({ url: '/pages/booking/booking?type=room&key=' + this.data.room.id + '&name=' + encodeURIComponent(this.data.room.name) })
+  },
+  onCoverError() {
+    this.setData({ 'room.cover': '' })
   }
 })

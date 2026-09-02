@@ -3,7 +3,7 @@
     <view class="hero-bg"></view>
     <view class="id-card">
       <view class="id-left">
-        <view class="avatar">{{userInfo.avatarUrl ? '' : '🧑‍🎨'}}</view>
+        <view class="avatar">{{userInfo.avatarUrl ? '' : avatarInitial}}</view>
         <image wx:if="{{userInfo.avatarUrl}}" class="avatar-img" src="{{userInfo.avatarUrl}}"></image>
       </view>
       <view class="id-info">
@@ -19,14 +19,14 @@
 
     <view class="mbti-row" bindtap="goResult">
       <view class="mbti-info" wx:if="{{mbtiResult}}">
-        <text class="m-icon">{{mbtiResult.persona.icon}}</text>
+        <view class="m-dot" style="background:{{mbtiResult.persona.colors.primary}};"></view>
         <view class="m-body">
           <view class="m-name">{{mbtiResult.persona.name}} 人格</view>
           <view class="m-mbti">{{mbtiResult.persona.mbtiRange}}</view>
         </view>
       </view>
       <view class="mbti-info" wx:else>
-        <text class="m-icon">🎭</text>
+        <view class="m-dot m-dot-empty"></view>
         <view class="m-body">
           <view class="m-name">还没测怪兽人格</view>
           <view class="m-mbti">点击去测试 ›</view>
@@ -44,7 +44,7 @@
 
   <view class="menu-card">
     <view class="m-item" wx:for="{{menu}}" wx:key="key" bindtap="goMenu" data-key="{{item.key}}">
-      <view class="m-icon">{{item.icon}}</view>
+      <view class="m-block" style="background:{{item.color}};"></view>
       <view class="m-name">{{item.name}}</view>
       <text class="m-tag" wx:if="{{item.tag}}">{{item.tag}}</text>
       <text class="m-arrow">›</text>
@@ -52,7 +52,7 @@
   </view>
 
   <view class="intro-card">
-    <view class="i-title">🏡 怪兽星球居民公约</view>
+    <view class="i-title t-bar t-bar-gold">怪兽星球居民公约</view>
     <view class="i-desc">
       · 私域直订占比目标 2028 年 ≥ 60%，和我们一起降低对OTA的依赖\n
       · 推荐≥3位新客升级「引荐人」，享优先订房、生日礼、主理人茶会\n

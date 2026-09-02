@@ -2,7 +2,6 @@
   <view class="hero">
     <view class="hero-bg"></view>
     <view class="h-content">
-      <view class="h-icon">👾</view>
       <view class="h-title">怪兽收养计划</view>
       <view class="h-price">¥ 398<span class="unit"> / 只</span></view>
       <view class="h-sub">首年限量{{total}}只 · 售罄不补</view>
@@ -20,7 +19,7 @@
   </view>
 
   <view class="section">
-    <view class="h-row"><text class="h-icon">🌱</text><text class="h-title">每收养一只怪兽，种一棵白茶树</text></view>
+    <view class="h-row"><text class="h-bar" style="background:#6B8E4E;"></text><text class="h-title">每收养一只怪兽，种一棵白茶树</text></view>
     <view class="tree-desc">
       怪兽不只是一件摆件——它对应安吉后山上的一棵白茶树。树牌上写着怪兽的名字和您的居民编号，您可以每年回家"看它"。
     </view>
@@ -41,7 +40,7 @@
   </view>
 
   <view class="section">
-    <view class="h-row"><text class="h-icon">📜</text><text class="h-title">收养包含</text></view>
+    <view class="h-row"><text class="h-bar" style="background:#C9A961;"></text><text class="h-title">收养包含</text></view>
     <view class="incl">
       <view class="i-item">✓ 独1只陶土小怪兽（主理人捏塑+您命名）</view>
       <view class="i-item">✓ 白茶树种植 + 专属树牌</view>
@@ -52,10 +51,10 @@
   </view>
 
   <view class="section">
-    <view class="h-row"><text class="h-icon">👥</text><text class="h-title">已收养的怪兽们（部分）</text></view>
+    <view class="h-row"><text class="h-bar" style="background:#A67C52;"></text><text class="h-title">已收养的怪兽们（部分）</text></view>
     <view class="story-wall">
       <view class="story-item" wx:for="{{stories}}" wx:key="id">
-        <view class="s-icon" style="background:{{item.color}}22;">{{item.icon}}</view>
+        <view class="s-icon" style="background:{{item.color}}22;color:{{item.color}};">{{item.initial}}</view>
         <view class="s-name">No.{{item.no}} · {{item.name}}</view>
         <view class="s-owner">{{item.owner}}</view>
       </view>

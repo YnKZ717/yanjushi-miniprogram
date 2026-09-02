@@ -7,8 +7,8 @@ Page({
     activities: [],
     experiences: [],
     banners: [
-      { id: 'mbti', title: '测测你的怪兽人格', sub: '6题·4种人格·专属海报', cta: '立即测', icon: '🎭' },
-      { id: 'adopt', title: '怪兽收养计划', sub: '首年限量100只', cta: '去收养', icon: '👾' }
+      { id: 'mbti', title: '测测你的怪兽人格', sub: '6题·4种人格·专属海报', cta: '立即测', mark: '测' },
+      { id: 'adopt', title: '怪兽收养计划', sub: '首年限量100只', cta: '去收养', mark: '兽' }
     ],
     floors: []
   },
@@ -17,7 +17,21 @@ Page({
     this.setData({
       rooms: ROOMS.slice(0, 3),
       activities: ACTIVITIES,
-      experiences: EXPERIENCES
+      experiences: EXPERIENCES.map(x => Object.assign({}, x, { initial: x.name.charAt(0) }))
+    })
+  },
+
+  onRoomCoverError(e) {
+    const id = e.currentTarget.dataset.id
+    this.setData({
+      rooms: this.data.rooms.map(it => it.id === id ? Object.assign({}, it, { cover: '' }) : it)
+    })
+  },
+
+  onActivityCoverError(e) {
+    const id = e.currentTarget.dataset.id
+    this.setData({
+      activities: this.data.activities.map(it => it.id === id ? Object.assign({}, it, { cover: '' }) : it)
     })
   },
 

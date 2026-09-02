@@ -1,6 +1,6 @@
 <view class="page" wx:if="{{activity}}">
   <view class="cover" style="background:linear-gradient(160deg,{{activity.color}}33,{{activity.color}}cc);">
-    <text class="icon">{{activity.icon}}</text>
+    <image wx:if="{{activity.cover}}" src="{{activity.cover}}" mode="aspectFill" class="cover-img" binderror="onCoverError"></image>
     <view class="t">{{activity.name}}</view>
     <view class="sub">{{activity.period}}</view>
   </view>

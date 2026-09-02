@@ -82,7 +82,8 @@
 }
 
 .persona-icon {
-  font-size: 56rpx;
+  font-size: 48rpx;
+  font-weight: 700;
 }
 
 .result-info {
@@ -178,10 +179,29 @@
 
 .persona-card {
   border-radius: 24rpx;
-  padding: 32rpx 24rpx;
+  padding: 20rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+.p-text-col {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 6rpx;
+  gap: 4rpx;
+  align-items: flex-start;
+}
+
+.p-cover {
+  width: 130rpx;
+  height: 130rpx;
+  border-radius: 20rpx;
+  flex-shrink: 0;
 }
 
 .card-fire {
@@ -201,14 +221,14 @@
   border: 1rpx solid rgba(58, 90, 124, 0.25);
 }
 
-.p-icon { font-size: 48rpx; margin-bottom: 8rpx; }
+.p-dot { width: 28rpx; height: 28rpx; border-radius: 8rpx; margin-bottom: 6rpx; }
 .p-name { font-size: 30rpx; font-weight: 700; color: var(--color-text); }
 .p-mbti { font-size: 20rpx; color: var(--color-text-secondary); letter-spacing: 2rpx; }
 .p-tag {
-  margin-top: 10rpx;
+  margin-top: 6rpx;
   align-self: flex-start;
   padding: 4rpx 16rpx;
-  background: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.75);
   border-radius: 100rpx;
   font-size: 20rpx;
   color: var(--color-text-secondary);
@@ -229,7 +249,7 @@
   width: 88rpx; height: 88rpx; border-radius: 50%;
   background: linear-gradient(135deg, #2C5F4E, #C9A961);
   display: flex; align-items: center; justify-content: center;
-  font-size: 44rpx; color: #fff;
+  font-size: 40rpx; font-weight: 700; color: #FFFDF8;
 }
 .avatar-img {
   position: absolute; inset: 0;
@@ -261,7 +281,11 @@
   font-size: 30rpx; font-weight: 700; color: var(--color-ochre);
   margin-bottom: 8rpx;
 }
-.adopt-icon { margin-right: 10rpx; font-size: 32rpx; }
+.adopt-dot {
+  width: 20rpx; height: 20rpx; border-radius: 6rpx;
+  background: var(--color-ochre);
+  margin-right: 12rpx; flex-shrink: 0;
+}
 .adopt-price { margin-left: auto; color: var(--color-accent); font-weight: 700; }
 
 .adopt-sub {
@@ -306,7 +330,8 @@
   background: linear-gradient(135deg, rgba(44,95,78,0.1), rgba(201,169,97,0.15));
   border-radius: 20rpx;
   display: flex; align-items: center; justify-content: center;
-  font-size: 40rpx; margin-right: 20rpx;
+  font-size: 36rpx; font-weight: 700; color: var(--color-primary);
+  margin-right: 20rpx; flex-shrink: 0;
 }
 
 .banner-info { flex: 1; }

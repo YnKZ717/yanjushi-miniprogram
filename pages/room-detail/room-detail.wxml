@@ -1,6 +1,6 @@
 <view class="page" wx:if="{{room}}">
   <view class="cover" style="background:linear-gradient(135deg,{{room.color}}55,{{room.color}}cc);">
-    <text class="cover-icon">🛏️</text>
+    <image wx:if="{{room.cover}}" src="{{room.cover}}" mode="aspectFill" class="cover-img" binderror="onCoverError"></image>
     <view class="cover-name">{{room.name}}</view>
     <view class="cover-en">{{room.nameEn}}</view>
   </view>
@@ -30,9 +30,9 @@
   <view class="section">
     <view class="h notice-title">直订专属权益</view>
     <view class="notice-box">
-      <view class="n-item">🎁 欢迎礼升级（岩涺石定制白茶+手作小怪兽）</view>
-      <view class="n-item">🛏️ 优先房型升级（如有空房）</view>
-      <view class="n-item">💬 添加管家企微，一对一服务</view>
+      <view class="n-item"><view class="dot" style="background:var(--color-gold);"></view>欢迎礼升级（岩涺石定制白茶+手作小怪兽）</view>
+      <view class="n-item"><view class="dot" style="background:var(--color-stone-blue);"></view>优先房型升级（如有空房）</view>
+      <view class="n-item"><view class="dot" style="background:var(--color-primary);"></view>添加管家企微，一对一服务</view>
       <view class="n-tagline">* 不打折，只做非折价权益 · 价格=OTA同价</view>
     </view>
   </view>

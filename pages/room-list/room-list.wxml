@@ -2,8 +2,11 @@
   <view class="list">
     <view class="r-item" wx:for="{{rooms}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
       <view class="r-cover" style="background:linear-gradient(135deg,{{item.color}}33,{{item.color}}99);">
-        <text class="r-icon">🛏️</text>
-        <view class="r-color-name">{{item.name}}</view>
+        <image wx:if="{{item.cover}}" src="{{item.cover}}" mode="aspectFill" class="r-cover-img" binderror="onCoverError" data-id="{{item.id}}"></image>
+        <view class="r-label">
+          <view class="r-color-name">{{item.name}}</view>
+          <view class="r-color-en">{{item.nameEn}} · {{item.area}}</view>
+        </view>
       </view>
       <view class="r-body">
         <view class="r-name-row">

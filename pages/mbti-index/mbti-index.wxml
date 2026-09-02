@@ -11,7 +11,7 @@
   <view class="result-card" wx:if="{{mbtiResult}}">
     <view class="result-header">
       <view class="persona-badge" style="background:{{mbtiResult.persona.colors.bg}}; border-color:{{mbtiResult.persona.colors.primary}};">
-        <text class="persona-icon">{{mbtiResult.persona.icon}}</text>
+        <text class="persona-icon" style="color:{{mbtiResult.persona.colors.primary}};">{{personaInitial}}</text>
       </view>
       <view class="result-info">
         <view class="result-label">你上次的测试结果</view>
@@ -36,45 +36,30 @@
 
   <view class="section">
     <view class="section-header">
-      <view class="section-title">🎭 四种怪兽人格</view>
+      <view class="section-title t-bar t-bar-accent">四种怪兽人格</view>
     </view>
     <view class="persona-grid">
-      <view class="persona-card card-fire">
-        <text class="p-icon">🔥</text>
-        <text class="p-name">观火者</text>
-        <text class="p-mbti">INFJ/INFP/INTJ</text>
-        <text class="p-tag">窑火与茶</text>
-      </view>
-      <view class="persona-card card-mud">
-        <text class="p-icon">🟫</text>
-        <text class="p-name">泥巴怪</text>
-        <text class="p-mbti">ESFP/ENFP/ESTP</text>
-        <text class="p-tag">怪兽收养计划</text>
-      </view>
-      <view class="persona-card card-earth">
-        <text class="p-icon">🪨</text>
-        <text class="p-name">大地建造者</text>
-        <text class="p-mbti">ISFJ/ESFJ/ENFJ</text>
-        <text class="p-tag">石头的口信</text>
-      </view>
-      <view class="persona-card card-wild">
-        <text class="p-icon">🏗️</text>
-        <text class="p-name">野生建筑师</text>
-        <text class="p-mbti">ISTP/ENTP/INTJ</text>
-        <text class="p-tag">柴烧集训营</text>
+      <view class="persona-card card-{{item.key}}" wx:for="{{personas}}" wx:key="key" wx:for-item="item">
+        <view class="p-text-col">
+          <view class="p-dot" style="background:{{item.colors.primary}};"></view>
+          <text class="p-name">{{item.name}}</text>
+          <text class="p-mbti">{{item.mbtiRange}}</text>
+          <text class="p-tag">{{item.tagText}}</text>
+        </view>
+        <image wx:if="{{item.cover}}" src="{{item.cover}}" mode="aspectFill" class="p-cover"></image>
       </view>
     </view>
   </view>
 
   <view class="section">
     <view class="section-header">
-      <view class="section-title">🌿 居民星球</view>
+      <view class="section-title t-bar">居民星球</view>
       <view class="section-link" bindtap="goHome">去首页 ›</view>
     </view>
 
     <view class="resident-card">
       <view class="resident-left">
-        <view class="avatar">{{userInfo.avatarUrl ? '' : '🧑'}}</view>
+        <view class="avatar">{{userInfo.avatarUrl ? '' : avatarInitial}}</view>
         <image wx:if="{{userInfo.avatarUrl}}" class="avatar-img" src="{{userInfo.avatarUrl}}"></image>
       </view>
       <view class="resident-info">
@@ -86,7 +71,7 @@
 
     <view class="adopt-progress" bindtap="goAdopt">
       <view class="adopt-title">
-        <text class="adopt-icon">👾</text>
+        <view class="adopt-dot"></view>
         怪兽收养计划
         <text class="adopt-price">¥398</text>
       </view>
@@ -102,11 +87,11 @@
 
   <view class="section">
     <view class="section-header">
-      <view class="section-title">🔥 三大主题活动</view>
+      <view class="section-title t-bar t-bar-accent">三大主题活动</view>
     </view>
     <view class="banner-list">
       <view class="banner-item" wx:for="{{banners}}" wx:key="index" bindtap="goActivity" data-id="{{['adopt-plan','kiln-fire-tea','stone-message'][index]}}">
-        <view class="banner-icon">{{item.icon}}</view>
+        <view class="banner-icon" style="background:{{item.color}}1f;color:{{item.color}};">{{item.mark}}</view>
         <view class="banner-info">
           <view class="banner-title">{{item.title}}</view>
           <view class="banner-sub">{{item.sub}}</view>

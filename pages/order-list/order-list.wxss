@@ -3,7 +3,14 @@
   padding: 160rpx 0;
   text-align: center;
 }
-.e-icon { font-size: 120rpx; color: #ccc; margin-bottom: 24rpx; }
+.e-mark {
+  width: 120rpx; height: 120rpx; border-radius: 32rpx;
+  background: linear-gradient(135deg, rgba(44,95,78,0.10), rgba(201,169,97,0.16));
+  border: 2rpx solid rgba(44,95,78,0.12);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 28rpx;
+  font-size: 52rpx; font-weight: 700; color: var(--color-primary); opacity: 0.75;
+}
 .e-text { font-size: 30rpx; color: var(--color-text-secondary); margin-bottom: 12rpx; }
 .e-desc { font-size: 24rpx; color: var(--color-text-muted); }
 .list { display: flex; flex-direction: column; gap: 20rpx; }

@@ -1,8 +1,9 @@
 <view class="result-page">
   <view class="hero-section" style="background: linear-gradient(160deg, {{persona.colors.primary}} 0%, #1a1a1a 100%);">
     <view class="hero-bg" style="background: radial-gradient(circle at 80% 20%, {{persona.colors.secondary}}55 0%, transparent 50%);"></view>
+    <image wx:if="{{persona.cover}}" src="{{persona.cover}}" mode="aspectFill" class="hero-cover"></image>
     <view class="hero-content">
-      <view class="p-badge">{{persona.icon}}</view>
+      <view class="p-badge">{{personaInitial}}</view>
       <view class="p-name">{{persona.name}}</view>
       <view class="p-name-en">{{persona.nameEn}}</view>
       <view class="p-mbti-wrap">
@@ -21,22 +22,22 @@
     <view class="card scores-card">
       <view class="card-label">得分分布</view>
       <view class="score-row">
-        <text class="s-name">🔥 观火者</text>
+        <view class="s-name"><view class="s-dot" style="background:#C44536;"></view>观火者</view>
         <view class="s-bar"><view class="s-fill" style="width:{{scores.fireWatcher / 12 * 100}}%; background:#C44536;"></view></view>
         <text class="s-num">{{scores.fireWatcher}}</text>
       </view>
       <view class="score-row">
-        <text class="s-name">🟫 泥巴怪</text>
+        <view class="s-name"><view class="s-dot" style="background:#A67C52;"></view>泥巴怪</view>
         <view class="s-bar"><view class="s-fill" style="width:{{scores.mudMonster / 12 * 100}}%; background:#A67C52;"></view></view>
         <text class="s-num">{{scores.mudMonster}}</text>
       </view>
       <view class="score-row">
-        <text class="s-name">🪨 大地建造者</text>
+        <view class="s-name"><view class="s-dot" style="background:#4D7C4F;"></view>大地建造者</view>
         <view class="s-bar"><view class="s-fill" style="width:{{scores.earthBuilder / 12 * 100}}%; background:#4D7C4F;"></view></view>
         <text class="s-num">{{scores.earthBuilder}}</text>
       </view>
       <view class="score-row">
-        <text class="s-name">🏗️ 野生建筑师</text>
+        <view class="s-name"><view class="s-dot" style="background:#3A5A7C;"></view>野生建筑师</view>
         <view class="s-bar"><view class="s-fill" style="width:{{scores.wildArchitect / 12 * 100}}%; background:#3A5A7C;"></view></view>
         <text class="s-num">{{scores.wildArchitect}}</text>
       </view>
@@ -60,19 +61,19 @@
     </view>
 
     <view class="share-card card">
-      <view class="share-title">📣 把你的怪兽人格分享出去</view>
+      <view class="share-title t-bar t-bar-accent">把你的怪兽人格分享出去</view>
       <view class="share-desc">生成专属海报保存相册发小红书/朋友圈，或者直接分享小程序给朋友</view>
       <view class="share-btns">
         <button class="share-btn poster-btn" bindtap="generatePoster" open-type="share" hover-class="none">
-          <text class="sb-icon">🖼️</text>
+          <view class="sb-bar" style="background:var(--color-gold);"></view>
           <text class="sb-label">生成海报</text>
         </button>
         <button class="share-btn wx-btn" hover-class="none" bindtap="openShare">
-          <text class="sb-icon">💬</text>
+          <view class="sb-bar" style="background:var(--color-primary);"></view>
           <text class="sb-label">分享好友</text>
         </button>
         <button class="share-btn xhs-btn" bindtap="copyXiaohongshu" hover-class="none">
-          <text class="sb-icon">📝</text>
+          <view class="sb-bar" style="background:var(--color-accent);"></view>
           <text class="sb-label">{{xhsCopyReady ? '已复制✓' : '小红书文案'}}</text>
         </button>
       </view>
@@ -80,7 +81,7 @@
 
     <view class="card adopt-card">
       <view class="adopt-left">
-        <view class="adopt-icon">👾</view>
+        <view class="adopt-icon">兽</view>
       </view>
       <view class="adopt-info">
         <view class="adopt-title">怪兽收养计划</view>
@@ -128,11 +129,11 @@
       </view>
       <view class="sm-body">
         <button class="sm-item" open-type="share" hover-class="none">
-          <view class="sm-icon-wrap sm-wx">💬</view>
+          <view class="sm-icon-wrap sm-wx"><text class="sm-char">信</text></view>
           <text class="sm-label">发送给朋友</text>
         </button>
         <button class="sm-item" bindtap="closeShare;generatePoster();" hover-class="none">
-          <view class="sm-icon-wrap sm-pyq">🖼️</view>
+          <view class="sm-icon-wrap sm-pyq"><text class="sm-char">图</text></view>
           <text class="sm-label">朋友圈/小红书</text>
           <text class="sm-sub">（保存图片后手动发）</text>
         </button>

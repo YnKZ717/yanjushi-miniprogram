@@ -71,11 +71,14 @@ Page({
       item,
       priceText,
       cover,
+      itemColor: (item && item.color) || '#2C5F4E',
       today: dateStr,
       date: dateStr,
       guests
     })
   },
+
+  onCoverError() { this.setData({ cover: '' }) },
 
   onDateChange(e) { this.setData({ date: e.detail.value }) },
   onGuestMinus() {
