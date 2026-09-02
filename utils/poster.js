@@ -71,11 +71,18 @@ function drawPoster(persona) {
       ctx.restore()
 
       ctx.save()
-      ctx.font = 'bold 140px sans-serif'
+      ctx.font = 'bold 110px sans-serif'
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
       ctx.fillStyle = '#FFFDF8'
-      ctx.fillText(persona.icon, W / 2, badgeY + badgeSize / 2 + 10)
+      ctx.fillText(persona.name.charAt(0), W / 2, badgeY + badgeSize / 2)
+      ctx.restore()
+
+      ctx.save()
+      ctx.beginPath()
+      ctx.arc(W / 2, badgeY + badgeSize - 30, 9, 0, Math.PI * 2)
+      ctx.fillStyle = hexToRgba(persona.colors.secondary, 0.9)
+      ctx.fill()
       ctx.restore()
 
       ctx.save()
