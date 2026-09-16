@@ -2,8 +2,8 @@ const app = getApp()
 const { loginWithWechat, updateUserProfile } = require('../../utils/api.js')
 const { showToast, showModal, showLoading, hideLoading } = require('../../utils/util.js')
 
-const CDN = 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@37a79721989dd9489e1a0c83f186d9ae41b7e4ce/pics/login/monster-banner-4.1.jpg'
-const RAW = 'https://raw.githubusercontent.com/YnKZ717/yanjushi-miniprogram/37a79721989dd9489e1a0c83f186d9ae41b7e4ce/pics/login/monster-banner-4.1.jpg'
+const CDN = 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@89c1dbd3678626e438ef1f9995f3b13f6bc04a4f/pics/login/banner-qingshuruwenzi.jpg'
+const RAW = 'https://raw.githubusercontent.com/YnKZ717/yanjushi-miniprogram/89c1dbd3678626e438ef1f9995f3b13f6bc04a4f/pics/login/banner-qingshuruwenzi.jpg'
 const SAFE_FALLBACK = 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/covers/earth-builder.jpg'
 
 Page({
@@ -15,13 +15,15 @@ Page({
     _bannerFallbackTried: 0
   },
 
-  onShow() {
+  onLoad() {
     this.setData({
       bannerSrc: CDN,
       bannerHide: false,
       _bannerFallbackTried: 0
     })
   },
+
+  onShow() {},
 
   onBannerError() {
     const nowSrc = this.data.bannerSrc || ''
