@@ -41,7 +41,6 @@
   </view>
 
   <view class="card wx-card">
-    <view class="wx-icon">企</view>
     <view class="wx-body">
       <view class="wx-title">添加管家企业微信确认预订</view>
       <view class="wx-desc">· 意向咨询阶段 · 线下确认收款后才算预订成功</view>

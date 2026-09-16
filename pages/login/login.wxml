@@ -1,40 +1,46 @@
-<view class="login-page">
-  <view class="hero-section">
-    <view class="hero-bg"></view>
+<view class="login-page" style="min-height:100vh;background:#17342b;display:flex;flex-direction:column;overflow:hidden;">
+  <view class="hero-section" style="position:relative;width:100%;height:42vh;overflow:hidden;flex-shrink:0;background:#17342b;">
     <image
       wx:if="{{!bannerHide}}"
       class="hero-cover"
+      style="position:absolute;top:0;left:0;width:100%;height:100%;display:block;"
       src="{{bannerSrc}}"
       mode="aspectFill"
       binderror="onBannerError"
       lazy-load="{{false}}"
       show-menu-by-longpress="{{false}}"
       key="{{bannerSrc}}"></image>
-    <view class="hero-bottom-fade"></view>
+    <view class="hero-bottom-fade" style="position:absolute;left:0;right:0;bottom:0;height:180rpx;background:linear-gradient(180deg,rgba(23,52,43,0) 0%,#17342b 100%);"></view>
   </view>
 
-  <view class="login-content">
-    <view class="brand-area">
-      <view class="brand-name">岩涺石 <text class="brand-en">Monster Planet</text></view>
+  <view class="login-content" style="position:relative;z-index:1;flex:1;min-height:58vh;display:flex;flex-direction:column;justify-content:flex-start;padding:42rpx 64rpx 80rpx;background:#17342b;">
+    <view class="brand-area" style="text-align:center;">
+      <view class="brand-mark" style="display:flex;align-items:center;justify-content:center;margin-bottom:28rpx;">
+        <view class="mark-line" style="width:58rpx;height:2rpx;background:#cdb47d;"></view>
+        <view class="mark-dot" style="width:12rpx;height:12rpx;margin:0 16rpx;border-radius:50%;background:#cdb47d;"></view>
+        <view class="mark-line" style="width:58rpx;height:2rpx;background:#cdb47d;"></view>
+      </view>
+      <view class="brand-name" style="color:#fffaf0;font-size:82rpx;font-weight:700;line-height:1.25;letter-spacing:8rpx;white-space:nowrap;">岩涺石</view>
+      <view class="brand-en" style="margin-top:10rpx;color:#d6be8f;font-size:26rpx;font-weight:400;letter-spacing:4rpx;">Monster Planet</view>
     </view>
 
-    <view class="cta-area">
-      <view class="cta-title">欢迎来到岩涺石</view>
-
+    <view class="cta-area" style="margin-top:11vh;">
+      <view class="login-intro" style="margin-bottom:28rpx;color:#e8d9b0;font-size:25rpx;line-height:1.5;text-align:center;white-space:nowrap;">欢迎来到岩涺石--可居住的山野艺术馆</view>
       <button
-        class="btn-primary btn-block login-btn"
+        class="login-btn"
+        style="width:100%;height:96rpx;display:flex;align-items:center;justify-content:center;padding:0;border-radius:48rpx;background:#e9d3a5;color:#19352b;font-size:30rpx;font-weight:700;letter-spacing:2rpx;"
         bindtap="doLogin"
         hover-class="btn-hover"
         loading="{{loading}}"
       >
-        微信登录
+        游客登录体验
       </button>
 
-      <view class="agree-row" bindtap="toggleAgree">
-        <view class="checkbox {{agreed ? 'checked' : ''}}">
+      <view class="agree-row" style="display:flex;align-items:center;justify-content:center;margin-top:30rpx;white-space:nowrap;" bindtap="toggleAgree">
+        <view class="checkbox {{agreed ? 'checked' : ''}}" style="width:30rpx;height:30rpx;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-right:12rpx;border:2rpx solid #d6be8f;border-radius:7rpx;background:{{agreed ? '#d6be8f' : 'transparent'}};">
           <text wx:if="{{agreed}}" class="check-icon">✓</text>
         </view>
-        <text class="agree-text">我已阅读并同意<text class="link" catchtap="openPrivacy">《用户隐私协议》</text></text>
+        <text class="agree-text" style="color:rgba(255,250,240,0.78);font-size:22rpx;white-space:nowrap;">我已阅读并同意<text class="link" style="color:#e9d3a5;" catchtap="openPrivacy">《用户隐私协议》</text></text>
       </view>
     </view>
   </view>

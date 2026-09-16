@@ -3,7 +3,7 @@ Page({
   data: { list: [] },
   onLoad() {
     this.setData({
-      list: ACTIVITIES.map(a => Object.assign({}, a, { initial: a.name.charAt(0) }))
+      list: ACTIVITIES
     })
   },
   goDetail(e) { wx.navigateTo({ url: '/pages/activity-detail/activity-detail?id=' + e.currentTarget.dataset.id }) },

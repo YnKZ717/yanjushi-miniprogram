@@ -41,17 +41,6 @@
   border: none;
 }
 
-.p-badge-fallback {
-  background: rgba(255, 253, 248, 0.12);
-  border: 2rpx solid rgba(255, 253, 248, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 84rpx;
-  font-weight: 700;
-  color: #FFFDF8;
-  backdrop-filter: blur(10rpx);
-}
 
 .p-name {
   font-size: 72rpx;
@@ -228,6 +217,9 @@
 }
 .share-btn::after { border: none; }
 
+.wx-btn { background: #E8E8E6; }
+.wx-btn .sb-label { color: #888888; }
+
 .sb-label { font-size: 24rpx; font-weight: 600; letter-spacing: 1rpx; }
 
 .adopt-card {
@@ -305,6 +297,9 @@
 
 .pm-body {
   flex: 1;
+  min-height: 0;
+  width: 100%;
+  box-sizing: border-box;
   padding: 32rpx;
   overflow: auto;
   text-align: center;
@@ -325,9 +320,17 @@
   color: var(--color-text-secondary);
 }
 
-.poster-img {
+.poster-preview {
   width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.poster-img {
+  display: block;
+  width: 560rpx;
   max-width: 560rpx;
+  margin: 0 auto;
   border-radius: 24rpx;
   box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.15);
 }
@@ -386,15 +389,5 @@
   gap: 10rpx;
 }
 .sm-item::after { border: none; }
-.sm-icon-wrap {
-  width: 96rpx; height: 96rpx;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 8rpx;
-}
-.sm-char { font-size: 40rpx; font-weight: 700; color: var(--color-primary); }
-.sm-wx { background: rgba(44, 95, 78, 0.12); }
-.sm-pyq { background: rgba(201, 169, 97, 0.18); }
-.sm-pyq .sm-char { color: #8a6d2c; }
 .sm-label { font-size: 26rpx; font-weight: 600; color: var(--color-text); }
 .sm-sub { font-size: 20rpx; color: var(--color-text-muted); }

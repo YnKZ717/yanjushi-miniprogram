@@ -31,7 +31,6 @@
   </view>
   <view class="safe-bottom"></view>
   <view class="cart-bar" bindtap="openCart">
-    <view class="c-icon">购</view>
     <view class="c-count">{{cart.length}}件 · ¥{{cartTotal}}</view>
     <view class="c-btn-go">去结算 ›</view>
   </view>

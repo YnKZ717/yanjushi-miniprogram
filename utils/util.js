@@ -70,27 +70,21 @@ function hideLoading() {
 
 function showModal(title, content, options = {}) {
   return new Promise((resolve) => {
-    let settled = false
-    const done = (value) => {
-      if (settled) return
-      settled = true
-      clearTimeout(timer)
-      resolve(value)
+    try {
+      wx.showModal({
+        title,
+        content,
+        confirmText: options.confirmText || '确定',
+        cancelText: options.cancelText || '取消',
+        confirmColor: options.confirmColor || '#2C5F4E',
+        showCancel: options.showCancel !== false,
+        success: (res) => resolve(res.confirm),
+        fail: () => resolve(false)
+      })
+    } catch (err) {
+      console.error('弹窗打开失败:', err)
+      resolve(false)
     }
-    const timer = setTimeout(() => {
-      showToast('弹窗打开失败，请重试')
-      done(false)
-    }, 1500)
-    wx.showModal({
-      title,
-      content,
-      confirmText: options.confirmText || '确定',
-      cancelText: options.cancelText || '取消',
-      confirmColor: options.confirmColor || '#2C5F4E',
-      showCancel: options.showCancel !== false,
-      success: (res) => done(res.confirm),
-      fail: () => done(false)
-    })
   })
 }
 
@@ -191,90 +185,78 @@ function checkDuplicateOrder(params) {
   }
 }
 
-/* ================= 相册授权 + 保存海报（拒绝引导打开设置） ================= */
+/* ================= 保存海报到相册 ================= */
 function saveImageToAlbumWithAuth(tempFilePath) {
   return new Promise((resolve) => {
     if (!tempFilePath) {
-      showToast('海报还没生成好哦')
-      return resolve({ ok: false })
+      return resolve({ ok: false, reason: 'noFile' })
+    }
+
+    let settled = false
+    let retriedAfterSetting = false
+    let retriedAfterPrivacy = false
+    const done = (result) => {
+      if (settled) return
+      settled = true
+      resolve(result)
+    }
+
+    const openAlbumSetting = () => {
+      showModal('需要相册权限', '保存海报需要相册写入权限。要去设置中开启吗？', {
+        confirmText: '去设置', confirmColor: '#2C5F4E'
+      }).then((yes) => {
+        if (!yes) return done({ ok: false, reason: 'permission' })
+        wx.openSetting({
+          success: (res) => {
+            if (res.authSetting && res.authSetting['scope.writePhotosAlbum']) {
+              retriedAfterSetting = true
+              doSave()
+            } else {
+              done({ ok: false, reason: 'permission' })
+            }
+          },
+          fail: () => done({ ok: false, reason: 'permission' })
+        })
+      })
     }
 
     const doSave = () => {
       wx.saveImageToPhotosAlbum({
         filePath: tempFilePath,
-        success: () => resolve({ ok: true }),
+        success: () => done({ ok: true }),
         fail: (err) => {
           console.warn('[saveImageToAlbumWithAuth] fail:', err)
           const errMsg = (err && err.errMsg) ? err.errMsg : ''
-          if (errMsg.includes('auth deny') || errMsg.includes('authorize')) {
-            showModal('需要相册权限', '保存海报到相册需要写入相册的权限。\n点「去设置」→ 打开「保存到相册」开关后，再回来重新点保存即可。', {
-              confirmText: '去设置',
-              confirmColor: '#C44536'
-            }).then(yes => {
-              if (yes) {
-                wx.openSetting({
-                  success: () => resolve({ ok: false, needRetry: true }),
-                  fail: () => resolve({ ok: false, manualTip: true })
-                })
-              } else {
-                resolve({ ok: false, manualTip: true })
-              }
-            })
-          } else {
-            resolve({ ok: false, manualTip: true })
+          if (/scope is not declared/i.test(errMsg)) {
+            return done({ ok: false, reason: 'privacyDeclaration', errMsg })
           }
+          if (/privacy/i.test(errMsg)) {
+            if (!retriedAfterPrivacy && typeof wx.requirePrivacyAuthorize === 'function') {
+              retriedAfterPrivacy = true
+              return wx.requirePrivacyAuthorize({
+                success: () => doSave(),
+                fail: () => done({ ok: false, reason: 'privacy', errMsg })
+              })
+            }
+            return done({ ok: false, reason: 'privacy', errMsg })
+          }
+          const denied = /auth deny|authorize|permission denied/i.test(errMsg)
+          if (!denied || retriedAfterSetting) {
+            return done({ ok: false, reason: 'save', errMsg })
+          }
+          wx.getSetting({
+            success: (res) => {
+              const albumScope = res.authSetting && res.authSetting['scope.writePhotosAlbum']
+              if (albumScope === false) openAlbumSetting()
+              else done({ ok: false, reason: 'unavailable', errMsg })
+            },
+            fail: () => done({ ok: false, reason: 'unavailable', errMsg })
+          })
         }
       })
     }
 
-    wx.getSetting({
-      success: (res) => {
-        if (res.authSetting['scope.writePhotosAlbum'] === false) {
-          showModal('需要相册权限', '之前你拒绝了相册权限，保存海报需要去设置开启。', {
-            confirmText: '去设置',
-            confirmColor: '#C44536'
-          }).then(yes => {
-            if (yes) {
-              wx.openSetting({
-                success: (s2) => {
-                  if (s2.authSetting['scope.writePhotosAlbum']) doSave()
-                  else resolve({ ok: false, manualTip: true })
-                },
-                fail: () => resolve({ ok: false, manualTip: true })
-              })
-            } else {
-              resolve({ ok: false, manualTip: true })
-            }
-          })
-        } else if (res.authSetting['scope.writePhotosAlbum'] === true) {
-          doSave()
-        } else {
-          wx.authorize({
-            scope: 'scope.writePhotosAlbum',
-            success: () => doSave(),
-            fail: () => {
-              showModal('需要相册权限', '保存海报需要写入相册权限，是否去设置打开？', {
-                confirmText: '去设置',
-                confirmColor: '#C44536'
-              }).then(yes => {
-                if (yes) {
-                  wx.openSetting({
-                    success: (s2) => {
-                      if (s2.authSetting['scope.writePhotosAlbum']) doSave()
-                      else resolve({ ok: false, manualTip: true })
-                    },
-                    fail: () => resolve({ ok: false, manualTip: true })
-                  })
-                } else {
-                  resolve({ ok: false, manualTip: true })
-                }
-              })
-            }
-          })
-        }
-      },
-      fail: () => doSave()
-    })
+    doSave()
   })
 }
 

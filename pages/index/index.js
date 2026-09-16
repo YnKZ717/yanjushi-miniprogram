@@ -17,7 +17,7 @@ Page({
     this.setData({
       rooms: ROOMS.slice(0, 3),
       activities: ACTIVITIES,
-      experiences: EXPERIENCES.map(x => Object.assign({}, x, { initial: x.name.charAt(0) }))
+      experiences: EXPERIENCES
     })
   },
 

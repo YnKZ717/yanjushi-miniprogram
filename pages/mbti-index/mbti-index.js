@@ -45,12 +45,9 @@ Page({
     if (!app.requireLogin()) return
     const ui = app.globalData.userInfo
     const mbtiResult = app.globalData.mbtiResult
-    const nick = ((ui && ui.nickName) || '').trim()
     this.setData({
       userInfo: ui,
-      mbtiResult: mbtiResult,
-      avatarInitial: nick ? nick.charAt(0) : '居',
-      personaInitial: mbtiResult && mbtiResult.persona ? mbtiResult.persona.name.charAt(0) : ''
+      mbtiResult: mbtiResult
     })
     const { generateResidentNo } = require('../../utils/util.js')
     this.setData({ residentNo: generateResidentNo(app.globalData.userInfo.openid) })

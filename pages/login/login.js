@@ -89,8 +89,8 @@ Page({
       if (isGuest) {
         showModal('欢迎来到岩涺石', '您选择了不授权微信头像昵称，我们将以「游客居民」身份带您进入民宿世界~\n\n以后想完善资料时，随时可以在「居民中心」补充即可。', {
           showCancel: false, confirmText: '开始探索', confirmColor: '#2C5F4E'
-        }).then(() => {
-          wx.switchTab({ url: '/pages/mbti-index/mbti-index' })
+        }).then((confirmed) => {
+          if (confirmed) wx.switchTab({ url: '/pages/mbti-index/mbti-index' })
         })
       } else {
         showToast('登录成功', 'success')
@@ -103,8 +103,8 @@ Page({
       hideLoading()
       showModal('欢迎来到岩涺石', '暂时无法获取您的微信资料，我们将以「游客居民」身份带您进入~\n\n订单、收养等核心功能均可正常使用，以后可以在「居民中心」完善资料。', {
         showCancel: false, confirmText: '开始探索', confirmColor: '#2C5F4E'
-      }).then(() => {
-        wx.switchTab({ url: '/pages/mbti-index/mbti-index' })
+      }).then((confirmed) => {
+        if (confirmed) wx.switchTab({ url: '/pages/mbti-index/mbti-index' })
       })
     } finally {
       this.setData({ loading: false })

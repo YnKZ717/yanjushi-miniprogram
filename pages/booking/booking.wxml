@@ -55,7 +55,6 @@
   </view>
 
   <view class="card direct-card">
-    <view class="dc-icon">直</view>
     <view class="dc-body">
       <view class="dc-title">私域直订专属权益</view>
       <view class="dc-list">

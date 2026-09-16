@@ -27,13 +27,11 @@ Page({
     const ui = app.globalData.userInfo
     const openid = ui && ui.openid
     const mbti = app.globalData.mbtiResult
-    const nick = ((ui && ui.nickName) || '').trim()
     this.setData({
       userInfo: ui,
       residentNo: generateResidentNo(openid),
       referralCode: generateReferralCode(openid),
-      mbtiResult: mbti,
-      avatarInitial: nick ? nick.charAt(0) : '居'
+      mbtiResult: mbti
     })
     this.loadStats()
   },

@@ -4,7 +4,7 @@ Page({
   data: { list: [] },
   onLoad() {
     this.setData({
-      list: EXPERIENCES.map(x => Object.assign({}, x, { initial: x.name.charAt(0) }))
+      list: EXPERIENCES
     })
   },
   book(e) {

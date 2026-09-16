@@ -8,7 +8,6 @@
       <view class="a-cover" style="background:linear-gradient(135deg,{{item.color}}22,{{item.color}}88);">
         <image wx:if="{{item.cover}}" src="{{item.cover}}" mode="aspectFill" class="a-cover-img" binderror="onCoverError" data-id="{{item.id}}"></image>
         <view wx:else class="cover-label">
-          <view class="cl-name" style="font-size:72rpx;">{{item.initial}}</view>
           <view class="cl-en" style="font-size:20rpx;letter-spacing:2rpx;">{{item.name}}</view>
         </view>
       </view>

@@ -20,8 +20,7 @@ Page({
     const r = await getAdoptRemain()
     this.setData({
       remain: r.remain,
-      total: r.total,
-      stories: this.data.stories.map(s => Object.assign({}, s, { initial: s.name.charAt(0) }))
+      total: r.total
     })
   },
 

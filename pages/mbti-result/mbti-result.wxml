@@ -4,7 +4,6 @@
     <image wx:if="{{persona.cover}}" src="{{persona.cover}}" mode="aspectFill" class="hero-cover" binderror="onHeroCoverError" key="hero-{{persona.cover}}"></image>
     <view class="hero-content">
       <image wx:if="{{persona.cover}}" src="{{persona.cover}}" mode="aspectFill" class="p-badge" binderror="onBadgeCoverError" key="badge-{{persona.cover}}"></image>
-      <view wx:else class="p-badge p-badge-fallback">{{personaInitial}}</view>
       <view class="p-name">{{persona.name}}</view>
       <view class="p-name-en">{{persona.nameEn}}</view>
       <view class="p-mbti-wrap">
@@ -65,11 +64,11 @@
       <view class="share-title t-bar t-bar-accent">把你的怪兽人格分享出去</view>
       <view class="share-desc">生成专属海报保存相册发小红书/朋友圈，或者直接分享小程序给朋友</view>
       <view class="share-btns">
-        <button class="share-btn poster-btn" bindtap="generatePoster" open-type="share" hover-class="none">
+        <button class="share-btn poster-btn" bindtap="generatePoster" hover-class="none">
           <text class="sb-label" style="color:var(--color-gold);">生成海报</text>
         </button>
-        <button class="share-btn wx-btn" hover-class="none" bindtap="openShare">
-          <text class="sb-label" style="color:var(--color-primary);">分享好友</text>
+        <button class="share-btn wx-btn" hover-class="none" bindtap="shareFriendUnavailable">
+          <text class="sb-label">分享好友</text>
         </button>
         <button class="share-btn xhs-btn" bindtap="copyXiaohongshu" hover-class="none">
           <text class="sb-label" style="color:var(--color-accent);">{{xhsCopyReady ? '已复制✓' : '小红书文案'}}</text>
@@ -92,7 +91,7 @@
   <view class="safe-bottom"></view>
 
   <view class="poster-mask" wx:if="{{showPoster}}" bindtap="closePoster">
-    <view class="poster-modal" catchtap="">
+    <view class="poster-modal" catchtap="stopPosterMaskTap">
       <view class="pm-header">
         <text class="pm-title">你的专属怪兽人格海报</text>
         <text class="pm-close" bindtap="closePoster">✕</text>
@@ -102,7 +101,9 @@
         <view class="gen-text">正在绘制海报...</view>
       </view>
       <scroll-view class="pm-body" wx:else scroll-y>
-        <image wx:if="{{posterTempPath}}" class="poster-img" src="{{posterTempPath}}" mode="widthFix" bindtap="previewPoster"></image>
+        <view class="poster-preview" wx:if="{{posterTempPath}}">
+          <image class="poster-img" src="{{posterTempPath}}" mode="widthFix" bindtap="previewPoster"></image>
+        </view>
         <view class="pm-tips">
           <view class="tip-item">· 点击图片可以预览</view>
           <view class="tip-item">· 保存后可发小红书 / 朋友圈</view>
@@ -112,26 +113,6 @@
       <view class="pm-actions">
         <button class="btn-outline" bindtap="closePoster">关闭</button>
         <button class="btn-primary pm-save" bindtap="savePoster" disabled="{{generating || !posterTempPath}}">保存到相册</button>
-      </view>
-    </view>
-  </view>
-
-  <view class="share-modal-mask" wx:if="{{showShareModal}}" bindtap="closeShare">
-    <view class="share-modal" catchtap="">
-      <view class="sm-header">
-        <text class="sm-title">分享给朋友</text>
-        <text class="sm-close" bindtap="closeShare">✕</text>
-      </view>
-      <view class="sm-body">
-        <button class="sm-item" open-type="share" hover-class="none">
-          <view class="sm-icon-wrap sm-wx"><text class="sm-char">信</text></view>
-          <text class="sm-label">发送给朋友</text>
-        </button>
-        <button class="sm-item" bindtap="closeShare;generatePoster();" hover-class="none">
-          <view class="sm-icon-wrap sm-pyq"><text class="sm-char">图</text></view>
-          <text class="sm-label">朋友圈/小红书</text>
-          <text class="sm-sub">（保存图片后手动发）</text>
-        </button>
       </view>
     </view>
   </view>

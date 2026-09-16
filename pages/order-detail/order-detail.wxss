@@ -64,13 +64,6 @@
   border: 1rpx solid rgba(44,95,78,0.15);
   display: flex; align-items: center;
 }
-.wx-icon {
-  width: 72rpx; height: 72rpx; border-radius: 20rpx;
-  background: var(--color-primary);
-  color: #FFFDF8; font-size: 34rpx; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  margin-right: 20rpx; flex-shrink: 0;
-}
 .wx-body { flex: 1; }
 .wx-title { font-size: 28rpx; font-weight: 700; color: var(--color-primary); margin-bottom: 6rpx; }
 .wx-desc { font-size: 22rpx; color: var(--color-text-secondary); line-height: 1.6; }

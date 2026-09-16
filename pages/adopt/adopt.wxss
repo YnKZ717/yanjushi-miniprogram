@@ -92,13 +92,6 @@
   padding: 20rpx 16rpx;
   text-align: center;
 }
-.s-icon {
-  width: 96rpx; height: 96rpx;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 12rpx;
-  font-size: 40rpx; font-weight: 700;
-}
 .s-name { font-size: 22rpx; font-weight: 600; color: var(--color-text); margin-bottom: 4rpx; }
 .s-owner { font-size: 18rpx; color: var(--color-text-secondary); line-height: 1.4; }
 

@@ -51,6 +51,11 @@
     ]
   },
   "style": "v2",
+  "permission": {
+    "scope.writePhotosAlbum": {
+      "desc": "用于将生成的怪兽人格海报保存到相册"
+    }
+  },
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents",
   "__usePrivacyCheck__": true

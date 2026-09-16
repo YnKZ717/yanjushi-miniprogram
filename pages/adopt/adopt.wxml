@@ -54,7 +54,6 @@
     <view class="h-row"><text class="h-bar" style="background:#A67C52;"></text><text class="h-title">已收养的怪兽们（部分）</text></view>
     <view class="story-wall">
       <view class="story-item" wx:for="{{stories}}" wx:key="id">
-        <view class="s-icon" style="background:{{item.color}}22;color:{{item.color}};">{{item.initial}}</view>
         <view class="s-name">No.{{item.no}} · {{item.name}}</view>
         <view class="s-owner">{{item.owner}}</view>
       </view>

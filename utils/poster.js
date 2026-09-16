@@ -3,13 +3,9 @@ const POSTER_H = 1334
 
 function drawPoster(persona) {
   return new Promise((resolve, reject) => {
-    const query = wx.createSelectorQuery()
-    let canvasEl = null
-
     const ensureCanvas = () => new Promise((res) => {
       const tryFind = (attempt = 0) => {
         if (attempt > 10) return res(null)
-        const c = document ? null : null
         const q = wx.createSelectorQuery()
         q.select('#mbti-poster-canvas')
           .fields({ node: true, size: true })
@@ -59,77 +55,52 @@ function drawPoster(persona) {
       drawGrain(ctx, W, H)
 
       ctx.save()
-      const badgeSize = 240
-      const badgeX = (W - badgeSize) / 2
-      const badgeY = 120
-      roundRect(ctx, badgeX, badgeY, badgeSize, badgeSize, 56)
-      ctx.fillStyle = 'rgba(255, 253, 248, 0.10)'
-      ctx.fill()
-      ctx.lineWidth = 3
-      ctx.strokeStyle = 'rgba(255, 253, 248, 0.25)'
-      ctx.stroke()
-      ctx.restore()
-
-      ctx.save()
-      ctx.font = 'bold 110px sans-serif'
-      ctx.textAlign = 'center'
-      ctx.textBaseline = 'middle'
-      ctx.fillStyle = '#FFFDF8'
-      ctx.fillText(persona.name.charAt(0), W / 2, badgeY + badgeSize / 2)
-      ctx.restore()
-
-      ctx.save()
-      ctx.beginPath()
-      ctx.arc(W / 2, badgeY + badgeSize - 30, 9, 0, Math.PI * 2)
-      ctx.fillStyle = hexToRgba(persona.colors.secondary, 0.9)
-      ctx.fill()
-      ctx.restore()
-
-      ctx.save()
-      ctx.font = 'bold 88px sans-serif'
+      ctx.font = 'bold 84px sans-serif'
       ctx.textAlign = 'center'
       ctx.textBaseline = 'top'
       ctx.fillStyle = '#FFFDF8'
-      ctx.fillText(persona.name, W / 2, badgeY + badgeSize + 60)
+      ctx.fillText(persona.name, W / 2, 126)
       ctx.restore()
 
       ctx.save()
-      ctx.font = '28px sans-serif'
-      ctx.textAlign = 'center'
-      ctx.fillStyle = 'rgba(255, 253, 248, 0.55)'
-      ctx.letterSpacing = '8px'
-      ctx.fillText(persona.nameEn.toUpperCase(), W / 2, badgeY + badgeSize + 170)
-      ctx.restore()
-
-      ctx.save()
-      const mbtiText = persona.mbtiRange.join('   ·   ')
       ctx.font = '26px sans-serif'
-      ctx.fillStyle = 'rgba(255, 253, 248, 0.8)'
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'top'
+      ctx.fillStyle = 'rgba(255, 253, 248, 0.55)'
+      ctx.fillText(persona.nameEn.toUpperCase(), W / 2, 238)
+      ctx.restore()
+
+      ctx.save()
+      const mbtiText = persona.mbtiRange.join('  ·  ')
+      ctx.font = '25px sans-serif'
       const mbtiW = ctx.measureText(mbtiText).width
-      const mbtiX = (W - mbtiW) / 2 - 40
-      const mbtiY = badgeY + badgeSize + 220
-      roundRect(ctx, mbtiX, mbtiY, mbtiW + 80, 56, 28)
+      const mbtiBoxW = Math.min(W - 160, mbtiW + 76)
+      const mbtiY = 296
+      roundRect(ctx, (W - mbtiBoxW) / 2, mbtiY, mbtiBoxW, 58, 29)
       ctx.fillStyle = 'rgba(255, 253, 248, 0.1)'
       ctx.fill()
       ctx.strokeStyle = 'rgba(255, 253, 248, 0.18)'
       ctx.lineWidth = 1.5
       ctx.stroke()
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
       ctx.fillStyle = 'rgba(255, 253, 248, 0.9)'
-      ctx.fillText(mbtiText, W / 2, mbtiY + 18)
+      ctx.fillText(mbtiText, W / 2, mbtiY + 29)
       ctx.restore()
 
       ctx.save()
-      ctx.font = 'italic 32px serif'
+      ctx.font = '30px sans-serif'
       ctx.textAlign = 'center'
+      ctx.textBaseline = 'top'
       ctx.fillStyle = 'rgba(255, 253, 248, 0.88)'
-      wrapText(ctx, '「' + persona.tagline + '」', W / 2, 610, W - 160, 52, 'center')
+      drawWrappedText(ctx, '「' + persona.tagline + '」', W / 2, 394, W - 160, 44, 2, 'center')
       ctx.restore()
 
       ctx.save()
       const boxX = 80
-      const boxY = 760
+      const boxY = 548
       const boxW = W - 160
-      roundRect(ctx, boxX, boxY, boxW, 260, 32)
+      roundRect(ctx, boxX, boxY, boxW, 284, 32)
       ctx.fillStyle = 'rgba(255, 253, 248, 0.06)'
       ctx.fill()
       ctx.strokeStyle = 'rgba(255, 253, 248, 0.12)'
@@ -138,74 +109,61 @@ function drawPoster(persona) {
 
       ctx.font = '20px sans-serif'
       ctx.textAlign = 'left'
+      ctx.textBaseline = 'top'
       ctx.fillStyle = hexToRgba(persona.colors.secondary, 0.95)
-      ctx.fillText('人 格 画 像', boxX + 40, boxY + 50)
+      ctx.fillText('人 格 画 像', boxX + 36, boxY + 30)
 
-      ctx.font = '26px sans-serif'
+      ctx.font = '25px sans-serif'
       ctx.fillStyle = 'rgba(255, 253, 248, 0.9)'
-      wrapText(ctx, truncate(persona.description, 88), boxX + 40, boxY + 96, boxW - 80, 44, 'left')
+      drawWrappedText(ctx, persona.description, boxX + 36, boxY + 75, boxW - 72, 37, 5, 'left')
       ctx.restore()
 
       ctx.save()
-      const matchY = boxY + 260 + 48
+      const matchY = 870
       ctx.font = '20px sans-serif'
       ctx.textAlign = 'left'
+      ctx.textBaseline = 'top'
       ctx.fillStyle = 'rgba(201, 169, 97, 0.95)'
       ctx.fillText('为 你 推 荐', 80, matchY)
 
-      let rowY = matchY + 40
-      persona.matchProducts.slice(0, 2).forEach((p, i) => {
+      let rowY = 910
+      persona.matchProducts.slice(0, 2).forEach((p) => {
         const rX = 80
         const rW = W - 160
-        const rH = 92
+        const rH = 94
         roundRect(ctx, rX, rowY, rW, rH, 22)
         ctx.fillStyle = 'rgba(255, 253, 248, 0.08)'
         ctx.fill()
-        const badgeText = p.type === 'activity' ? '活动' : p.type === 'room' ? '客房' : '体验'
+        const typeText = p.type === 'activity' ? '活动' : p.type === 'room' ? '客房' : '体验'
         ctx.font = '20px sans-serif'
-        const bw = ctx.measureText(badgeText).width + 28
-        roundRect(ctx, rX + 24, rowY + 22, bw, 44, 22)
-        ctx.fillStyle = hexToRgba(persona.colors.primary, 0.95)
-        ctx.fill()
+        ctx.fillStyle = hexToRgba(persona.colors.secondary, 0.95)
+        ctx.fillText(typeText, rX + 24, rowY + 15)
+        ctx.font = 'bold 27px sans-serif'
         ctx.fillStyle = '#FFFDF8'
-        ctx.fillText(badgeText, rX + 24 + 14, rowY + 52)
-        ctx.font = 'bold 28px sans-serif'
-        ctx.fillStyle = '#FFFDF8'
-        ctx.fillText(p.name, rX + 24 + bw + 20, rowY + 54)
-        ctx.font = 'bold 26px sans-serif'
+        ctx.fillText(fitText(ctx, p.name, 360), rX + 24, rowY + 52)
+        ctx.font = 'bold 25px sans-serif'
         ctx.textAlign = 'right'
-        ctx.fillStyle = '#C44536'
-        ctx.fillText('¥' + (typeof p.price === 'number' ? p.price : p.price.split('-')[0] + '起'), rX + rW - 24, rowY + 54)
+        ctx.textBaseline = 'middle'
+        ctx.fillStyle = '#e8d9b0'
+        ctx.fillText('¥' + (typeof p.price === 'number' ? p.price : p.price.split('-')[0] + '起'), rX + rW - 24, rowY + rH / 2)
         ctx.textAlign = 'left'
-        rowY += rH + 16
+        ctx.textBaseline = 'top'
+        rowY += rH + 14
       })
       ctx.restore()
 
       ctx.save()
-      const footerY = H - 200
+      const footerY = 1152
       ctx.fillStyle = 'rgba(255, 253, 248, 0.12)'
       ctx.fillRect(80, footerY, W - 160, 2)
-      ctx.font = 'bold 30px sans-serif'
+      ctx.font = 'bold 28px sans-serif'
       ctx.textAlign = 'left'
+      ctx.textBaseline = 'top'
       ctx.fillStyle = '#FFFDF8'
-      ctx.fillText('岩涺石 Monster Planet', 80, footerY + 60)
-      ctx.font = '22px sans-serif'
-      ctx.fillStyle = 'rgba(255, 253, 248, 0.6)'
-      ctx.fillText('住进颜料的名字里，带走未被规训的自己', 80, footerY + 100)
+      ctx.fillText('岩涺石 Monster Planet', 80, footerY + 32)
       ctx.font = '20px sans-serif'
-      ctx.fillStyle = 'rgba(255, 253, 248, 0.45)'
-      ctx.fillText('浙江·安吉·报福镇 | 扫码测你的怪兽人格', 80, footerY + 140)
-
-      const qrSize = 140
-      const qrX = W - 80 - qrSize
-      const qrY = footerY + 10
-      roundRect(ctx, qrX, qrY, qrSize, qrSize, 12)
-      ctx.fillStyle = '#FFFDF8'
-      ctx.fill()
-      ctx.fillStyle = '#1a1a1a'
-      ctx.font = 'bold 20px sans-serif'
-      ctx.textAlign = 'center'
-      ctx.fillText('小程序码', qrX + qrSize / 2, qrY + qrSize / 2 + 4)
+      ctx.fillStyle = 'rgba(255, 253, 248, 0.6)'
+      ctx.fillText('浙江·安吉·报福镇', 80, footerY + 82)
       ctx.restore()
 
       try {
@@ -233,11 +191,9 @@ function drawPoster(persona) {
           ensureCanvas().then((info) => {
             if (!info) return reject(new Error('canvas not found'))
             const canvas = info.node
-            const dpr = wx.getSystemInfoSync().pixelRatio
-            canvas.width = POSTER_W * dpr
-            canvas.height = POSTER_H * dpr
+            canvas.width = POSTER_W
+            canvas.height = POSTER_H
             const ctx = canvas.getContext('2d')
-            ctx.scale(dpr, dpr)
             draw(canvas, ctx)
           })
         })
@@ -283,37 +239,39 @@ function roundRect(ctx, x, y, w, h, r) {
   ctx.closePath()
 }
 
-function wrapText(ctx, text, x, y, maxWidth, lineHeight, align = 'left') {
-  const chars = text.split('')
+function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight, maxLines, align = 'left') {
+  const chars = String(text || '').split('')
   let line = ''
-  let currentY = y
   const lines = []
   for (let i = 0; i < chars.length; i++) {
     const test = line + chars[i]
     if (ctx.measureText(test).width > maxWidth && line) {
-      lines.push(line)
-      line = chars[i]
+      if (/[，。！？；：、）》」』）]/.test(chars[i]) && line.length > 1) {
+        lines.push(line.slice(0, -1))
+        line = line.slice(-1) + chars[i]
+      } else {
+        lines.push(line)
+        line = chars[i]
+      }
     } else {
       line = test
     }
   }
   if (line) lines.push(line)
-  lines.forEach((ln, idx) => {
-    let drawX = x
-    if (align === 'center') {
-      drawX = x
-      ctx.textAlign = 'center'
-    } else if (align === 'right') {
-      drawX = x
-      ctx.textAlign = 'right'
-    }
-    ctx.fillText(ln, drawX, currentY + idx * lineHeight)
+  const visible = lines.slice(0, maxLines)
+  if (lines.length > maxLines) visible[maxLines - 1] = fitText(ctx, visible[maxLines - 1] + '…', maxWidth)
+  ctx.textAlign = align
+  visible.forEach((ln, idx) => {
+    ctx.fillText(ln, x, y + idx * lineHeight)
   })
 }
 
-function truncate(s, n) {
-  if (!s) return ''
-  return s.length > n ? s.slice(0, n) + '…' : s
+function fitText(ctx, text, maxWidth) {
+  const value = String(text || '')
+  if (ctx.measureText(value).width <= maxWidth) return value
+  let result = value
+  while (result && ctx.measureText(result + '…').width > maxWidth) result = result.slice(0, -1)
+  return result + '…'
 }
 
 module.exports = {

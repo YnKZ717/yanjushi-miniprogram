@@ -27,7 +27,6 @@ Page({
         _heroTriedFallback: false,
         _badgeTriedFallback: false
       }),
-      personaInitial: result.persona.name.charAt(0),
       scores: result.scores,
       matchProducts: result.persona.matchProducts.map(p => ({
         ...p,
@@ -100,6 +99,17 @@ Page({
     this.setData({ showShareModal: false })
   },
 
+  stopShareMaskTap() {},
+
+  shareFriendUnavailable() {
+    showToast('暂无体验~')
+  },
+
+  sharePosterToSocial() {
+    this.closeShare()
+    this.generatePoster()
+  },
+
   async generatePoster() {
     if (this.data.generating) return
     this.setData({ generating: true, showPoster: true })
@@ -122,15 +132,23 @@ Page({
     }
     const r = await saveImageToAlbumWithAuth(this.data.posterTempPath)
     if (r.ok) {
-      showToast('已保存到相册，去发小红书吧！', 'success')
-    } else if (r.manualTip) {
-      showModal('保存小贴士', '暂时无法自动保存到相册~\n\n你可以先点「查看大图」进入预览，然后**长按图片**，在弹出的菜单里选「保存到相册」即可。', {
-        showCancel: false, confirmText: '我知道了', confirmColor: '#2C5F4E'
+      showToast('已保存到相册', 'success')
+    } else {
+      let message = '图片未能写入相册。'
+      if (r.reason === 'permission') message = '相册权限未开启。'
+      if (r.reason === 'privacyDeclaration') message = '微信未允许本小程序调用相册写入接口，需要在微信公众平台补充相册用途声明。'
+      if (r.reason === 'privacy') message = '微信的隐私授权尚未完成。'
+      if (r.reason === 'unavailable') message = '微信未显示相册授权项。'
+      if (r.errMsg) message += '\n\n微信错误：' + r.errMsg.slice(0, 180)
+      message += '\n\n可先预览海报并尝试长按保存。'
+      const preview = await showModal('保存失败', message, {
+        confirmText: '预览海报', cancelText: '关闭', confirmColor: '#2C5F4E'
       })
-    } else if (!r.needRetry) {
-      showToast('保存失败，请稍后重试')
+      if (preview) this.previewPoster()
     }
   },
+
+  stopPosterMaskTap() {},
 
   previewPoster() {
     if (!this.data.posterTempPath) return
@@ -156,6 +174,7 @@ Page({
   },
 
   onShareAppMessage(res) {
+    if (res && res.from === 'button') this.closeShare()
     const persona = this.data.persona
     return {
       title: `我是${persona.name}｜测测你的内心怪兽人格`,
