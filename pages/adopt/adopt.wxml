@@ -3,44 +3,21 @@
     <view class="hero-bg"></view>
     <view class="h-content">
       <view class="h-title">怪兽收养计划</view>
-      <view class="h-price">¥ 398<span class="unit"> / 只</span></view>
-      <view class="h-sub">首年限量{{total}}只 · 售罄不补</view>
-    </view>
-    <view class="progress-card">
-      <view class="p-row">
-        <text class="p-label">已收养</text>
-        <text class="p-num">{{total - remain}}<text class="p-total"> / {{total}}只</text></text>
-      </view>
-      <view class="p-wrap">
-        <view class="p-fill" style="width:{{(1 - remain/total)*100}}%;"></view>
-      </view>
-      <view class="p-remain">还剩 <text class="r-n">{{remain}}</text> 只 · 先到先得</view>
+      <view class="h-price">¥ 398<span class="unit"> / 只 · 方案参考价</span></view>
+      <view class="h-sub">商赛方案展示 · 尚未开放真实收养</view>
     </view>
   </view>
 
   <view class="section">
-    <view class="h-row"><text class="h-bar" style="background:#6B8E4E;"></text><text class="h-title">每收养一只怪兽，种一棵白茶树</text></view>
+    <view class="h-row"><text class="h-bar" style="background:#6B8E4E;"></text><text class="h-title">计划：每收养一只怪兽，种一棵白茶树</text></view>
     <view class="tree-desc">
-      怪兽不只是一件摆件——它对应安吉后山上的一棵白茶树。树牌上写着怪兽的名字和您的居民编号，您可以每年回家"看它"。
+      方案设想让每只陶土怪兽对应一棵安吉白茶树，并制作写有怪兽名字和居民编号的树牌。具体种植与探访安排以正式落地方案为准。
     </view>
-    <view class="tree-row">
-      <view class="t-col">
-        <text class="t-num">{{total - remain}}</text>
-        <text class="t-l">已种茶树</text>
-      </view>
-      <view class="t-col">
-        <text class="t-num">{{remain}}</text>
-        <text class="t-l">剩余名额</text>
-      </view>
-      <view class="t-col">
-        <text class="t-num">4-6周</text>
-        <text class="t-l">怪兽邮寄到家</text>
-      </view>
-    </view>
+    <view class="tree-row"><view class="plan-note">拟首年制作 100 只 · 寄送周期暂按 4–6 周规划，均待实际确认</view></view>
   </view>
 
   <view class="section">
-    <view class="h-row"><text class="h-bar" style="background:#C9A961;"></text><text class="h-title">收养包含</text></view>
+    <view class="h-row"><text class="h-bar" style="background:#C9A961;"></text><text class="h-title">方案拟包含</text></view>
     <view class="incl">
       <view class="i-item">✓ 独1只陶土小怪兽（主理人捏塑+您命名）</view>
       <view class="i-item">✓ 白茶树种植 + 专属树牌</view>
@@ -50,21 +27,9 @@
     </view>
   </view>
 
-  <view class="section">
-    <view class="h-row"><text class="h-bar" style="background:#A67C52;"></text><text class="h-title">已收养的怪兽们（部分）</text></view>
-    <view class="story-wall">
-      <view class="story-item" wx:for="{{stories}}" wx:key="id">
-        <view class="s-name">No.{{item.no}} · {{item.name}}</view>
-        <view class="s-owner">{{item.owner}}</view>
-      </view>
-    </view>
-  </view>
-
   <view class="safe-bottom"></view>
   <view class="bottom-bar">
-    <view class="p"><text class="n">¥398</text><text class="u">/ 只</text></view>
-    <button class="btn-primary b-btn {{remain === 0 ? 'btn-disabled' : ''}}" bindtap="adopt" disabled="{{remain === 0}}">
-      {{remain === 0 ? '已售罄' : '立即收养'}}
-    </button>
+    <view class="p"><text class="n">¥398</text><text class="u"> / 只 · 参考价</text></view>
+    <button class="btn-primary b-btn" bindtap="adopt">申请收养</button>
   </view>
 </view>

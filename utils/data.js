@@ -83,6 +83,37 @@ const ROOMS = [
 
 const ACTIVITIES = [
   {
+    id: 'adopt-plan',
+    name: '怪兽收养计划',
+    type: 'IP主线',
+    priceRange: '398',
+    price: 398,
+    priceUnit: '元/只',
+    limit: 100,
+    period: '计划首年制作100只',
+    tags: ['方案展示', '拟制作100只', '拟配套茶树种植'],
+    color: '#A67C52',
+    cover: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@379795344f7a0bce951fd0ee895950833311603c/pics/activities/huodong-cover.jpg',
+    desc: '商赛方案：拟首年制作100只陶土小怪兽，由主理人捏塑、客人命名，并为每只怪兽配套一棵白茶树及专属树牌。计划尚未开放真实收养，具体权益以正式落地方案为准。',
+    scheduleNote: '方案展示，尚未开放真实收养；寄送周期暂按4–6周规划',
+    include: ['独1只陶土怪兽', '茶树种植+树牌', '怪兽收养证书', '编号居民证升级']
+  },
+  {
+    id: 'monster-factory-open-day',
+    name: '怪兽工厂开放日',
+    type: '陶艺与共创主线',
+    priceRange: '价格待定',
+    price: null,
+    priceUnit: '',
+    period: '计划每月最后一个周末',
+    tags: ['方案展示', '星球居民造兽大赛'],
+    color: '#4D7C4F',
+    cover: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/activities/stone.jpg',
+    desc: '怪兽工厂开放日——星球居民造兽大赛。方案拟邀请参与者使用陶土、竹材和自然材料自由创作怪兽，展示作品并由现场观众投票。具体举办日期、名额与价格以正式公布为准。',
+    scheduleNote: '活动方案展示；具体日期、名额与价格尚未确定，暂未开放预约。',
+    include: ['自由造兽创作', '作品展示', '现场观众投票']
+  },
+  {
     id: 'kiln-fire-tea',
     name: '窑火与茶',
     type: '茶文化主线',
@@ -98,38 +129,6 @@ const ACTIVITIES = [
     desc: '8席限定的深夜茶会。主理人亲自主持，从西北罐罐茶煮到安吉白茶白毫银针。柴烧茶器+窑火温度，把「看火」「等水沸」「听茶烟」变成一整个傍晚。16岁以上报名。',
     scheduleNote: '每季开窑后公布具体日期，请关注小程序排期',
     include: ['8席围炉茶会', '柴烧茶器品鉴', '窑火讲解', '茶点配食']
-  },
-  {
-    id: 'stone-message',
-    name: '石头的口信',
-    type: '陶艺+大地艺术主线',
-    priceRange: '198',
-    price: 198,
-    priceUnit: '元/位（延伸活动）',
-    limit: 20,
-    period: '每月最后一个周末',
-    tags: ['每月固定', '延伸活动「烧一片大地」'],
-    color: '#4D7C4F',
-    cover: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/activities/stone.jpg',
-    desc: '每个月最后一个周末，我们在南坞里峡谷找一块天然场地。大家在收集来的石头上写字、画、刻，然后放进窑里烧。延伸活动「烧一片大地」198元/位，把口信永久留在山里。',
-    scheduleNote: '每月最后一个周六/日，排期以小程序为准',
-    include: ['石头材料', '烧制', '活动物料', '指导']
-  },
-  {
-    id: 'adopt-plan',
-    name: '怪兽收养计划',
-    type: 'IP主线',
-    priceRange: '398',
-    price: 398,
-    priceUnit: '元/只',
-    limit: 100,
-    period: '首年限量100只',
-    tags: ['限量100只', '售罄不补', '种一棵茶树'],
-    color: '#A67C52',
-    cover: '',
-    desc: '首年限量100只独一无二的陶土小怪兽，由主理人捏塑+客人命名。每收养一只怪兽，民宿在后山安吉白茶园种一棵白茶树，树牌上写怪兽名字和编号。居民每年可以回来"回家看它。',
-    scheduleNote: '全年收养，先到先得；收养后4-6周寄到家',
-    include: ['独1只陶土怪兽', '茶树种植+树牌', '怪兽收养证书', '编号居民证升级']
   },
   {
     id: 'chai-shao-camp',

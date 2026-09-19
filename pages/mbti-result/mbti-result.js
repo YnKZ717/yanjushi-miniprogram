@@ -30,7 +30,7 @@ Page({
       scores: result.scores,
       matchProducts: result.persona.matchProducts.map(p => ({
         ...p,
-        priceText: formatPrice(p.price)
+        priceText: p.price == null ? '价格待定' : formatPrice(p.price)
       }))
     })
   },
@@ -74,6 +74,10 @@ Page({
 
   goBooking(e) {
     const item = e.currentTarget.dataset.item
+    if (item.key === 'monster-factory-open-day') {
+      showToast('暂未开放')
+      return
+    }
     const params = Object.entries({
       type: item.type,
       key: item.key,

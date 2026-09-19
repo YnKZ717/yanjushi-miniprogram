@@ -43,14 +43,14 @@ const PERSONAS = {
     tagline: '手脏过泥巴里打滚，快乐比逻辑先',
     description: '你的快乐是即时的、感官的、不按剧本的。你捏泥巴你就捏，管它圆不圆。你是怪兽收养计划的天选主人——捏100只限量怪兽的第___号居民，手要留在大地上打滚的每一粒',
     matchProducts: [
-      { type: 'activity', key: 'adopt-plan', name: '怪兽收养计划', price: CONFIG.PRICE.ADOPT_PLAN, desc: '首年限量100只·种一棵茶树' },
+      { type: 'activity', key: 'adopt-plan', name: '怪兽收养计划（方案）', price: CONFIG.PRICE.ADOPT_PLAN, desc: '拟首年制作100只·配套茶树种植' },
       { type: 'experience', key: 'handbuilding', name: '陶艺手作体验', price: CONFIG.PRICE.SINGLE_EXPERIENCE, desc: '捏泥巴捏个自己的小怪兽' }
     ],
     copywriting: {
       xiaohongshu: {
         title: '我是泥巴怪🟫在安吉山野捏了自己的小怪兽！',
         tags: ['#安吉民宿', '#MBTI测试', '#岩涺石MonsterPlanet', '#陶艺手作', '#泥巴怪人格', '#周末去哪玩'],
-        body: '岩涺石的MBTI怪兽人格测试真的有毒…\n\n我=泥巴怪🟫=ESFP/ENFP/ESTP，主打一个手脏过先，快乐第一！\n\n匹配的活动是「怪兽收养计划」398元收养一只独一无二的陶土小怪兽，首年限量100只！\n每收养一只民宿会在后山种一棵安吉白茶树！\n\n我的小怪兽已经入住啦🥹好可爱下次来看你！'
+        body: '我在岩涺石小程序测出了泥巴怪人格。\n\n匹配到的「怪兽收养计划」目前是商赛方案：拟首年制作100只陶土怪兽，并配套白茶树种植；398元/只是方案参考价。真实收养尚未开放。'
       }
     }
   },
@@ -68,16 +68,16 @@ const PERSONAS = {
     cover: 'https://cdn.jsdelivr.net/gh/YnKZ717/yanjushi-miniprogram@4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E5%A4%A7%E5%9C%B0%E5%BB%BA%E9%80%A0%E8%80%85.jpg',
     coverFallback: 'https://raw.githubusercontent.com/YnKZ717/yanjushi-miniprogram/4372da24af168593b818d0dce21abc2a6573fa9b/pics/monsters/%E5%A4%A7%E5%9C%B0%E5%BB%BA%E9%80%A0%E8%80%85.jpg',
     tagline: '把人是被石头替，要一起垒成',
-    description: '你相信日积月累的力量。你相信石头叠石头，故事叠故事，最后叠出一个家。「石头的口信」是为你准备的——每月最后一个周末，你和朋友们在石头上写字、画、烧，把口信烧进一片大地里。',
+    description: '你相信动手创造能让想象落地。怪兽工厂开放日的方案邀请星球居民用陶土、竹材和自然材料自由造兽，展示作品，并让大家一起投票。活动具体安排待正式公布。',
     matchProducts: [
-      { type: 'activity', key: 'stone-message', name: '石头的口信', price: CONFIG.PRICE.STONE_MESSAGE_EXTEND, desc: '每月最后一个周末·延伸活动烧一片大地' },
+      { type: 'activity', key: 'monster-factory-open-day', name: '怪兽工厂开放日', price: null, desc: '星球居民造兽大赛·方案展示' },
       { type: 'room', key: 'spring', name: '春辰·观星客房', price: CONFIG.PRICE.ROOM_START, desc: '绿色调房间适合家庭朋友聚会' }
     ],
     copywriting: {
       xiaohongshu: {
-        title: '大地建造者🪨在安吉把口信烧进了石头里',
-        tags: ['#安吉民宿', '#MBTI测试', '#岩涺石MonsterPlanet', '#大地艺术', '#大地建造者', '#石头的口信'],
-        body: '岩涺石 Monster Planet 的人格测试真的戳中我！\n\n我是大地建造者🪨=ISFJ/ESFJ/ENFJ\n\n匹配的活动是「石头的口信」每月最后一个周末，在石头上写想说的话然后烧进一片大地的仪式感真的谁懂啊…\n\n398的怪兽收养计划也冲了，收养一只=种一棵白茶树，把我自己也种进安吉的山里了（不是'
+        title: '大地建造者的怪兽工厂开放日灵感',
+        tags: ['#安吉民宿', '#MBTI测试', '#岩涺石MonsterPlanet', '#怪兽工厂开放日', '#大地建造者', '#造兽大赛'],
+        body: '岩涺石 Monster Planet 的人格测试结果是大地建造者。匹配到的活动方案是「怪兽工厂开放日——星球居民造兽大赛」：用陶土、竹材和自然材料创造自己的怪兽，展示作品，并由现场观众投票。活动具体日期和参与方式待正式公布。'
       }
     }
   },

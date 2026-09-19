@@ -16,6 +16,14 @@ Page({
   },
   book() {
     const a = this.data.activity
+    if (a.id === 'monster-factory-open-day') {
+      showToast('暂未开放')
+      return
+    }
+    if (a.id === 'adopt-plan') {
+      wx.navigateTo({ url: '/pages/adopt/adopt' })
+      return
+    }
     wx.navigateTo({ url: '/pages/booking/booking?type=activity&key=' + a.id + '&name=' + encodeURIComponent(a.name) })
   },
   onCoverError() {

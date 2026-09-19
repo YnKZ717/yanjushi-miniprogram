@@ -8,7 +8,7 @@ Page({
     experiences: [],
     banners: [
       { id: 'mbti', title: '测测你的怪兽人格', sub: '6题·4种人格·专属海报', cta: '立即测', mark: '测' },
-      { id: 'adopt', title: '怪兽收养计划', sub: '首年限量100只', cta: '去收养', mark: '兽' }
+      { id: 'adopt', title: '怪兽收养计划', sub: '商赛方案 · 拟首年制作100只', cta: '了解方案', mark: '兽' }
     ],
     floors: []
   },

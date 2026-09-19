@@ -1,7 +1,5 @@
 const app = getApp()
 const { getQuestions, getAllPersonas, getHeroWmCover, getHeroWmFallbackCover } = require('../../utils/mbti.js')
-const { getAdoptRemain } = require('../../utils/api.js')
-const CONFIG = require('../../utils/config.js')
 
 Page({
   data: {
@@ -10,13 +8,11 @@ Page({
     questions: [],
     personas: [],
     heroWmList: [],
-    adoptRemain: CONFIG.LIMITS.ADOPT_TOTAL,
-    adoptTotal: CONFIG.LIMITS.ADOPT_TOTAL,
     residentNo: '',
     banners: [
-      { title: '怪兽收养计划', sub: '首年限量100只 · 每收养一棵白茶树', tag: '398元/只', mark: '收', color: '#A67C52' },
-      { title: '窑火与茶', sub: '限8席 · 每季窑烧后开席', tag: '880元起', mark: '窑', color: '#C44536' },
-      { title: '石头的口信', sub: '每月最后一个周末', tag: '延伸活动198元', mark: '石', color: '#4D7C4F' }
+      { title: '怪兽收养计划', sub: '方案拟首年制作100只 · 配套白茶树种植', tag: '参考价398元/只', mark: '收', color: '#A67C52' },
+      { title: '怪兽工厂开放日', sub: '星球居民造兽大赛', tag: '方案展示', mark: '造', color: '#4D7C4F' },
+      { title: '窑火与茶', sub: '限8席 · 每季窑烧后开席', tag: '880元起', mark: '窑', color: '#C44536' }
     ]
   },
 
@@ -35,7 +31,7 @@ Page({
       personas: [
         Object.assign({ key: 'fireWatcher', tagText: '窑火与茶' }, p.fireWatcher),
         Object.assign({ key: 'mudMonster', tagText: '怪兽收养计划' }, p.mudMonster),
-        Object.assign({ key: 'earthBuilder', tagText: '石头的口信' }, p.earthBuilder),
+        Object.assign({ key: 'earthBuilder', tagText: '怪兽工厂开放日' }, p.earthBuilder),
         Object.assign({ key: 'wildArchitect', tagText: '柴烧集训营' }, p.wildArchitect)
       ]
     })
@@ -51,7 +47,6 @@ Page({
     })
     const { generateResidentNo } = require('../../utils/util.js')
     this.setData({ residentNo: generateResidentNo(app.globalData.userInfo.openid) })
-    this.loadAdoptRemain()
   },
 
   onMbtiResultAvatarError() {
@@ -96,11 +91,6 @@ Page({
       list[idx] = item
       this.setData({ heroWmList: list })
     }
-  },
-
-  async loadAdoptRemain() {
-    const res = await getAdoptRemain()
-    this.setData({ adoptRemain: res.remain, adoptTotal: res.total })
   },
 
   startTest() {

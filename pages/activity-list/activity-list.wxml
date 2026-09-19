@@ -18,7 +18,7 @@
           <text class="a-tag" wx:for="{{item.tags}}" wx:for-item="t" wx:key="*this">{{t}}</text>
         </view>
         <view class="a-bottom">
-          <text class="a-price">¥{{item.priceRange}}</text>
+          <text class="a-price">{{item.id === 'monster-factory-open-day' ? '' : '¥'}}{{item.priceRange}}</text>
           <text class="a-link">查看详情 ›</text>
         </view>
       </view>

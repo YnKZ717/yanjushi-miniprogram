@@ -145,7 +145,8 @@ function drawPoster(persona) {
         ctx.textAlign = 'right'
         ctx.textBaseline = 'middle'
         ctx.fillStyle = '#e8d9b0'
-        ctx.fillText('¥' + (typeof p.price === 'number' ? p.price : p.price.split('-')[0] + '起'), rX + rW - 24, rowY + rH / 2)
+        const priceText = p.price == null ? '价格待定' : '¥' + (typeof p.price === 'number' ? p.price : p.price.split('-')[0] + '起')
+        ctx.fillText(priceText, rX + rW - 24, rowY + rH / 2)
         ctx.textAlign = 'left'
         ctx.textBaseline = 'top'
         rowY += rH + 14

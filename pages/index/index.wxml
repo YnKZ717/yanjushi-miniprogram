@@ -67,7 +67,7 @@
           <view class="a-name">{{item.name}}</view>
           <view class="a-period">{{item.period}}</view>
           <view class="a-bottom">
-            <view class="a-price">¥{{item.priceRange}}</view>
+            <view class="a-price">{{item.id === 'monster-factory-open-day' ? '' : '¥'}}{{item.priceRange}}</view>
             <view class="a-link">查看 ›</view>
           </view>
         </view>

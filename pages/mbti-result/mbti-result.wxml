@@ -55,7 +55,7 @@
         </view>
         <view class="m-right">
           <view class="m-price">{{item.priceText}}</view>
-          <view class="m-btn" catchtap="goBooking" data-item="{{item}}">立即约</view>
+          <view class="m-btn" catchtap="goBooking" data-item="{{item}}">{{item.key === 'monster-factory-open-day' ? '暂未开放' : '立即约'}}</view>
         </view>
       </view>
     </view>
@@ -79,9 +79,9 @@
     <view class="card adopt-card">
       <view class="adopt-info">
         <view class="adopt-title">怪兽收养计划</view>
-        <view class="adopt-sub">首年限量100只 · 每收养一只种一棵白茶树</view>
+        <view class="adopt-sub">商赛方案 · 拟首年制作100只并配套白茶树种植</view>
       </view>
-      <view class="adopt-btn" bindtap="goAdopt">去收养 ›</view>
+      <view class="adopt-btn" bindtap="goAdopt">了解方案 ›</view>
     </view>
 
     <view class="retake-row">

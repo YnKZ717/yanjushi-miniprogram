@@ -59,7 +59,7 @@
 .f-row:last-child { border-bottom: none; }
 .f-row.f-col { flex-direction: column; align-items: flex-start; }
 .f-label { width: 150rpx; font-size: 26rpx; color: var(--color-text-secondary); flex-shrink: 0; }
-.f-row.f-col .f-label { margin-bottom: 12rpx; }
+.f-row.f-col .f-label { width: auto; white-space: nowrap; margin-bottom: 12rpx; }
 .f-input {
   flex: 1;
   font-size: 28rpx;
@@ -95,7 +95,7 @@
 .dc-list { font-size: 22rpx; color: var(--color-text-secondary); line-height: 1.8; margin-bottom: 10rpx; }
 .dc-i { display: flex; align-items: center; }
 .dc-i .dot { margin-right: 12rpx; }
-.dc-tagline { font-size: 20rpx; color: var(--color-text-muted); text-align: center; }
+.dc-tagline { font-size: 20rpx; color: var(--color-text-muted); padding-left: 30rpx; text-align: left; }
 
 .agree-row { display: flex; align-items: flex-start; padding: 8rpx 12rpx 24rpx; }
 .checkbox {

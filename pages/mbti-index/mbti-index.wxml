@@ -77,15 +77,10 @@
     <view class="adopt-progress" bindtap="goAdopt">
       <view class="adopt-title">
         怪兽收养计划
-        <text class="adopt-price">¥398</text>
+        <text class="adopt-price">参考价 ¥398</text>
       </view>
-      <view class="adopt-sub">首年限量{{adoptTotal}}只 · 每收养一只种一棵白茶树</view>
-      <view class="progress-wrap">
-        <view class="progress-fill" style="width:{{(1 - adoptRemain/adoptTotal)*100}}%"></view>
-      </view>
-      <view class="adopt-remain">
-        剩余 <text class="remain-num">{{adoptRemain}}</text> 只 · 售罄不补
-      </view>
+      <view class="adopt-sub">商赛方案展示 · 拟首年制作100只并配套白茶树种植</view>
+      <view class="adopt-remain">尚未开放真实收养</view>
     </view>
   </view>
 
@@ -94,7 +89,7 @@
       <view class="section-title t-bar t-bar-accent">三大主题活动</view>
     </view>
     <view class="banner-list">
-      <view class="banner-item" wx:for="{{banners}}" wx:key="index" bindtap="goActivity" data-id="{{['adopt-plan','kiln-fire-tea','stone-message'][index]}}">
+      <view class="banner-item" wx:for="{{banners}}" wx:key="index" bindtap="goActivity" data-id="{{['adopt-plan','monster-factory-open-day','kiln-fire-tea'][index]}}">
         <view class="banner-info">
           <view class="banner-title" style="color:{{item.color}};">{{item.title}}</view>
           <view class="banner-sub">{{item.sub}}</view>
